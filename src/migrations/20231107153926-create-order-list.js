@@ -15,8 +15,6 @@ module.exports = {
 			},
 			id_product: {
 				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
 				type: Sequelize.INTEGER,
 				// references: {
 				// 	model: "Products",
@@ -25,8 +23,6 @@ module.exports = {
 			},
 			id_users: {
 				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
 				type: Sequelize.INTEGER,
 				// references: {
 				// 	model: "Users_customer",
@@ -35,8 +31,6 @@ module.exports = {
 			},
 			id_payment: {
 				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
 				type: Sequelize.INTEGER,
 				// references: {
 				//   model: "Payment",
@@ -52,7 +46,7 @@ module.exports = {
 				type: Sequelize.DATE,
 			},
 			deleted_at: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.DATE,
 			},
 		});

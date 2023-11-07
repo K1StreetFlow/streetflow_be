@@ -25,33 +25,15 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			id_product: {
 				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
 				type: DataTypes.INTEGER,
-				// references: {
-				// 	model: "Products",
-				// 	key: "id_product",
-				// },
 			},
 			id_users: {
 				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
 				type: DataTypes.INTEGER,
-				// references: {
-				// 	model: "Users_customer",
-				// 	key: "id_users",
-				// },
 			},
 			id_payment: {
 				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
 				type: DataTypes.INTEGER,
-				// references: {
-				//   model: "Payment",
-				//   key: "id_payment",
-				// }
 			},
 			created_at: {
 				allowNull: false,
@@ -62,16 +44,19 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.DATE,
 			},
 			deleted_at: {
-				allowNull: false,
+				allowNull: true,
 				type: DataTypes.DATE,
 			},
 		},
 		{
 			sequelize,
 			modelName: "Order_list",
+			tableName: "Order_list",
 			paranoid: true,
+			createdAt: "created_at",
+			updatedAt: "update_at",
+			deletedAt: "deleted_at",
 		}
 	);
 	return Order_list;
 };
-
