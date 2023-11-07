@@ -7,7 +7,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const getAllPayments = [
       {
-        number_payment: "PAY-001",
+        code_payment: "PAY-001",
         date_payment: new Date(),
         status_payment: "Pending",
         total_payment: 100000,
@@ -18,7 +18,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        number_payment: "PAY-002",
+        code_payment: "PAY-002",
         date_payment: new Date(),
         status_payment: "Failed",
         total_payment: 200000,
@@ -29,7 +29,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        number_payment: "PAY-003",
+        code_payment: "PAY-003",
         date_payment: new Date(),
         status_payment: "Success",
         total_payment: 300000,
@@ -45,11 +45,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("Payments", null, {});
   },
 };

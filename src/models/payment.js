@@ -9,19 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Payment.belongsTo(models.User, {
-        foreignKey: "id_users",
-        as: "user",
-      });
-      Payment.belongsTo(models.Product, {
-        foreignKey: "id_product",
-        as: "product",
-      });
+      // Payment.belongsTo(models.User, {
+      //   foreignKey: "id_users",
+      //   as: "user",
+      // });
+      // Payment.belongsTo(models.Product, {
+      //   foreignKey: "id_product",
+      //   as: "product",
+      // });
     }
   }
   Payment.init(
     {
-      number_payment: DataTypes.VARCHAR,
+      code_payment: DataTypes.STRING,
       date_payment: DataTypes.DATE,
       status_payment: DataTypes.ENUM("Pending", "Unpaid", "Success", "Failed"),
       total_payment: DataTypes.INTEGER,

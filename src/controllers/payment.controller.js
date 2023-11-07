@@ -1,16 +1,41 @@
+const { Payment } = require("../models");
+
 const testingController = {
   getAllPayments: async (req, res) => {
     try {
-      res.status(200).json({ data: "All Payment" });
+      const payments = await Payment.findAll();
+      res.status(200).json({
+        message: "Get all payments",
+        data: payments,
+      });
     } catch (error) {
-      res.status.json({ error: "Internal server error" });
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
     }
   },
-  getDetailPayment: async (req, res) => {
+  getPaymentById: async (req, res) => {
     try {
-      res.status(200).json({ data: "Detail Payment" });
+      const { id } = req.params;
+      const payment = await Payment.findByPk(id);
+      res.status(200).json({
+        message: `Get payment by id ${id}`,
+        data: payment,
+      });
     } catch (error) {
-      res.status.json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  createPayment: async (req, res) => {
+    try {
+      const { body } = req;
+      const payment = await Payment.create(body);
+      res.status(201).json({
+        message: "Create new payment",
+        data: payment,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
     }
   },
 };
