@@ -1,9 +1,16 @@
-const { Payment } = require("../models");
+const { Payment, Cart } = require("../models");
 
 const testingController = {
   getAllPayments: async (req, res) => {
     try {
-      const payments = await Payment.findAll();
+      const payments = await Payment.findAll({
+        include: [
+          {
+            model: Cart,
+            as: "cart",
+          },
+        ],
+      });
       res.status(200).json({
         message: "Get all payments",
         data: payments,
