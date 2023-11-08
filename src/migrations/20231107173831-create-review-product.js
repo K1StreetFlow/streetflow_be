@@ -18,6 +18,7 @@ module.exports = {
         //   model: "Products",
         //   key: "id_products",
         // }
+        
       },
       id_users_customer: {
         allowNull: false,
