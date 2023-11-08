@@ -2,7 +2,7 @@ const route = require("express").Router();
 const testingRoutes = require("./testing.routes");
 const orderListRoutes = require("./order_list.routes");
 const productsListRoutes = require("./products.routes");
-const reviewProductsRoutes = require('./Review_products_routes');
+const reviewProductsRoutes = require('./review_products.routes');
 
 route.use("/", testingRoutes);
 route.use("/testing", testingRoutes);
