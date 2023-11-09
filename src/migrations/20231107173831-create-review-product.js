@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Review_products', {
-      id_review: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
