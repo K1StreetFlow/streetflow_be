@@ -6,9 +6,21 @@ module.exports = {
     await queryInterface.bulkInsert(
       "PhotoProducts",
       [
-        { photo_product: "image1.jpg" },
-        { photo_product: "image2.jpg" },
-        { photo_product: "image3.jpg" },
+        {
+          photo_product: "image1.jpg",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          photo_product: "image2.jpg",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          photo_product: "image3.jpg",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
