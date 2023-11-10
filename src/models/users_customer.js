@@ -13,28 +13,62 @@ module.exports = (sequelize, DataTypes) => {
   }
   Users_customer.init(
     {
-      id_users_customer: DataTypes.INTEGER,
-      username: DataTypes.STRING(20),
-      fullname: DataTypes.STRING(100),
-      email: DataTypes.STRING(255),
-      password: DataTypes.STRING(100),
-      jenis_kelamin: {
-        type: DataTypes.STRING,
-        validate: {
-          isIn: [["Laki-laki", "Perempuan", "Lainnya"]],
-        },
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
       },
-      upload_photo: DataTypes.TEXT,
-      alamat: DataTypes.TEXT,
-      telepon: DataTypes.INTEGER,
-      created_at: DataTypes.DATE,
-      updated_at: DataTypes.DATE,
-      deleted_at: DataTypes.DATE,
+      username: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      fullname: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      gender: {
+        type: DataTypes.ENUM("Male", "Female"),
+        allowNull: false,
+      },
+      birth_date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
+      upload_photo: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      phone_number: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
     },
     {
       sequelize,
       modelName: "Users_customer",
     }
   );
+
   return Users_customer;
 };

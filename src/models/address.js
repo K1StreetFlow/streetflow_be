@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Users_administrators extends Model {
+  class Address extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Users_administrators.init(
+  Address.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,28 +19,38 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      username: {
-        type: DataTypes.STRING(20),
+      id_users_customer: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      email: {
+      street: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      password: {
-        type: DataTypes.STRING(100),
+      house_number: {
+        type: DataTypes.STRING(20),
+        allowNull: true,
+      },
+      zipcode: {
+        type: DataTypes.STRING(10),
         allowNull: false,
       },
-      upload_photo: {
-        type: DataTypes.TEXT,
-        allowNull: true,
+      city: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      province: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
         allowNull: false,
       },
       updatedAt: {
         type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
         allowNull: false,
       },
       deletedAt: {
@@ -50,9 +60,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Users_administrators",
+      modelName: "Address",
     }
   );
 
-  return Users_administrators;
+  return Address;
 };

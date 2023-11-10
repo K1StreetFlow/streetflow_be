@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("Users_customer", {
-      id_users_customer: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -11,10 +11,6 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING(20),
-        allowNull: false,
-      },
-      fullname: {
-        type: Sequelize.STRING(100),
         allowNull: false,
       },
       email: {
@@ -25,34 +21,35 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
-      jenis_kelamin: {
-        type: Sequelize.STRING,
+      fullname: {
+        type: Sequelize.STRING(100),
         allowNull: false,
-        validate: {
-          isIn: [["Laki-laki", "Perempuan", "Lainnya"]],
-        },
+      },
+      gender: {
+        type: Sequelize.ENUM("Male", "Female"),
+        allowNull: false,
+      },
+      birth_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
       },
       upload_photo: {
         type: Sequelize.TEXT,
         allowNull: true,
       },
-      alamat: {
-        type: Sequelize.TEXT,
+      phone_number: {
+        type: Sequelize.STRING(20),
         allowNull: false,
       },
-      telepon: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
       },

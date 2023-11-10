@@ -2,33 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Payments", {
+    await queryInterface.createTable("Address", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      code_payment: {
-        type: Sequelize.STRING,
-      },
-      date_payment: {
-        type: Sequelize.DATE,
-      },
-      status_payment: {
-        type: Sequelize.ENUM("Pending", "Unpaid", "Success", "Failed"),
-      },
-      total_payment: {
+      id_users_customer: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
-      method_payment: {
-        type: Sequelize.ENUM("Transfer Bank", "E-Wallet", "M-Banking"),
+      street: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
       },
-      id_cart: {
-        type: Sequelize.INTEGER,
+      house_number: {
+        type: Sequelize.STRING(20),
+        allowNull: true,
       },
-      id_cart_details: {
-        type: Sequelize.INTEGER,
+      zipcode: {
+        type: Sequelize.STRING(10),
+        allowNull: false,
+      },
+      city: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      province: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -45,6 +48,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Payments");
+    await queryInterface.dropTable("Address");
   },
 };
