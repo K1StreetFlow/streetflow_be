@@ -5,9 +5,9 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("Review_products", [
       {
-        id_review: 31,
-        id_product: 11,
-        id_users_customer: 31,
+        id_review: 1,
+        id_product: 1,
+        id_users_customer: 1,
         message_review:
           "Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga sukses selalu",
         number_review: 5,
@@ -17,9 +17,9 @@ module.exports = {
         deletedAt: null,
       },
       {
-        id_review: 22,
-        id_product: 12,
-        id_users_customer: 32,
+        id_review: 2,
+        id_product: 2,
+        id_users_customer: 2,
         message_review:
           "Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga berkah selalu",
         number_review: 5,
