@@ -1,51 +1,54 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Review_products', [
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Review_products", [
       {
-        id_review: 1,
-        id_product: 1,
-        id_users_customer: 1,
-        message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga sukses selalu',
+        id_review: 31,
+        id_product: 11,
+        id_users_customer: 31,
+        message_review:
+          "Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga sukses selalu",
         number_review: 5,
-        photo_review: 'databaru.png',
+        photo_review: "databaru.png",
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
       },
       {
-        id_review: 2,
-        id_product: 2,
-        id_users_customer: 2,
-        message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga berkah selalu',
+        id_review: 22,
+        id_product: 12,
+        id_users_customer: 32,
+        message_review:
+          "Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga berkah selalu",
         number_review: 5,
-        photo_review: 'databaru.jpg',
+        photo_review: "databaru.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: null
+        deletedAt: null,
       },
       {
         id_review: 3,
         id_product: 3,
         id_users_customer: 3,
-        message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga banyak order selalu',
+        message_review:
+          "Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga banyak order selalu",
         number_review: 5,
-        photo_review: 'databaru.jpeg',
+        photo_review: "databaru.jpeg",
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: null
-      }
+        deletedAt: null,
+      },
     ]);
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };
