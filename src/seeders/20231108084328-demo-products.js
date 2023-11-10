@@ -1,25 +1,142 @@
-'use strict';
+"use strict";
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-
-    return queryInterface.bulkInsert('Products', [{
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'example@example.com',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }]);
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert("Products", [
+      {
+        name_product: "Product 2",
+        description_product: "Description for Product 2",
+        price_product: 39.99,
+        stock_product: 30,
+        size_product: "L",
+        color_product: "black",
+        id_category_product: 2,
+        id_photo_product: 2,
+        slug_product: "product-2",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      {
+        name_product: "Product 3",
+        description_product: "Description for Product 3",
+        price_product: 19.99,
+        stock_product: 20,
+        size_product: "S",
+        color_product: "grey",
+        id_category_product: 3,
+        id_photo_product: 3,
+        slug_product: "product-3",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      // Add more products as needed
+      {
+        name_product: "Product 4",
+        description_product: "Description for Product 4",
+        price_product: 49.99,
+        stock_product: 40,
+        size_product: "XL",
+        color_product: "blue",
+        id_category_product: 1,
+        id_photo_product: 4,
+        slug_product: "product-4",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      {
+        name_product: "Product 5",
+        description_product: "Description for Product 5",
+        price_product: 59.99,
+        stock_product: 15,
+        size_product: "M",
+        color_product: "black",
+        id_category_product: 2,
+        id_photo_product: 5,
+        slug_product: "product-5",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      // Add more products as needed
+      {
+        name_product: "Product 6",
+        description_product: "Description for Product 6",
+        price_product: 34.99,
+        stock_product: 25,
+        size_product: "S",
+        color_product: "grey",
+        id_category_product: 3,
+        id_photo_product: 6,
+        slug_product: "product-6",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      {
+        name_product: "Product 7",
+        description_product: "Description for Product 7",
+        price_product: 44.99,
+        stock_product: 35,
+        size_product: "L",
+        color_product: "blue",
+        id_category_product: 1,
+        id_photo_product: 7,
+        slug_product: "product-7",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      // Add more products as needed
+      {
+        name_product: "Product 8",
+        description_product: "Description for Product 8",
+        price_product: 24.99,
+        stock_product: 10,
+        size_product: "XL",
+        color_product: "black",
+        id_category_product: 2,
+        id_photo_product: 8,
+        slug_product: "product-8",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      {
+        name_product: "Product 9",
+        description_product: "Description for Product 9",
+        price_product: 14.99,
+        stock_product: 5,
+        size_product: "M",
+        color_product: "grey",
+        id_category_product: 3,
+        id_photo_product: 9,
+        slug_product: "product-9",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+      // Add more products as needed
+      {
+        name_product: "Product 10",
+        description_product: "Description for Product 10",
+        price_product: 19.99,
+        stock_product: 8,
+        size_product: "S",
+        color_product: "blue",
+        id_category_product: 1,
+        id_photo_product: 10,
+        slug_product: "product-10",
+        created_At: new Date(),
+        updated_At: new Date(),
+        deleted_At: null,
+      },
+    ]);
   },
 
-  async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Products', null, {});
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete("Products", null, {});
+  },
 };
