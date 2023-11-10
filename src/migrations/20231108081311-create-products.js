@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable("Products", {
       id_product: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name_product: {
         type: Sequelize.STRING(255),
@@ -26,11 +26,11 @@ module.exports = {
         allowNull: false,
       },
       size_product: {
-        type: Sequelize.ENUM('S', 'M', 'L', 'XL'),
+        type: Sequelize.ENUM("S", "M", "L", "XL"),
         allowNull: false,
       },
       color_product: {
-        type: Sequelize.ENUM('blue', 'black', 'grey'),
+        type: Sequelize.ENUM("blue", "black", "grey"),
         allowNull: false,
       },
       id_category_product: {
@@ -47,19 +47,18 @@ module.exports = {
       },
       created_At: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updated_At: {
-        allowNull: false,
-        type: Sequelize.DATE
+        allowNull: true,
+        type: Sequelize.DATE,
       },
       deleted_At: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products');
-  }
+    await queryInterface.dropTable("Products");
+  },
 };
