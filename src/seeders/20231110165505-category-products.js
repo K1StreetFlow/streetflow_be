@@ -6,9 +6,26 @@ module.exports = {
     await queryInterface.bulkInsert(
       "CategoryProducts",
       [
-        { name_category_products: "Electronics" },
-        { name_category_products: "Clothing" },
-        { name_category_products: "Home and Living" },
+        {
+          name_category_products: "baju",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name_category_products: "celana",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name_category_products: "jaket",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name_category_products: "sepatu",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );
