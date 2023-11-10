@@ -1,4 +1,4 @@
-const { Payment, Cart } = require("../models");
+const { Payment, Cart, User } = require("../models");
 
 const testingController = {
   getAllPayments: async (req, res) => {
@@ -8,6 +8,12 @@ const testingController = {
           {
             model: Cart,
             as: "cart",
+            // include: [
+            //   {
+            //     model: User,
+            //     as: "user",
+            //   },
+            // ],
           },
         ],
       });
@@ -23,7 +29,14 @@ const testingController = {
   getPaymentById: async (req, res) => {
     try {
       const { id } = req.params;
-      const payment = await Payment.findByPk(id);
+      const payment = await Payment.findByPk(id, {
+        include: [
+          {
+            model: Cart,
+            as: "cart",
+          },
+        ],
+      });
       res.status(200).json({
         message: `Get payment by id ${id}`,
         data: payment,

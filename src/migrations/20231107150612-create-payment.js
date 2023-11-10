@@ -27,9 +27,6 @@ module.exports = {
       id_cart: {
         type: Sequelize.INTEGER,
       },
-      id_cart_details: {
-        type: Sequelize.INTEGER,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

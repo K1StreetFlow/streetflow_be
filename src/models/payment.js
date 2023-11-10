@@ -28,14 +28,6 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-
-      id_cart_details: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "Cart_details",
-          key: "id",
-        },
-      },
     },
     {
       sequelize,
