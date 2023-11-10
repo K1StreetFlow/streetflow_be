@@ -1,14 +1,11 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Review_products extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {}
   }
+
   Review_products.init(
     {
       id_review: {
@@ -19,14 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       id_product: {
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: DataTypes.INTEGER,
       },
       id_users_customer: {
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: DataTypes.INTEGER,
       },
       message_review: {
@@ -59,5 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true,
     }
   );
+
   return Review_products;
 };
