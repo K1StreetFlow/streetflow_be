@@ -1,19 +1,22 @@
 const { Payment, Cart, User } = require("../models");
 
-const testingController = {
+const paymentController = {
   getAllPayments: async (req, res) => {
     try {
       const payments = await Payment.findAll({
+        attributes: {
+          exclude: ["id_cart"],
+        },
         include: [
           {
             model: Cart,
             as: "cart",
-            // include: [
-            //   {
-            //     model: User,
-            //     as: "user",
-            //   },
-            // ],
+            include: [
+              {
+                model: User,
+                as: "user",
+              },
+            ],
           },
         ],
       });
@@ -34,6 +37,12 @@ const testingController = {
           {
             model: Cart,
             as: "cart",
+            include: [
+              {
+                model: User,
+                as: "user",
+              },
+            ],
           },
         ],
       });
@@ -51,7 +60,7 @@ const testingController = {
       const { body } = req;
       const payment = await Payment.create(body);
       res.status(201).json({
-        message: "Create new payment",
+        message: "Create payment successfull",
         data: payment,
       });
     } catch (error) {
@@ -60,4 +69,4 @@ const testingController = {
   },
 };
 
-module.exports = testingController;
+module.exports = paymentController;

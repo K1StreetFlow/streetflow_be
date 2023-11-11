@@ -1,4 +1,4 @@
-const { Cart_detail, Cart } = require("../models");
+const { Cart_detail, Cart, Product } = require("../models");
 
 const cardDetailController = {
   getAllCartDetail: async (req, res) => {
@@ -9,6 +9,10 @@ const cardDetailController = {
             model: Cart,
             as: "cart",
           },
+          // {
+          //   model: Product,
+          //   as: "product",
+          // }
         ],
       });
       res.status(200).json({
