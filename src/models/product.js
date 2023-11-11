@@ -6,10 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
       Product.belongsTo(models.CategoryProduct, {
-        foreignKey: "id_category_products",
+        foreignKey: "id_category_product", // Sesuaikan dengan nama kolom yang ada di dalam tabel Products
+        as: "category",
       });
+
       Product.belongsTo(models.PhotoProduct, {
-        foreignKey: "id_photo_product",
+        foreignKey: "id_photo_product", // Sesuaikan dengan nama kolom yang ada di dalam tabel Products
+        as: "photo",
       });
     }
   }

@@ -4,7 +4,18 @@ const { Product, CategoryProduct, PhotoProduct } = require("../models");
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
-      include: [CategoryProduct, PhotoProduct],
+      include: [
+        {
+          model: CategoryProduct,
+          as: "category",
+          attributes: ["id_category_products"],
+        },
+        {
+          model: PhotoProduct,
+          as: "photo",
+          attributes: ["photo_product"],
+        },
+      ],
     });
     res.json(products);
   } catch (error) {
@@ -18,7 +29,18 @@ const getProductById = async (req, res) => {
 
   try {
     const product = await Product.findByPk(id, {
-      include: [CategoryProduct, PhotoProduct],
+      include: [
+        {
+          model: CategoryProduct,
+          as: "category",
+          attributes: ["id_category_products"],
+        },
+        {
+          model: PhotoProduct,
+          as: "photo",
+          attributes: ["photo_product"],
+        },
+      ],
     });
 
     if (!product) {

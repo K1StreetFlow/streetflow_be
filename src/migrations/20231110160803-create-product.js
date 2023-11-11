@@ -27,11 +27,11 @@ module.exports = {
       colour_product: {
         type: Sequelize.ENUM("black", "Blue", "Green"),
       },
-      id_category_products: {
+      id_category_product: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "CategoryProducts",
+          model: "CategoryProducts", // Perhatikan huruf kecil di sini
           key: "id",
         },
         onDelete: "cascade",
@@ -41,7 +41,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "PhotoProducts",
+          model: "PhotoProducts", // Perhatikan huruf kecil di sini
           key: "id",
         },
         onDelete: "cascade",
