@@ -1,47 +1,52 @@
-const { Products } = require("../models");
+// controllers/products.controller.js
+const { Product, CategoryProduct, PhotoProduct } = require("../models");
 
 const getAllProducts = async (req, res) => {
   try {
-    const products = await Products.findAll();
-
-    if (products) {
-      res.status(200).json({
-        message: "Get All Products List Successfully",
-        data: products,
-      });
-    } else {
-      res.status(404).json({ message: "Get All Products List Failed" });
-    }
+    const products = await Product.findAll({
+      include: [CategoryProduct, PhotoProduct],
+    });
+    res.json(products);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const getProductById = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const { id } = req.params; // Ambil ID produk dari parameter permintaan
+    const product = await Product.findByPk(id, {
+      include: [CategoryProduct, PhotoProduct],
+    });
 
-    // Cari produk berdasarkan ID
-    const product = await Products.findByPk(id);
-
-    if (product) {
-      res.status(200).json({
-        message: "Get Product by ID Successfully",
-        data: product,
-      });
-    } else {
-      res.status.json({ message: "Product not found" });
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
     }
+
+    res.json(product);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const createProduct = async (req, res) => {
+  const {
+    name_product,
+    description_product,
+    price_product,
+    stock_product,
+    size_product,
+    color_product,
+    id_category_product,
+    id_photo_product,
+    slug_product,
+  } = req.body;
+
   try {
-    const {
+    const newProduct = await Product.create({
       name_product,
       description_product,
       price_product,
@@ -51,54 +56,39 @@ const createProduct = async (req, res) => {
       id_category_product,
       id_photo_product,
       slug_product,
-    } = req.body;
-
-    const newProduct = await Products.create({
-      name_product,
-      description_product,
-      price_product,
-      stock_product,
-      size_product,
-      color_product,
-      id_category_product,
-      id_photo_product,
-      slug_product,
-      created_At: new Date(),
-      updated_At: new Date(),
+      created_at: new Date(),
+      updated_at: new Date(),
     });
 
-    res.status(201).json({
-      message: "Product created successfully",
-      data: newProduct,
-    });
+    res.status(201).json(newProduct);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const {
+    name_product,
+    description_product,
+    price_product,
+    stock_product,
+    size_product,
+    color_product,
+    id_category_product,
+    id_photo_product,
+    slug_product,
+  } = req.body;
+
   try {
-    const { id } = req.params;
-    const {
-      name_product,
-      description_product,
-      price_product,
-      stock_product,
-      size_product,
-      color_product,
-      id_category_product,
-      id_photo_product,
-      slug_product,
-    } = req.body;
+    const product = await Product.findByPk(id);
 
-    const existingProduct = await Products.findByPk(id);
-
-    if (!existingProduct) {
-      return res.status(404).json({ message: "Product not found" });
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
     }
 
-    await existingProduct.update({
+    await product.update({
       name_product,
       description_product,
       price_product,
@@ -108,35 +98,32 @@ const updateProduct = async (req, res) => {
       id_category_product,
       id_photo_product,
       slug_product,
-      updated_At: new Date(),
+      updated_at: new Date(),
     });
 
-    res.status(200).json({
-      message: "Product updated successfully",
-      data: existingProduct,
-    });
+    res.json(product);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const { id } = req.params;
+    const product = await Product.findByPk(id);
 
-    const productToDelete = await Products.findByPk(id);
-
-    if (!productToDelete) {
-      return res.status(404).json({ message: "Product not found" });
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
     }
 
-    await productToDelete.destroy();
+    await product.destroy();
 
-    res.status(200).json({ message: "Product deleted successfully" });
+    res.json({ message: "Product deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

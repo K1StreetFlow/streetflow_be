@@ -1,4 +1,6 @@
+// routes/products.routes.js
 const express = require("express");
+const router = express.Router();
 const {
   getAllProducts,
   getProductById,
@@ -6,21 +8,12 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/products.controller");
-const router = express.Router();
 
-// Rute untuk mendapatkan semua produk
-router.get("/", getAllProducts);
-
-// Rute untuk mendapatkan produk berdasarkan ID
-router.get("/:id", getProductById);
-
-// Rute untuk membuat produk baru
-router.post("/", createProduct);
-
-// Rute untuk mengupdate produk berdasarkan ID
-router.put("/:id", updateProduct);
-
-// Rute untuk menghapus produk berdasarkan ID
-router.delete("/:id", deleteProduct);
+// CRUD routes
+router.get("/products", getAllProducts);
+router.get("/products/:id", getProductById);
+router.post("/products", createProduct);
+router.put("/products/:id", updateProduct);
+router.delete("/products/:id", deleteProduct);
 
 module.exports = router;
