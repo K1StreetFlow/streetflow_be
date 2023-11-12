@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Address.belongsTo(models.Users_customer, {
+        foreignKey: "id_users_customer",
+        as: "users_customer",
+      });
     }
   }
   Address.init(
@@ -61,6 +65,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Address",
+      paranoid: true,
+      tableName: "Address",
     }
   );
 
