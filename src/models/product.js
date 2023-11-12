@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "id_category_product", // Sesuaikan dengan nama kolom yang ada di dalam tabel Products
         as: "category",
       });
-
       Product.belongsTo(models.PhotoProduct, {
         foreignKey: "id_photo_product", // Sesuaikan dengan nama kolom yang ada di dalam tabel Products
         as: "photo",
@@ -28,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       colour_product: {
         type: DataTypes.ENUM,
-        values: ["black", "Blue", "Green"],
+        values: ["Black", "Blue", "Green"],
       },
-      id_category_products: DataTypes.INTEGER,
+      id_category_product: DataTypes.INTEGER,
       id_photo_product: DataTypes.INTEGER,
       slug_product: DataTypes.STRING,
     },
@@ -38,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Product",
       paranoid: true,
-      timestamps: true,
     }
   );
   return Product;

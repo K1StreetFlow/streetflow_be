@@ -8,7 +8,7 @@ const getAllProducts = async (req, res) => {
         {
           model: CategoryProduct,
           as: "category",
-          attributes: ["id_category_products"],
+          // attributes: ["id_category_product"],
         },
         {
           model: PhotoProduct,

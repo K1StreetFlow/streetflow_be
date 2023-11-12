@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("Products", {
-      id_product: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -25,12 +25,12 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      size_product: {
-        type: Sequelize.ENUM("S", "M", "L", "XL"),
+      colour_product: {
+        type: Sequelize.ENUM("White", "Black", "Brown"),
         allowNull: false,
       },
-      color_product: {
-        type: Sequelize.ENUM("blue", "black", "grey"),
+      size_product: {
+        type: Sequelize.ENUM("S", "M", "L", "XL"),
         allowNull: false,
       },
       id_category_product: {
@@ -45,15 +45,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      created_At: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updated_At: {
+      updatedAt: {
         allowNull: true,
         type: Sequelize.DATE,
       },
-      deleted_At: {
+      deletedAt: {
         type: Sequelize.DATE,
       },
     });
