@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     photo_review: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(200),
     },
     createdAt: {
       allowNull: false,
