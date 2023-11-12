@@ -1,4 +1,4 @@
-const { Review_products } = require('../models');
+const { Review_products, Order_list } = require('../models');
 
 const getReviewProducts = async (req, res) => {
     try {
@@ -43,6 +43,30 @@ const getReviewProductById = async (req, res) => {
         });
     }
 };
+
+const createReview = async (req, res) => {
+    try {
+        const { id_order_list, id_products, id_users_customer, review } = req.body;
+        const order = await Order_list.findByPk(id_order_list);
+
+        if(!order || order.status_order !== 'Finished') {
+            return res.status(400).json({
+                message: "Order not finished or not found"
+            });
+        }
+
+        const reviewProduct = await Review_products.create({
+            id_products,
+            id_users_customer,
+            id_order_list,
+            review,
+            rating,
+            date_review: 
+        })
+    } catch (error) {
+
+    }
+}
 
 module.exports = {
     getReviewProducts,

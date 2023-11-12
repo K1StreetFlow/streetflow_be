@@ -10,7 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-       // define association here
+      // define association here
+      Review_products.belongsTo(models.Users_customer, {
+        foreignKey: "id_users_customer",
+        as: "users_customer",
+      });
+
+      Review_products.belongsTo(models.Products, {
+        foreignKey: "id_products",
+        as: "products",
+      });
+
+      Review_products.belongsTo(models.Order_list, {
+        foreignKey: "id_order_list",
+        as: "order_list",
+      })
     }
   }
   Review_products.init({
@@ -20,16 +34,16 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    id_cart_details: {
+    id_users_customer: {
       allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    id_carts: {
+    id_products: {
       allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
+    id_order_list: {
+      allowNull: false,
       type: DataTypes.INTEGER,
     },
     message_review: {

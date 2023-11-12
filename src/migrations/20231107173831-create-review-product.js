@@ -9,25 +9,31 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_product: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-        // references: {
-        //   model: "Products",
-        //   key: "id_products",
-        // }
-      },
       id_users_customer: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: "Users_customer",
-        //   key: "id_users_customer"
-        // }
+        references: {
+          model: "Users_customer",
+          key: "id_users_customer"
+        }
+      },
+      id_products: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Products",
+          key: "id_products",
+        }
+      },
+      id_order_list: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Order_list",
+          key: "id_order_list",
+        }
       },
       message_review: {
         type: Sequelize.TEXT
@@ -47,6 +53,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       deletedAt: {
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
