@@ -2,48 +2,50 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Order_list extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
 		static associate(models) {
-			// define association here
+			// Order_list.belongsTo(models.Payment, {
+			// 	foreignKey: "id_payment",
+			// 	as: "payment",
+			// });
+			// Order_list.belongsTo(models.Cart_details, {
+			// 	foreignKey: "id_cart_details",
+			// 	as: "cart_details",
+			// });
+			// Order_list.hasMany(models.Reviews_products, {
+			// 	foreignKey: "id_order_list",
+			// 	as: "review_products",
+			// });
 		}
 	}
 	Order_list.init(
 		{
-			id_order: {
+			id: {
 				allowNull: false,
 				autoIncrement: true,
 				primaryKey: true,
 				type: DataTypes.INTEGER,
 			},
 			code_order: {
-				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			id_product: {
-				allowNull: false,
-				type: DataTypes.INTEGER,
-			},
-			id_users: {
-				allowNull: false,
-				type: DataTypes.INTEGER,
-			},
 			id_payment: {
-				allowNull: false,
 				type: DataTypes.INTEGER,
 			},
-			created_at: {
+			id_cart_details: {
+				type: DataTypes.INTEGER,
+			},
+			status_order: {
+				type: DataTypes.ENUM("Unpaid", "Paid", "Packaged", "Delivered", "Completed", "Canceled"),
+			},
+			createdAt: {
 				allowNull: false,
 				type: DataTypes.DATE,
 			},
-			update_at: {
+			updatedAt: {
 				allowNull: false,
 				type: DataTypes.DATE,
 			},
-			deleted_at: {
+			deletedAt: {
 				allowNull: true,
 				type: DataTypes.DATE,
 			},
@@ -53,9 +55,6 @@ module.exports = (sequelize, DataTypes) => {
 			modelName: "Order_list",
 			tableName: "Order_list",
 			paranoid: true,
-			createdAt: "created_at",
-			updatedAt: "update_at",
-			deletedAt: "deleted_at",
 		}
 	);
 	return Order_list;
