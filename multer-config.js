@@ -1,7 +1,7 @@
 // multer-config.js
 const multer = require("multer");
 
-const storage = multer.memoryStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "src/assets/images/products");
   },
