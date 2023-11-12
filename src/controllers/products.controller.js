@@ -33,7 +33,7 @@ const getProductById = async (req, res) => {
         {
           model: CategoryProduct,
           as: "category",
-          attributes: ["id_category_products"],
+          // attributes: ["id_category_products"],
         },
         {
           model: PhotoProduct,
@@ -53,7 +53,6 @@ const getProductById = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 const createProduct = async (req, res) => {
   const {
     name_product,
@@ -61,7 +60,7 @@ const createProduct = async (req, res) => {
     price_product,
     stock_product,
     size_product,
-    color_product,
+    colour_product, // Change from color_product to colour_product
     id_category_product,
     id_photo_product,
     slug_product,
@@ -74,18 +73,18 @@ const createProduct = async (req, res) => {
       price_product,
       stock_product,
       size_product,
-      color_product,
+      colour_product, // Change from color_product to colour_product
       id_category_product,
       id_photo_product,
       slug_product,
-      created_at: new Date(),
-      updated_at: new Date(),
     });
 
     res.status(201).json(newProduct);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ error: "Failed to create product", details: error.message });
   }
 };
 
@@ -97,7 +96,7 @@ const updateProduct = async (req, res) => {
     price_product,
     stock_product,
     size_product,
-    color_product,
+    colour_product, // Corrected attribute name
     id_category_product,
     id_photo_product,
     slug_product,
@@ -116,17 +115,18 @@ const updateProduct = async (req, res) => {
       price_product,
       stock_product,
       size_product,
-      color_product,
+      colour_product, // Corrected attribute name
       id_category_product,
       id_photo_product,
       slug_product,
-      updated_at: new Date(),
     });
 
     res.json(product);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ error: "Failed to update product", details: error.message });
   }
 };
 
