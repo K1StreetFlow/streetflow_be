@@ -1,6 +1,32 @@
 const { PhotoProduct } = require("../models");
 const upload = require("../../multer-config.js");
 
+const getAllPhotos = async (req, res) => {
+  try {
+    const photos = await PhotoProduct.findAll();
+    res.json(photos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getPhotoById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const photo = await PhotoProduct.findByPk(id);
+
+    if (!photo) {
+      return res.status(404).json({ error: "Photo not found" });
+    }
+
+    res.json(photo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 const uploadPhoto = async (req, res) => {
   try {
     const { filename } = req.file;
@@ -55,4 +81,10 @@ const deletePhoto = async (req, res) => {
   }
 };
 
-module.exports = { uploadPhoto, editPhoto, deletePhoto };
+module.exports = {
+  getAllPhotos,
+  getPhotoById,
+  uploadPhoto,
+  editPhoto,
+  deletePhoto,
+};

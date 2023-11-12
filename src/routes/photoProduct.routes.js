@@ -2,12 +2,18 @@ const path = require("path");
 const express = require("express");
 const router = express.Router();
 const {
+  getAllPhotos,
+  getPhotoById,
   uploadPhoto,
   editPhoto,
   deletePhoto,
 } = require("../controllers/photoProduct.controller");
 const upload = require("../../multer-config.js");
 
+router.get("/", getAllPhotos);
+
+// Get photo by ID
+router.get("/:id", getPhotoById);
 // Handle the photo upload
 router.post("/upload", upload.single("photo_product"), uploadPhoto);
 
