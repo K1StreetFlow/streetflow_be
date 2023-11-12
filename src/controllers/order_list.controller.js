@@ -1,4 +1,4 @@
-const { Order_list, Payment } = require("../models");
+const { Order_list, Payment, Cart_details } = require("../models");
 
 const getAllOrder = async (req, res) => {
 	try {
@@ -7,6 +7,11 @@ const getAllOrder = async (req, res) => {
 				{
 					model: Payment,
 					as: "payment",
+					attributes: ["id"],
+				},
+				{
+					model: Cart_details,
+					as: "cart_details",
 					attributes: ["id"],
 				},
 			],
@@ -37,6 +42,11 @@ const getOrderById = async (req, res) => {
 				{
 					model: Payment,
 					as: "payment",
+					attributes: ["id"],
+				},
+				{
+					model: Cart_details,
+					as: "cart_details",
 					attributes: ["id"],
 				},
 			],
