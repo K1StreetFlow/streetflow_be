@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
 			// 	foreignKey: "id_order_list",
 			// 	as: "review_products",
 			// });
+			// Order_list.hasMany(models.Nomor_resi, {
+			// 	foreignKey: "id_order_list",
+			// 	as: "nomor_resi",
+			// });
 		}
 	}
 	Order_list.init(
@@ -25,15 +29,9 @@ module.exports = (sequelize, DataTypes) => {
 				primaryKey: true,
 				type: DataTypes.INTEGER,
 			},
-			code_order: {
-				type: DataTypes.STRING,
-			},
-			id_payment: {
-				type: DataTypes.INTEGER,
-			},
-			id_cart_details: {
-				type: DataTypes.INTEGER,
-			},
+			code_order:DataTypes.STRING,
+			id_payment: DataTypes.INTEGER,
+			id_cart_details:DataTypes.INTEGER,
 			status_order: {
 				type: DataTypes.ENUM("Unpaid", "Paid", "Packaged", "Delivered", "Completed", "Canceled"),
 			},

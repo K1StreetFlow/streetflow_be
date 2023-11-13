@@ -3,40 +3,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		return queryInterface.bulkInsert("Order_list", [
+		return queryInterface.bulkInsert("Shipping", [
 			{
-				code_order: "TS-001",
-				id_payment: 1,
-				id_cart_details: 1,
-				status_order: "Unpaid",
+				name_courier: "John",
+				receipt_number: 1,
+				id_nomer_resi: 1,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				deletedAt: null,
 			},
 			{
-				code_order: "TS-002",
-				id_payment: 2,
-				id_cart_details: 2,
-				status_order: "Unpaid",
+				name_courier: "Doel",
+				receipt_number: 2,
+				id_nomer_resi: 2,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				deletedAt: null,
 			},
 			{
-				code_order: "TS-003",
-				id_payment: 3,
-				id_cart_details: 3,
-				status_order: "Unpaid",
+				name_courier: "Dadang",
+				receipt_number: 3,
+				id_nomer_resi: 3,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 				deletedAt: null,
 			},
-			
 		]);
 	},
 
 	async down(queryInterface, Sequelize) {
-		return queryInterface.bulkDelete("Order_list", null, {});
+		return queryInterface.bulkDelete("Shipping", null, {});
 	},
 };
 
