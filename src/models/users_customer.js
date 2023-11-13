@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // Definisi relasi one-to-many
+      this.hasMany(models.Address, { foreignKey: "id_users_customer", as: "addresses" });
     }
   }
   Users_customer.init(
@@ -67,6 +68,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Users_customer",
+      freezeTableName: true,
     }
   );
 

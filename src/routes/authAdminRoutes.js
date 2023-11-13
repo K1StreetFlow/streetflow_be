@@ -1,10 +1,8 @@
 const express = require("express");
-const { register, login, logout } = require("../controllers/authAdminController");
-const upload = require("../middleware/multerConfig");
+const { login, logout } = require("../controllers/authAdminController");
 const verifyTokenCookie = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.post("/register", upload.single("profileImage"), register);
 router.post("/login", login);
 router.post("/logout", verifyTokenCookie, logout);
 

@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     // Ganti nama file agar unik (gunakan timestamp, dll.)
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 

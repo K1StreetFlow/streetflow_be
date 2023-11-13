@@ -1,44 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Users_administrators } = require("../models");
-const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
-
-const register = async (req, res) => {
-  try {
-    const { username, email, password, retypePassword } = req.body;
-
-    // Check if user with the provided email already exists
-    const existingUser = await Users_administrators.findOne({ where: { email: email } });
-
-    if (existingUser) {
-      return res.status(400).json({ message: "User with this email already exists" });
-    }
-    if (password !== retypePassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Dapatkan informasi file yang diunggah (jika ada)
-    const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
-
-    // Create a new user
-    await Users_administrators.create({
-      username,
-      email,
-      password: hashedPassword,
-      upload_photo: profileImage, // Simpan nama file di database
-    });
-
-    res.status(201).json("Registration successful");
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
 
 async function login(req, res) {
   try {
@@ -82,7 +46,6 @@ async function logout(req, res) {
 }
 
 module.exports = {
-  register,
   login,
   logout,
 };

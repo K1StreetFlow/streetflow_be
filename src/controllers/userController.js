@@ -1,4 +1,6 @@
 const { Users_customer } = require("../models");
+const path = require("path");
+const bcrypt = require("bcrypt");
 
 async function getAllUsers(req, res) {
   // Implementasi logika mendapatkan semua pengguna
@@ -31,10 +33,10 @@ async function getUserById(req, res) {
 const editUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email, password, retypePassword } = req.body;
+    const { username, email, password, retypePassword, fullname, gender, birth_date, phone_number } = req.body;
 
     // Check if the user with the provided ID exists
-    const existingUser = await Users_customer.findByPk(id);
+    const existingUser = await Users_customer.findByPk(id, { attributes: { exclude: ["password", "deletedAt"] } });
 
     if (!existingUser) {
       return res.status(404).json({ message: "User not found" });
@@ -43,6 +45,17 @@ const editUser = async (req, res) => {
     // Update user data if the fields are provided
     existingUser.username = username || existingUser.username;
     existingUser.email = email || existingUser.email;
+    existingUser.fullname = fullname || existingUser.fullname;
+    existingUser.gender = gender || existingUser.gender;
+    existingUser.birth_date = birth_date || existingUser.birth_date;
+    existingUser.phone_number = phone_number || existingUser.phone_number;
+
+    const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
+
+    if (profileImage) {
+      // Update the profile image if a new one is uploaded
+      existingUser.upload_photo = profileImage;
+    }
 
     if (password !== undefined && password === retypePassword) {
       // Hash the new password

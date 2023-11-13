@@ -5,7 +5,7 @@ const verifyTokenCookie = require("../middleware/verifyToken");
 const router = express.Router();
 
 router.post("/register", upload.single("profileImage"), register);
-// router.post("/login", login);
-// router.post("/logout", verifyTokenCookie, logout);
+router.post("/login", login);
+router.post("/logout", verifyTokenCookie, logout);
 
 module.exports = router;
