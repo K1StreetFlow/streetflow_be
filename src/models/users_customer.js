@@ -68,6 +68,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Users_customer",
+      paranoid: true,
+      timestamps: true,
+      tableName: "Users_customer",
       freezeTableName: true,
     }
   );

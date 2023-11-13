@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.Users_customer, { foreignKey: "id_users_customer", as: "user" });
+      // define association here
+      Address.belongsTo(models.Users_customer, {
+        foreignKey: "id_users_customer",
+        as: "users_customer",
+      });
     }
   }
   Address.init(
@@ -61,6 +65,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Address",
+      paranoid: true,
+      tableName: "Address",
     }
   );
 
