@@ -13,7 +13,7 @@ module.exports = {
 				id_users_customer: 1,
 				createdAt: new Date(),
 				updatedAt: new Date(),
-        deletedAt: null,
+				deletedAt: null,
 			},
 			{
 				street: "Jl. Jalan Bunga",
@@ -24,7 +24,7 @@ module.exports = {
 				id_users_customer: 2,
 				createdAt: new Date(),
 				updatedAt: new Date(),
-        deletedAt: null,
+				deletedAt: null,
 			},
 			{
 				street: "Jl. Jalan Buah",
@@ -35,13 +35,13 @@ module.exports = {
 				id_users_customer: 3,
 				createdAt: new Date(),
 				updatedAt: new Date(),
-        deletedAt: null,
+				deletedAt: null,
 			},
 		]);
 	},
 
 	async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Address', null, {});
+		return queryInterface.bulkDelete("Address", null, {});
 	},
 };
 
