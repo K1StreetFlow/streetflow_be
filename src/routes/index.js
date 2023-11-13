@@ -5,6 +5,7 @@ const reviewProductsRoutes = require("./review_products.routes");
 const paymentRoutes = require("./payment.routes");
 const productsRoutes = require("./products.routes");
 const categoryProductsRoutes = require("./categoryProduct.routes");
+const photoProductRoutes = require("./photoProduct.routes");
 
 route.use("/", testingRoutes);
 route.use("/testing", testingRoutes);
@@ -13,4 +14,5 @@ route.use("/review_products", reviewProductsRoutes);
 route.use("/payments", paymentRoutes);
 route.use("/products", productsRoutes);
 route.use("/category_products", categoryProductsRoutes);
+route.use("/photo_products", photoProductRoutes);
 module.exports = route;

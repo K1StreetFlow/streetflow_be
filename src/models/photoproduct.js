@@ -1,12 +1,13 @@
-"use strict";
-const { Model } = require("sequelize");
+// models/photoProduct.js
+const { Model, DataTypes } = require("sequelize");
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
   class PhotoProduct extends Model {
     static associate(models) {
       PhotoProduct.hasMany(models.Product, { foreignKey: "id_photo_product" });
     }
   }
+
   PhotoProduct.init(
     {
       photo_product: DataTypes.STRING,
@@ -18,5 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
+
   return PhotoProduct;
 };
