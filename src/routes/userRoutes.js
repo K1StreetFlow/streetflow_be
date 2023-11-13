@@ -1,6 +1,6 @@
 const express = require("express");
 const { getAllUsers, getUserById, editUser, deleteUser } = require("../controllers/userController");
-const { verifyTokenCookieAdmin, verifyTokenCookieCustomer } = require("../middleware/verifyToken");
+const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
 const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const upload = require("../middleware/multerConfig");
 const router = express.Router();
