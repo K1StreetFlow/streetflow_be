@@ -1,11 +1,19 @@
-const { Users_customer } = require("../models");
+const { Users_customer, Address } = require("../models");
 const path = require("path");
 const bcrypt = require("bcrypt");
 
 async function getAllUsers(req, res) {
   // Implementasi logika mendapatkan semua pengguna
   try {
-    const users = await Users_customer.findAll();
+    const users = await Users_customer.findAll({
+      include: [
+        {
+          model: Address,
+          as: "addresses",
+          attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
+        },
+      ],
+    });
     res.json(users);
   } catch (error) {
     console.error(error);
@@ -17,7 +25,14 @@ async function getUserById(req, res) {
   // Implementasi logika mendapatkan pengguna berdasarkan ID
   try {
     const { id } = req.params;
-    const user = await Users_customer.findByPk(id);
+    const user = await Users_customer.findByPk(id, {
+      include: [
+        {
+          model: Address,
+          as: "addresses",
+        },
+      ],
+    });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -33,10 +48,21 @@ async function getUserById(req, res) {
 const editUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email, password, retypePassword, fullname, gender, birth_date, phone_number } = req.body;
+    const {
+      username,
+      email,
+      password,
+      retypePassword,
+      fullname,
+      gender,
+      birth_date,
+      phone_number,
+    } = req.body;
 
     // Check if the user with the provided ID exists
-    const existingUser = await Users_customer.findByPk(id, { attributes: { exclude: ["password", "deletedAt"] } });
+    const existingUser = await Users_customer.findByPk(id, {
+      attributes: { exclude: ["password", "deletedAt"] },
+    });
 
     if (!existingUser) {
       return res.status(404).json({ message: "User not found" });
@@ -50,7 +76,9 @@ const editUser = async (req, res) => {
     existingUser.birth_date = birth_date || existingUser.birth_date;
     existingUser.phone_number = phone_number || existingUser.phone_number;
 
-    const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
+    const profileImage = req.file
+      ? path.join("uploads", req.file.filename)
+      : null;
 
     if (profileImage) {
       // Update the profile image if a new one is uploaded
