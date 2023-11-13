@@ -25,7 +25,7 @@ async function login(req, res) {
     // Generate token JWT
     const token = jwt.sign({ userId: user.id, username: user.username, email: user.email, photo: user.upload_photo }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("tokenAdmin", token, { httpOnly: true });
     // Kirim respons dengan token
     res.status(200).json({ token });
   } catch (error) {
@@ -37,7 +37,7 @@ async function login(req, res) {
 async function logout(req, res) {
   try {
     // Clear the 'token' cookie
-    res.clearCookie("token", { httpOnly: true });
+    res.clearCookie("tokenAdmin", { httpOnly: true });
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     console.error(error);
