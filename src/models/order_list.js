@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
 			// 	foreignKey: "id_order_list",
 			// 	as: "review_products",
 			// });
-			// Order_list.hasMany(models.Nomor_resi, {
-			// 	foreignKey: "id_order_list",
-			// 	as: "nomor_resi",
-			// });
+			Order_list.hasMany(models.Nomor_resi, {
+				foreignKey: "id_order_list",
+				as: "nomor_resi",
+			});
 		}
 	}
 	Order_list.init(

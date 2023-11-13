@@ -17,10 +17,10 @@ module.exports = {
       },
       id_nomer_resi: {
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: "Nomor_resi",
-        //   key: "id",
-        // }
+        references: {
+          model: "Nomor_resi",
+          key: "id",
+        }
       },
       createdAt: {
         allowNull: false,

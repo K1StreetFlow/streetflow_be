@@ -3,18 +3,16 @@ const { Order_list, Payment, Cart_details } = require("../models");
 const getAllOrder = async (req, res) => {
 	try {
 		const orderList = await Order_list.findAll({
-			include: [
-				{
-					model: Payment,
-					as: "payment",
-					attributes: ["id"],
-				},
-				{
-					model: Cart_details,
-					as: "cart_details",
-					attributes: ["id"],
-				},
-			],
+			// include: [
+			// 	{
+			// 		model: Payment,
+			// 		as: "payment",
+			// 	},
+			// 	{
+			// 		model: Cart_details,
+			// 		as: "cart_details",
+			// 	},
+			// ],
 		});
 
 		if (orderList) {
@@ -38,18 +36,18 @@ const getOrderById = async (req, res) => {
 			where: {
 				id,
 			},
-			include: [
-				{
-					model: Payment,
-					as: "payment",
-					attributes: ["id"],
-				},
-				{
-					model: Cart_details,
-					as: "cart_details",
-					attributes: ["id"],
-				},
-			],
+			// include: [
+			// 	{
+			// 		model: Payment,
+			// 		as: "payment",
+			// 		attributes: ["id"],
+			// 	},
+			// 	{
+			// 		model: Cart_details,
+			// 		as: "cart_details",
+			// 		attributes: ["id"],
+			// 	},
+			// ],
 		});
 
 		if (orderList) {
@@ -124,4 +122,10 @@ const deleteOrder = async (req, res) => {
 	}
 };
 
-module.exports = { getAllOrder, getOrderById, createOrder, updateOrder, deleteOrder };
+module.exports = {
+	getAllOrder,
+	getOrderById,
+	createOrder,
+	updateOrder,
+	deleteOrder,
+};

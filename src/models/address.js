@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
 			// 	foreignKey: "id_users_customer",
 			// 	as: "users_customer",
 			// });
-			// Address.hasMany(models.Nomor_resi, {
-			// 	foreignKey: "id_address",
-			// 	as: "nomor_resi",
-			// });
+			Address.hasMany(models.Nomor_resi, {
+				foreignKey: "id_address",
+				as: "nomor_resi",
+			});
 		}
 	}
 	Address.init(

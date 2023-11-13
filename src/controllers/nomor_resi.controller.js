@@ -7,12 +7,10 @@ const getAllNomor_resi = async (req, res) => {
 				{
 					model: Order_list,
 					as: "order_list",
-					attributes: ["id"],
 				},
 				{
 					model: Address,
 					as: "address",
-					attributes: ["id"],
 				},
 			],
 		});

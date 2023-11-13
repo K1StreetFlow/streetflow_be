@@ -1,4 +1,4 @@
-const { Shipping, Nomor_resi } = require("../models");
+const { Shipping, Nomor_resi, Order_list, Address } = require("../models");
 
 const getAllShipping = async (req, res) => {
 	try {
@@ -7,7 +7,16 @@ const getAllShipping = async (req, res) => {
 				{
 					model: Nomor_resi,
 					as: "nomor_resi",
-					attributes: ["id"],
+					include: [
+						{
+							model: Order_list,
+							as: "order_list",
+						},
+						{
+							model: Address,
+							as: "address",
+						},
+					],
 				},
 			],
 		});
