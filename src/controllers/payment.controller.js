@@ -1,4 +1,5 @@
-const { Payment, Cart, User } = require("../models");
+const { Payment, Cart, User_customer } = require("../models");
+const midtransClient = require("midtrans-client");
 
 const paymentController = {
   getAllPayments: async (req, res) => {
@@ -11,12 +12,12 @@ const paymentController = {
           {
             model: Cart,
             as: "cart",
-            include: [
-              {
-                model: User,
-                as: "user",
-              },
-            ],
+            // include: [
+            //   {
+            //     model: User,
+            //     as: "user",
+            //   },
+            // ],
           },
         ],
       });
@@ -37,12 +38,12 @@ const paymentController = {
           {
             model: Cart,
             as: "cart",
-            include: [
-              {
-                model: User,
-                as: "user",
-              },
-            ],
+            // include: [
+            //   {
+            //     model: User,
+            //     as: "user",
+            //   },
+            // ],
           },
         ],
       });
@@ -64,6 +65,37 @@ const paymentController = {
         data: payment,
       });
     } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  processPayment: async (req, res) => {
+    try {
+      const { fullname, email, codePayment, total } = req.body;
+      const snap = new midtransClient.Snap({
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_SERVER_KEY,
+      });
+      const parameter = {
+        transaction_details: {
+          order_id: codePayment,
+          gross_amount: total,
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          first_name: fullname,
+          email: email,
+        },
+      };
+      const transaction = await snap.createTransaction(parameter);
+      res.status(201).json({
+        message: "Create payment successfull",
+        token: transaction.token,
+      });
+    } catch (error) {
+      console.log(error);
       res.status(500).json({ error: "Internal server error" });
     }
   },

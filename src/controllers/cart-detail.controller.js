@@ -16,7 +16,7 @@ const cardDetailController = {
         ],
       });
       res.status(200).json({
-        message: "Get all carts",
+        message: "Get all cart details",
         data: cart_details,
       });
     } catch (error) {
@@ -27,9 +27,20 @@ const cardDetailController = {
   getCartDetailById: async (req, res) => {
     try {
       const { id } = req.params;
-      const cart_detail = await Cart_detail.findByPk(id);
+      const cart_detail = await Cart_detail.findByPk(id, {
+        include: [
+          {
+            model: Cart,
+            as: "cart",
+          },
+          // {
+          //   model: Product,
+          //   as: "product",
+          // }
+        ],
+      });
       res.status(200).json({
-        message: `Get cart by id ${id}`,
+        message: `Get cart detail by id ${id}`,
         data: cart_detail,
       });
     } catch (error) {
@@ -58,8 +69,7 @@ const cardDetailController = {
         },
       });
       res.status(200).json({
-        message: `Edit cart by id ${id}`,
-        data: cart_detail,
+        message: `Cart detail updated successfully`,
       });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
@@ -74,8 +84,7 @@ const cardDetailController = {
         },
       });
       res.status(200).json({
-        message: `Delete cart by id ${id}`,
-        data: cart_detail,
+        message: `Cart detail deleted successfully`,
       });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });

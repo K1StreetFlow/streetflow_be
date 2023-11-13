@@ -1,15 +1,15 @@
-const { Cart, User, Cart_detail } = require("../models");
+const { Cart, User_customer, Cart_detail } = require("../models");
 
 const cartController = {
   getAllCarts: async (req, res) => {
     try {
       const carts = await Cart.findAll({
-        include: [
-          {
-            model: User,
-            as: "user",
-          },
-        ],
+        // include: [
+        //   {
+        //     model: User,
+        //     as: "user",
+        //   },
+        // ],
       });
       res.status(200).json({
         message: "Get all carts",
@@ -24,12 +24,12 @@ const cartController = {
     try {
       const { id } = req.params;
       const cart = await Cart.findByPk(id, {
-        include: [
-          {
-            model: User,
-            as: "user",
-          },
-        ],
+        // include: [
+        //   {
+        //     model: User,
+        //     as: "user",
+        //   },
+        // ],
       });
       res.status(200).json({
         message: `Get cart by id ${id}`,
@@ -44,7 +44,7 @@ const cartController = {
       const { body } = req;
       const cart = await Cart.create(body);
       res.status(201).json({
-        message: "Create new cart",
+        message: "Cart created successfully",
         data: cart,
       });
     } catch (error) {
@@ -61,8 +61,7 @@ const cartController = {
         },
       });
       res.status(200).json({
-        message: `Edit cart by id ${id}`,
-        data: cart,
+        message: `Cart Successfully updated with id ${id}`,
       });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
@@ -77,8 +76,7 @@ const cartController = {
         },
       });
       res.status(200).json({
-        message: `Delete cart by id ${id}`,
-        data: cart,
+        message: `Cart Successfully deleted with id ${id}`,
       });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
