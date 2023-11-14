@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "users_customer",
       });
 
-      Review_products.belongsTo(models.Products, {
+      Review_products.belongsTo(models.Product, {
         foreignKey: "id_products",
         as: "products",
       });
