@@ -12,6 +12,8 @@ const upload = require("../middleware/multer-config.js");
 const { isAdminOrSelf } = require("../middleware/adminMiddleware.js");
 
 router.get("/", getAllPhotos);
+// pagination
+// http://localhost:8000/api/photo_products?page=1
 
 // Get photo by ID
 router.get("/:id", getPhotoById);
