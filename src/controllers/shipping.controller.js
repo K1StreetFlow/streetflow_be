@@ -1,22 +1,16 @@
-const { Shipping, Nomor_resi, Order_list, Address } = require("../models");
+const { Shipping, Order_list, Address } = require("../models");
 
 const getAllShipping = async (req, res) => {
 	try {
 		const shipping = await Shipping.findAll({
 			include: [
 				{
-					model: Nomor_resi,
-					as: "nomor_resi",
-					include: [
-						{
-							model: Order_list,
-							as: "order_list",
-						},
-						{
-							model: Address,
-							as: "address",
-						},
-					],
+					model: Order_list,
+					as: "order_list",
+				},
+				{
+					model: Address,
+					as: "address",
 				},
 			],
 		});
@@ -44,9 +38,12 @@ const getShippingById = async (req, res) => {
 			},
 			include: [
 				{
-					model: Nomor_resi,
-					as: "nomor_resi",
-					attributes: ["id"],
+					model: Order_list,
+					as: "order_list",
+				},
+				{
+					model: Address,
+					as: "address",
 				},
 			],
 		});
