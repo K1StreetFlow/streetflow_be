@@ -18,7 +18,7 @@ router.get("/:id", getPhotoById);
 router.post("/upload", upload.single("photo_product"), uploadPhoto);
 
 // Handle photo update
-router.put("/:id", upload.single("photo_product"), editPhoto);
+router.put("/upload/:id", upload.single("photo_product"), editPhoto);
 
 // Handle photo deletion
 router.delete("/:id", deletePhoto);
