@@ -86,7 +86,6 @@ const createReview = async (req, res) => {
     try {
         const { id_products, id_users_customer, message_review, number_review, id_order_list } = req.body;
 
-        
         // Query the Order_list model
         const order = await Order_list.findOne({
             where: { id: id_order_list }
@@ -115,91 +114,75 @@ const createReview = async (req, res) => {
             return res.status(400).json({ message: "Review for this product already exists" });
         }
 
-        // Use middleware multer to upload files
-        // upload(req, res, async (err) => {
-        //     if (err) {
-        //         console.error(err);
-        //         return res.status(500).json({ message: "Error uploading photo" });
-        //     }
+        // Create a new review
+        const reviewProducts = await Review_products.create({
+            id_users_customer,
+            id_products,
+            id_order_list,
+            message_review,
+            number_review
+        });
 
-            // Create a new review
-            const reviewProducts = await Review_products.create({
-                id_users_customer,
-                id_products,
-                id_order_list,
-                message_review,
-                number_review
+        if (reviewProducts) {
+            res.status(201).json({
+                message: "Create Review Products Successfully",
+                data: reviewProducts
             });
-
-            if (reviewProducts) {
-                res.status(201).json({
-                    message: "Create Review Products Successfully",
-                    data: reviewProducts
-                });
-            } else {
-                res.status(400).json({
-                    message: "Create Review Products Failed"
-                });
-            }
-        // });
+        } else {
+            res.status(400).json({
+                message: "Create Review Products Failed"
+            });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal Server Error " });
     }
 };
 
-
 const updateReview = async (req, res) => {
     try {
         const { id } = req.params;
         const { message_review, number_review } = req.body;
 
-        // Cek apakah review sudah ada
+        // Check if the review exists
         const review = await Review_products.findByPk(id);
 
         if (!review) {
             return res.status(404).json({ message: "Review not found" });
         }
 
+        // Log the existing values before the update
+        console.log("Existing Review:", review.get({ plain: true }));
+
         // Update review attributes if provided in the request body
         if (message_review !== undefined) {
             review.message_review = message_review;
         }
+        
 
         if (number_review !== undefined) {
             review.number_review = number_review;
         }
 
-        // Menggunakan middleware multer untuk mengunggah file
-        upload(req, res, async (err) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: "Error uploading file" });
-            }
+        console.info("Message Review: ", message_review);
+        console.info("Number Review: ", number_review);
 
-            // // Check if a file is uploaded and update the photo_review
-            // if (req.file) {
-            //     review.photo_review = req.file.buffer;
-            // }
+        // Save the updated review
+        await review.save();
 
-            try {
-                // Save the updated review
-                await review.save();
+        // Log the updated values
+        console.log("Updated Review:", review.get({ plain: true }));
 
-                res.status(200).json({
-                    message: "Update Review Successfully",
-                    data: review,
-                });
-            } catch (error) {
-                console.error(error);
-                res.status(500).json({ message: "Internal Server Error" });
-            }
+        res.status(200).json({
+            message: "Update Review Successfully",
+            data: review,
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 
 
 

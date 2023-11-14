@@ -1,9 +1,9 @@
 const route = require("express").Router();
 
-const authAdminRoutes = require("./authAdminRoutes");
-const adminRoutes = require("./adminRoutes");
-const authUserRoutes = require("./authUserRoutes");
-const userRoutes = require("./userRoutes");
+const authAdminRoutes = require("./authAdminRoutes.routes");
+const adminRoutes = require("./adminRoutes.routes");
+const authUserRoutes = require("./authUserRoutes.routes");
+const userRoutes = require("./userRoutes.routes");
 const addressRoutes = require("./address.routes");
 const productsRoutes = require("./products.routes");
 const categoryProductsRoutes = require("./categoryProduct.routes");
@@ -12,7 +12,6 @@ const paymentRoutes = require("./payment.routes");
 const cartRoutes = require("./cart.routes");
 const cartDetailRoutes = require("./cart-detail.routes");
 const orderListRoutes = require("./order_list.routes");
-const nomorResiRoutes = require("./nomor_resi.routes");
 const shippingRoutes = require("./shipping.routes");
 const reviewProductsRoutes = require('./review_products.routes');
 
@@ -36,7 +35,6 @@ route.use("/carts", cartRoutes);
 route.use("/cart-details", cartDetailRoutes);
 
 route.use("/order", orderListRoutes);
-route.use("/nomor_resi", nomorResiRoutes);
 route.use("/shipping", shippingRoutes);
 route.use("/review-products", reviewProductsRoutes);
 

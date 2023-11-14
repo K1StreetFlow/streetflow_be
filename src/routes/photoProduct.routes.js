@@ -8,7 +8,7 @@ const {
   editPhoto,
   deletePhoto,
 } = require("../controllers/photoProduct.controller");
-const upload = require("../../multer-config.js");
+const upload = require("../middleware/multer-config.js");
 
 router.get("/", getAllPhotos);
 

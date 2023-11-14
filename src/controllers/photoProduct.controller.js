@@ -1,5 +1,5 @@
 const { PhotoProduct } = require("../models");
-const upload = require("../../multer-config.js");
+const upload = require("../middleware/multer-config.js");
 
 const getAllPhotos = async (req, res) => {
   try {
