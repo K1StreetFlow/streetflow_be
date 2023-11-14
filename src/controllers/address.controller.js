@@ -64,16 +64,17 @@ const updateAddress = async (req, res) => {
 	try {
 		const { body } = req;
 		const { id } = req.params;
-		const address = await Address.update(body, {
+		const [updated] = await Address.update(body, {
 			where: {
 				id,
 			},
 		});
 
-		if (address) {
+		if (updated) {
+			const updatedAddress = await Address.findOne({ where: { id } });
 			res.status(200).json({
 				message: "Update Address Successfully",
-				data: address,
+				data: updatedAddress,
 			});
 		} else {
 			res.status(404).json({ message: "Update Address Failed" });

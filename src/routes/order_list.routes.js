@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get("/", getAllOrder);
 router.get("/:id", getOrderById);
-router.get("/update/:id", updateOrder);
-router.get("/create", createOrder);
-router.get("/delete/:id", deleteOrder);
+router.put("/update/:id", updateOrder);
+router.post("/create", createOrder);
+router.delete("/delete/:id", deleteOrder);
 
 module.exports = router;
