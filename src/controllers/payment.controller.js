@@ -5,9 +5,6 @@ const paymentController = {
   getAllPayments: async (req, res) => {
     try {
       const payments = await Payment.findAll({
-        attributes: {
-          exclude: ["id_cart"],
-        },
         include: [
           {
             model: Cart,
@@ -96,6 +93,34 @@ const paymentController = {
       });
     } catch (error) {
       console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  updatePayment: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status_payment, date_payment, method_payment, id_cart } =
+        req.body;
+
+      await Payment.update(
+        {
+          status_payment,
+          date_payment,
+          method_payment,
+          id_cart,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      res.status(200).json({
+        message: `Update payment by id ${id} successfull`,
+        data: req.body,
+      });
+    } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
   },
