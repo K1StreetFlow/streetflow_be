@@ -1,4 +1,3 @@
-// routes/products.routes.js
 const express = require("express");
 const router = express.Router();
 const {
@@ -9,11 +8,17 @@ const {
   deleteProduct,
 } = require("../controllers/products.controller");
 
+const { isAdminOrSelf } = require("../middleware/adminMiddleware.js");
+
 // CRUD routes
 router.get("/", getAllProducts);
+// AKSES PAGINATION SAYA BIKIN 10 DATA YANG TAMPIL SETIAP PAGE
+// http://localhost:8000/api/products?page=1
 router.get("/:id", getProductById);
-router.post("/", createProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.post("/", isAdminOrSelf, createProduct); // Use isAdminOrSelf middleware for createProduct
+router.put("/:id", isAdminOrSelf, updateProduct); // Use isAdminOrSelf middleware for updateProduct
+router.delete("/:id", isAdminOrSelf, deleteProduct); // Use isAdminOrSelf middleware for deleteProduct
+
+
 
 module.exports = router;

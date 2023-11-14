@@ -8,13 +8,13 @@ const {
     deleteCategory,
 } = require("../controllers/categoryProductController");
 
+const { isAdminOrSelf } = require("../middleware/adminMiddleware.js");
+
 // CRUD routes
 router.get("/", getAllCategories);
-router.get("/:categoryId", getCategoryById);
-router.post("/", createCategory);
-router.put("/:categoryId", updateCategory);
-router.delete("/:categoryId", deleteCategory);
+router.get("/:id", getCategoryById);
+router.post("/", isAdminOrSelf, createCategory);
+router.put("/:id", isAdminOrSelf, updateCategory);
+router.delete("/:id", isAdminOrSelf, deleteCategory);
 
 module.exports = router;
-
-  

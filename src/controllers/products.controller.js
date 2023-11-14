@@ -1,9 +1,14 @@
 // controllers/products.controller.js
 const { Product, CategoryProduct, PhotoProduct } = require("../models");
 
+const ITEMS_PER_PAGE = 10;
+
 const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.findAll({
+    const page = req.query.page || 1; // Get page number from query parameter or default to 1
+    const offset = (page - 1) * ITEMS_PER_PAGE;
+
+    const products = await Product.findAndCountAll({
       include: [
         {
           model: CategoryProduct,
@@ -16,8 +21,17 @@ const getAllProducts = async (req, res) => {
           attributes: ["photo_product"],
         },
       ],
+      limit: ITEMS_PER_PAGE,
+      offset: offset,
     });
-    res.json(products);
+
+    const totalPages = Math.ceil(products.count / ITEMS_PER_PAGE);
+
+    res.json({
+      products: products.rows,
+      totalPages: totalPages,
+      currentPage: parseInt(page),
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

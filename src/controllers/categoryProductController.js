@@ -1,10 +1,25 @@
 // controllers/categoryProductController.js
 const { CategoryProduct, Product } = require("../models");
 
+const ITEMS_PER_PAGE = 5;
+
 const getAllCategories = async (req, res) => {
   try {
-    const categories = await CategoryProduct.findAll();
-    res.json(categories);
+    const page = req.query.page || 1; // Get page number from query parameter or default to 1
+    const offset = (page - 1) * ITEMS_PER_PAGE;
+
+    const categories = await CategoryProduct.findAndCountAll({
+      limit: ITEMS_PER_PAGE,
+      offset: offset,
+    });
+
+    const totalPages = Math.ceil(categories.count / ITEMS_PER_PAGE);
+
+    res.json({
+      categories: categories.rows,
+      totalPages: totalPages,
+      currentPage: parseInt(page),
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -9,19 +9,20 @@ const {
   deletePhoto,
 } = require("../controllers/photoProduct.controller");
 const upload = require("../middleware/multer-config.js");
+const { isAdminOrSelf } = require("../middleware/adminMiddleware.js");
 
 router.get("/", getAllPhotos);
 
 // Get photo by ID
 router.get("/:id", getPhotoById);
 // Handle the photo upload
-router.post("/upload", upload.single("photo_product"), uploadPhoto);
+router.post("/upload", isAdminOrSelf, upload.single("photo_product"), uploadPhoto);
 
 // Handle photo update
-router.put("/upload/:id", upload.single("photo_product"), editPhoto);
+router.put("/upload/:id", isAdminOrSelf, upload.single("photo_product"), editPhoto);
 
 // Handle photo deletion
-router.delete("/:id", deletePhoto);
+router.delete("/:id", isAdminOrSelf, deletePhoto);
 
 // Serve static files from the specified directory
 router.get("/view/:filename", (req, res) => {
