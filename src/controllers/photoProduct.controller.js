@@ -1,9 +1,11 @@
 const { PhotoProduct } = require("../models");
 const upload = require("../middleware/multer-config.js");
 
+
+
 const ITEMS_PER_PAGE = 10;
 
-const getAllPhotos = async (req, res) => {
+const getAllPhotosWithPagination = async (req, res) => {
   try {
     const page = req.query.page || 1; // Get page number from query parameter or default to 1
     const offset = (page - 1) * ITEMS_PER_PAGE;
@@ -25,6 +27,17 @@ const getAllPhotos = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const getAllPhotos = async (req, res) => {
+  try {
+    const photos = await PhotoProduct.findAll();
+    res.json(photos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const getPhotoById = async (req, res) => {
   const { id } = req.params;
 
@@ -98,6 +111,7 @@ const deletePhoto = async (req, res) => {
 module.exports = {
   getAllPhotos,
   getPhotoById,
+  getAllPhotosWithPagination,
   uploadPhoto,
   editPhoto,
   deletePhoto,

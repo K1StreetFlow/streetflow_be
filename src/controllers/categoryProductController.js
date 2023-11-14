@@ -3,7 +3,7 @@ const { CategoryProduct, Product } = require("../models");
 
 const ITEMS_PER_PAGE = 5;
 
-const getAllCategories = async (req, res) => {
+const getAllCategoriesWithPagination = async (req, res) => {
   try {
     const page = req.query.page || 1; // Get page number from query parameter or default to 1
     const offset = (page - 1) * ITEMS_PER_PAGE;
@@ -26,6 +26,16 @@ const getAllCategories = async (req, res) => {
   }
 };
 
+const getAllCategories = async (req, res) => {
+  try {
+    const categories = await CategoryProduct.findAll();
+
+    res.json(categories);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 const getCategoryById = async (req, res) => {
   const { categoryId } = req.params;
 
@@ -95,6 +105,7 @@ const deleteCategory = async (req, res) => {
 };
 
 module.exports = {
+  getAllCategoriesWithPagination,
   getAllCategories,
   getCategoryById,
   createCategory,

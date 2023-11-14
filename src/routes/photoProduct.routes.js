@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllPhotos,
+  getAllPhotosWithPagination,  // Sesuaikan nama fungsi dengan yang ada di controller
   getPhotoById,
   uploadPhoto,
   editPhoto,
@@ -13,7 +14,7 @@ const { isAdminOrSelf } = require("../middleware/adminMiddleware.js");
 
 router.get("/", getAllPhotos);
 // pagination
-// http://localhost:8000/api/photo_products?page=1
+router.get("/pagination", getAllPhotosWithPagination);  // Sesuaikan nama fungsi dengan yang ada di controller
 
 // Get photo by ID
 router.get("/:id", getPhotoById);
