@@ -5,6 +5,11 @@ const adminRoutes = require("./adminRoutes");
 const authUserRoutes = require("./authUserRoutes");
 const userRoutes = require("./userRoutes");
 const addressRoutes = require("./address.routes");
+const productsRoutes = require("./products.routes");
+const categoryProductsRoutes = require("./categoryProduct.routes");
+const photoProductRoutes = require("./photoProduct.routes");
+
+
 // Authentication routes come first
 route.use("/admin/auth", authAdminRoutes);
 route.use("/user/auth", authUserRoutes);
@@ -14,5 +19,9 @@ route.use("/admin", adminRoutes);
 route.use("/user", userRoutes);
 
 route.use("/addresses", addressRoutes);
+
+route.use("/products", productsRoutes);
+route.use("/category_products", categoryProductsRoutes);
+route.use("/photo_products", photoProductRoutes);
 
 module.exports = route;
