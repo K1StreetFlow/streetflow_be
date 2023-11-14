@@ -11,12 +11,10 @@ module.exports = {
       },
       id_users_customer: {
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
         references: {
           model: "Users_customer",
-          key: "id_users_customer"
+          key: "id"
         }
       },
       id_products: {
@@ -24,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "Products",
-          key: "id_products",
+          key: "id",
         }
       },
       id_order_list: {
@@ -32,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "Order_list",
-          key: "id_order_list",
+          key: "id",
         }
       },
       message_review: {
