@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
 			// 	foreignKey: "id_order_list",
 			// 	as: "review_products",
 			// });
-			Order_list.hasMany(models.Nomor_resi, {
+			Order_list.hasMany(models.Shipping, {
 				foreignKey: "id_order_list",
-				as: "nomor_resi",
+				as: "shipping",
 			});
 		}
 	}
