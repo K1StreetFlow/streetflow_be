@@ -14,6 +14,8 @@ const cartDetailRoutes = require("./cart-detail.routes");
 const orderListRoutes = require("./order_list.routes");
 const nomorResiRoutes = require("./nomor_resi.routes");
 const shippingRoutes = require("./shipping.routes");
+const reviewProductsRoutes = require('./review_products.routes');
+
 
 // Authentication routes come first
 route.use("/admin/auth", authAdminRoutes);
@@ -32,5 +34,10 @@ route.use("/photo_products", photoProductRoutes);
 route.use("/payments", paymentRoutes);
 route.use("/carts", cartRoutes);
 route.use("/cart-details", cartDetailRoutes);
+
+route.use("/order", orderListRoutes);
+route.use("/nomor_resi", nomorResiRoutes);
+route.use("/shipping", shippingRoutes);
+route.use("/review-products", reviewProductsRoutes);
 
 module.exports = route;
