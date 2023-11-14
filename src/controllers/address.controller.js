@@ -1,117 +1,87 @@
-const { Address } = require("../models");
+const { Address, Users_customer } = require("../models");
 
-const getAllAddress = async (req, res) => {
-	try {
-		const address = await Address.findAll();
-
-		if (address) {
-			res.status(200).json({
-				message: "Get All Address Successfully",
-				data: address,
+const addressController = {
+	getAllAddresses: async (req, res) => {
+		try {
+			const addresses = await Address.findAll({
+				include: [
+					{
+						model: Users_customer,
+						as: "users_customer",
+						attributes: {
+							exclude: ["password"],
+						},
+					},
+				],
 			});
-		} else {
-			res.status(404).json({ message: "Get All Address Failed" });
+			res.json(addresses);
+		} catch (error) {
+			console.error(error);
+			res.status(500).json(error);
 		}
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
-};
+	},
+	getAddressById: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const address = await Address.findByPk(id);
 
-const getAddressById = async (req, res) => {
-	try {
-		const { id } = req.params;
-		const address = await Address.findOne({
-			where: {
-				id,
-			},
-		});
+			if (!address) {
+				return res.status(404).json({ message: "Address not found" });
+			}
 
-		if (address) {
-			res.status(200).json({
-				message: "Get Address Successfully",
-				data: address,
+			res.json(address);
+		} catch (error) {
+			console.error(error);
+			res.status(500).json(error);
+		}
+	},
+	createAddress: async (req, res) => {
+		try {
+			const newAddress = await Address.create(req.body);
+			res.status(201).json({ message: "Address created successfully", address: newAddress });
+		} catch (error) {
+			console.error(error);
+			res.status(500).json(error);
+		}
+	},
+	updateAddressById: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const [updated] = await Address.update(req.body, {
+				where: { id },
 			});
-		} else {
-			res.status(404).json({ message: "Get Address Failed" });
-		}
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
-};
 
-const createAddress = async (req, res) => {
-	try {
-		const { body } = req;
-		const address = await Address.create(body);
+			if (!updated) {
+				return res.status(404).json({ message: "Address not found" });
+			}
 
-		if (address) {
+			const updatedAddress = await Address.findByPk(id);
 			res.status(200).json({
-				message: "Create Address Successfully",
-				data: address,
+				message: "Address updated successfully",
+				address: updatedAddress,
 			});
-		} else {
-			res.status(404).json({ message: "Create Address Failed" });
+		} catch (error) {
+			console.error(error);
+			res.status(500).json(error);
 		}
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
-};
-
-const updateAddress = async (req, res) => {
-	try {
-		const { body } = req;
-		const { id } = req.params;
-		const [updated] = await Address.update(body, {
-			where: {
-				id,
-			},
-		});
-
-		if (updated) {
-			const updatedAddress = await Address.findOne({ where: { id } });
-			res.status(200).json({
-				message: "Update Address Successfully",
-				data: updatedAddress,
+	},
+	deleteAddressById: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const deleted = await Address.destroy({
+				where: { id },
 			});
-		} else {
-			res.status(404).json({ message: "Update Address Failed" });
+
+			if (!deleted) {
+				return res.status(404).json({ message: "Address not found" });
+			}
+
+			res.status(204).json({ message: "Address deleted successfully" });
+		} catch (error) {
+			console.error(error);
+			res.status(500).json(error);
 		}
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
+	},
 };
 
-const deleteAddress = async (req, res) => {
-	try {
-		const { id } = req.params;
-		const address = await Address.destroy({
-			where: {
-				id,
-			},
-		});
-
-		if (address) {
-			res.status(200).json({
-				message: "Delete Address Successfully",
-				data: address,
-			});
-		} else {
-			res.status(404).json({ message: "Delete Address Failed" });
-		}
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
-};
-
-module.exports = {
-	getAllAddress,
-	getAddressById,
-	createAddress,
-	updateAddress,
-	deleteAddress,
-};
+module.exports = addressController;

@@ -1,17 +1,13 @@
 const express = require("express");
+const addressController = require("../controllers/address.controller");
+const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
+const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const router = express.Router();
-const {
-	getAllAddress,
-	getAddressById,
-	createAddress,
-	updateAddress,
-	deleteAddress,
-} = require("../controllers/address.controller");
 
-router.get("/", getAllAddress);
-router.get("/:id", getAddressById);
-router.post("/create", createAddress);
-router.put("/update/:id", updateAddress);
-router.delete("/delete/:id", deleteAddress);
+router.get("/", verifyTokenCookieAdmin, addressController.getAllAddresses);
+router.get("/:id", isAdminOrSelf, addressController.getAddressById);
+router.post("/", isAdminOrSelf, addressController.createAddress);
+router.put("/:id", isAdminOrSelf, addressController.updateAddressById);
+router.delete("/:id", isAdminOrSelf, addressController.deleteAddressById);
 
 module.exports = router;

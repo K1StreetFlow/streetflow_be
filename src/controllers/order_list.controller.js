@@ -1,18 +1,18 @@
-const { Order_list, Payment, Cart_details } = require("../models");
+const { Order_list, Payment, Cart_detail } = require("../models");
 
 const getAllOrder = async (req, res) => {
 	try {
 		const orderList = await Order_list.findAll({
-			// include: [
-			// 	{
-			// 		model: Payment,
-			// 		as: "payment",
-			// 	},
-			// 	{
-			// 		model: Cart_details,
-			// 		as: "cart_details",
-			// 	},
-			// ],
+			include: [
+				{
+					model: Payment,
+					as: "payment",
+				},
+				{
+					model: Cart_detail,
+					as: "cart_details",
+				},
+			],
 		});
 
 		if (orderList) {
