@@ -4,5 +4,5 @@ const reviewProductsRoutes = require('./review_products.routes');
 
 
 route.use("/testing", testingRoutes);
-route.use("/review_products", reviewProductsRoutes);
+route.use("/review-products", reviewProductsRoutes);
 module.exports = route;
