@@ -11,6 +11,9 @@ const photoProductRoutes = require("./photoProduct.routes");
 const paymentRoutes = require("./payment.routes");
 const cartRoutes = require("./cart.routes");
 const cartDetailRoutes = require("./cart-detail.routes");
+const orderListRoutes = require("./order_list.routes");
+const nomorResiRoutes = require("./nomor_resi.routes");
+const shippingRoutes = require("./shipping.routes");
 
 // Authentication routes come first
 route.use("/admin/auth", authAdminRoutes);

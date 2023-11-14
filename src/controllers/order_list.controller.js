@@ -1,0 +1,131 @@
+const { Order_list, Payment, Cart_details } = require("../models");
+
+const getAllOrder = async (req, res) => {
+	try {
+		const orderList = await Order_list.findAll({
+			// include: [
+			// 	{
+			// 		model: Payment,
+			// 		as: "payment",
+			// 	},
+			// 	{
+			// 		model: Cart_details,
+			// 		as: "cart_details",
+			// 	},
+			// ],
+		});
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Get All Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Get All Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+const getOrderById = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const orderList = await Order_list.findOne({
+			where: {
+				id,
+			},
+			// include: [
+			// 	{
+			// 		model: Payment,
+			// 		as: "payment",
+			// 		attributes: ["id"],
+			// 	},
+			// 	{
+			// 		model: Cart_details,
+			// 		as: "cart_details",
+			// 		attributes: ["id"],
+			// 	},
+			// ],
+		});
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Get Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Get Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+const createOrder = async (req, res) => {
+	try {
+		const orderList = await Order_list.create(req.body);
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Create Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Create Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+const updateOrder = async (req, res) => {
+	try {
+		const orderList = await Order_list.update(req.body, {
+			where: { id: req.params.id },
+		});
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Update Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Update Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+const deleteOrder = async (req, res) => {
+	try {
+		const orderList = await Order_list.destroy({
+			where: { id: req.params.id },
+		});
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Delete Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Delete Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+module.exports = {
+	getAllOrder,
+	getOrderById,
+	createOrder,
+	updateOrder,
+	deleteOrder,
+};
