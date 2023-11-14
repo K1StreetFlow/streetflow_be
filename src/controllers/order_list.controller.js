@@ -1,18 +1,18 @@
-const { Order_list, Payment, Cart_details } = require("../models");
+const { Order_list, Payment, Cart_detail } = require("../models");
 
 const getAllOrder = async (req, res) => {
 	try {
 		const orderList = await Order_list.findAll({
-			// include: [
-			// 	{
-			// 		model: Payment,
-			// 		as: "payment",
-			// 	},
-			// 	{
-			// 		model: Cart_details,
-			// 		as: "cart_details",
-			// 	},
-			// ],
+			include: [
+				{
+					model: Payment,
+					as: "payment",
+				},
+				{
+					model: Cart_detail,
+					as: "cart_details",
+				},
+			],
 		});
 
 		if (orderList) {
@@ -84,21 +84,22 @@ const createOrder = async (req, res) => {
 
 const updateOrder = async (req, res) => {
 	try {
-		const orderList = await Order_list.update(req.body, {
+		const [updated] = await Order_list.update(req.body, {
 			where: { id: req.params.id },
 		});
 
-		if (orderList) {
-			res.status(200).json({
+		if (updated) {
+			const updatedOrder = await Order_list.findOne({ where: { id: req.params.id } });
+			return res.status(200).json({
 				message: "Update Order List Successfully",
-				data: orderList,
+				data: updatedOrder,
 			});
-		} else {
-			res.status(404).json({ message: "Update Order List Failed" });
 		}
+
+		return res.status(404).json({ message: "Update Order List Failed" });
 	} catch (error) {
 		console.error(error);
-		res.status(500).json({ message: "Internal Server Error" });
+		return res.status(500).json({ message: "Internal Server Error" });
 	}
 };
 

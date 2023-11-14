@@ -1,9 +1,6 @@
 const route = require("express").Router();
-
-const authAdminRoutes = require("./authAdminRoutes.routes");
-const adminRoutes = require("./adminRoutes.routes");
-const authUserRoutes = require("./authUserRoutes.routes");
-const userRoutes = require("./userRoutes.routes");
+const testingRoutes = require("./testing.routes");
+const orderListRoutes = require("./order_list.routes");
 const addressRoutes = require("./address.routes");
 const productsRoutes = require("./products.routes");
 const categoryProductsRoutes = require("./categoryProduct.routes");
@@ -35,6 +32,7 @@ route.use("/carts", cartRoutes);
 route.use("/cart-details", cartDetailRoutes);
 
 route.use("/order", orderListRoutes);
+route.use("/address", addressRoutes);
 route.use("/shipping", shippingRoutes);
 route.use("/review-products", reviewProductsRoutes);
 

@@ -3,18 +3,18 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Order_list extends Model {
 		static associate(models) {
-			// Order_list.belongsTo(models.Payment, {
-			// 	foreignKey: "id_payment",
-			// 	as: "payment",
-			// });
-			// Order_list.belongsTo(models.Cart_details, {
-			// 	foreignKey: "id_cart_details",
-			// 	as: "cart_details",
-			// });
-			// Order_list.hasMany(models.Reviews_products, {
-			// 	foreignKey: "id_order_list",
-			// 	as: "review_products",
-			// });
+			Order_list.belongsTo(models.Payment, {
+				foreignKey: "id_payment",
+				as: "payment",
+			});
+			Order_list.belongsTo(models.Cart_details, {
+				foreignKey: "id_cart_details",
+				as: "cart_details",
+			});
+			Order_list.hasMany(models.Reviews_products, {
+				foreignKey: "id_order_list",
+				as: "review_products",
+			});
 			Order_list.hasMany(models.Shipping, {
 				foreignKey: "id_order_list",
 				as: "shipping",
