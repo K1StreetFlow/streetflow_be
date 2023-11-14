@@ -15,37 +15,34 @@ module.exports = {
 
     await queryInterface.bulkInsert('Review_products', [
       {
-        id_review: 1,
-        id_product: 1,
         id_users_customer: 1,
+        id_products: 1,
+        id_order_list: 2,
         message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga sukses selalu',
         number_review: 5,
         photo_review: 'databaru.png',
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: null,
       },
       {
-        id_review: 2,
-        id_product: 2,
         id_users_customer: 2,
+        id_products: 2,
+        id_order_list: 3,
         message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga berkah selalu',
         number_review: 5,
         photo_review: 'databaru.jpg',
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: null
       },
       {
-        id_review: 3,
-        id_product: 3,
         id_users_customer: 3,
+        id_products: 3,
+        id_order_list: 4,
         message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga banyak order selalu',
-        number_review: 5,
+        number_review: 4,
         photo_review: 'databaru.jpeg',
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: null
       }
     ]);
   },
