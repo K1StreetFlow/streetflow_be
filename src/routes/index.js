@@ -1,5 +1,4 @@
 const route = require("express").Router();
-const testingRoutes = require("./testing.routes");
 
 const authAdminRoutes = require('./authAdminRoutes.routes'); 
 const authUserRoutes = require("./authUserRoutes.routes");
@@ -43,6 +42,6 @@ route.use("/order", orderListRoutes);
 route.use("/address", addressRoutes);
 route.use("/shipping", shippingRoutes);
 route.use("/review-products", reviewProductsRoutes);
-route.use("/review-products", photoReviewProductRoutes);
+route.use("/review-products-photo", photoReviewProductRoutes);
 
 module.exports = route;
