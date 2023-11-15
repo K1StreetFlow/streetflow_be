@@ -25,7 +25,7 @@ const getPhotoByReviewId = async (req, res) => {
     const { id } = req.params;
     try {
         const review = await Review_products.findByPk(id, {
-            attributes: ['id', 'photo_review'],
+            attributes: ['photo_review'],
         });
 
         if (!review) {
@@ -33,7 +33,6 @@ const getPhotoByReviewId = async (req, res) => {
         }
 
         res.status(200).json({
-            id: review.review.id,
             photo_review: review.photo_review
         });
     } catch (error) {
@@ -43,75 +42,109 @@ const getPhotoByReviewId = async (req, res) => {
 };
 
 const uploadPhotoReview = async (req, res) => {
-    const { id } = req.params;
     try {
-        const review = await Review_products.findByPk(id);
-        
-        if (!review) {
-            return res.status(404).json({ error: 'Review not found'});
+        const filePath = req.file.path; // Use req.file.path instead of req.file.filePath
+
+        const reviewId = req.params.id;
+
+        const existingReview = await Review_products.findByPk(reviewId);
+
+        if (!existingReview) {
+            return res.status(404).json({
+                success: false,
+                error: `Review with ID ${reviewId} not found`,
+            });
         }
 
-        if (!req.file) {
-            return res.status(400).json({ error: 'No photo uploaded'});
-        }
+        const uploadPhoto = await Review_products.update(
+            { photo_review: filePath },
+            { where: { id: reviewId }},
+        );
 
-        const photo = req.file.buffer.toString('base64');
-
-        const reviews = await review.update({ photo_review: photo });
-
+        console.info(uploadPhoto);
         res.status(200).json({
-            message: 'Photo Uploaded Successfully',
-            data: reviews
+            success: true,
+            message: `Upload Photo Successfully in ID: ${reviewId}`,
+            data: uploadPhoto
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ 
+            success: false, 
+            error: 'Internal Server Error'
+        });
     }
 };
+
 
 const updatePhotoReview = async (req, res) => {
-    const { id } = req.params;
-
     try {
-        const review = await Review_products.findByPk(id);
+        const filePath = req.file.path;
 
-        if (!review) {
-            return res.status(404).json({ error: 'Review not found'});
+        const reviewId = req.params.id;
+
+        const existingReview = await Review_products.findByPk(reviewId);
+
+        if (!existingReview) {
+            return res.status(404).json({
+                success: false,
+                error: `Review with ID ${reviewId} not found`,
+            });
         }
 
-        if (!req.file) {
-            return res.status(400).json({ error: 'No photo uploaded'});
-        }
+        // Update the photo_review attribute
+        existingReview.photo_review = filePath;
+        existingReview.updatedAt = new Date();
+        await existingReview.save();
 
-        const photo = req.file.buffer.toString('base64');
-
-        const updatedPhoto = await review.update({ photo_review: photo });
         res.status(200).json({
-            message: 'Photo Updated Successfully'
+            success: true,
+            message: `Update Photo Review Successfully in ID: ${reviewId}`,
+            data: existingReview,
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
-
-const deletePhotoReview = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const review = await Review_products.findByPk(id);
-
-        if (!review) {
-            return res.status(404).json({ error: 'Review not found' });
-        }
-
-        const deletedPhoto = await review.update({ photo_review: null });
-
-        res.status(200).json({ message: 'Photo Deleted Successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({
+            success: false,
+            error: 'Internal Server Error',
+        });
     }
 };
+
+
+const deletePhotoReview = async (req, res) => {
+    try {
+        const reviewId = req.params.id;
+
+        const existingReview = await Review_products.findByPk(reviewId);
+
+        if (!existingReview) {
+            return res.status(404).json({
+                success: false,
+                error: `Review with ID ${reviewId} not found`,
+            });
+        }
+
+        // Delete the photo_review attribute
+        existingReview.photo_review = null; // Or set to an appropriate default value
+        existingReview.updatedAt = new Date();
+        await existingReview.save();
+
+        res.status(200).json({
+            success: true,
+            message: `Delete Photo Review Successfully in ID: ${reviewId}`,
+            data: existingReview,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            error: 'Internal Server Error',
+        });
+    }
+};
+
+
 
 module.exports = {
     getAllPhotoReviews,
