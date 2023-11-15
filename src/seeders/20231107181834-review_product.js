@@ -20,6 +20,7 @@ module.exports = {
         id_order_list: 2,
         message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga sukses selalu',
         number_review: 5,
+        photo_review: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -29,6 +30,7 @@ module.exports = {
         id_order_list: 10,
         message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga berkah selalu',
         number_review: 5,
+        photo_review: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -38,6 +40,7 @@ module.exports = {
         id_order_list: 12,
         message_review: 'Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga banyak order selalu',
         number_review: 4,
+        photo_review: null,
         createdAt: new Date(),
         updatedAt: new Date(),
       }
