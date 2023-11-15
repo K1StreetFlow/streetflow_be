@@ -7,12 +7,12 @@ const {
   updatePhotoReview,
   deletePhotoReview  
 } = require('../controllers/uploadReviewProducts.controller');
-const upload = require('../middleware/uploadReviewProducts');
+const upload = require('../middleware/multeruploadReviewProducts');
 
-router.get('/photo', getAllPhotoReviews);
-router.get('/photo/:id', getPhotoByReviewId);
-router.post('/photo/', upload.array('photo', 5), uploadPhotoReview);
-router.put('/photo/:id', upload.array('photo', 5), updatePhotoReview);
-router.delete('/photo/:id', deletePhotoReview);
+router.get('/', getAllPhotoReviews);
+router.get('/:id', getPhotoByReviewId);
+router.post('/:id', upload.single('photo_review'), uploadPhotoReview);
+router.put('/:id', upload.single('photo_review'), updatePhotoReview);
+router.delete('/:id', deletePhotoReview);
 
 module.exports = router;
