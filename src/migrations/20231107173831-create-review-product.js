@@ -39,6 +39,9 @@ module.exports = {
       number_review: {
         type: Sequelize.INTEGER
       },
+      photo_review: {
+        type: Sequelize.STRING(200)
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
