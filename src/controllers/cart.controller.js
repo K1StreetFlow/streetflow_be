@@ -1,16 +1,23 @@
-const { Cart, User_customer, Cart_detail } = require("../models");
+const { Cart, Users_customer, Cart_detail } = require("../models");
 
 const cartController = {
   getAllCarts: async (req, res) => {
     try {
       const carts = await Cart.findAll({
-        // include: [
-        //   {
-        //     model: User,
-        //     as: "user",
-        //   },
-        // ],
+        include: [
+          {
+            model: Users_customer,
+            as: "user_customer",
+          },
+        ],
       });
+
+      if (carts.length === 0) {
+        return res.status(200).json({
+          message: "There is no cart data",
+        });
+      }
+
       res.status(200).json({
         message: "Get all carts",
         data: carts,
@@ -24,13 +31,20 @@ const cartController = {
     try {
       const { id } = req.params;
       const cart = await Cart.findByPk(id, {
-        // include: [
-        //   {
-        //     model: User,
-        //     as: "user",
-        //   },
-        // ],
+        include: [
+          {
+            model: Users_customer,
+            as: "user_customer",
+          },
+        ],
       });
+
+      if (!cart) {
+        return res.status(404).json({
+          message: `Cart with id ${id} is not found`,
+        });
+      }
+
       res.status(200).json({
         message: `Get cart by id ${id}`,
         data: cart,
@@ -60,6 +74,15 @@ const cartController = {
           id,
         },
       });
+
+      console.log(cart);
+
+      if (!cart[0]) {
+        return res.status(404).json({
+          message: `Cart with id ${id} is not found`,
+        });
+      }
+
       res.status(200).json({
         message: `Cart Successfully updated with id ${id}`,
       });
@@ -75,6 +98,13 @@ const cartController = {
           id,
         },
       });
+
+      if (!cart) {
+        return res.status(404).json({
+          message: `Cart with id ${id} is not found`,
+        });
+      }
+
       res.status(200).json({
         message: `Cart Successfully deleted with id ${id}`,
       });
@@ -94,15 +124,17 @@ const cartController = {
           },
         ],
       });
+
+      if (!cart) {
+        return res.status(404).json({
+          message: `Cart with id ${id} is not found`,
+        });
+      }
+
       res.status(200).json({
         message: `Get cart detail by cart id ${id}`,
         data: cart,
       });
-      // const payment = await cart.getPayment();
-      // res.status(200).json({
-      //   message: `Get payment by cart id ${id}`,
-      //   data: payment,
-      // });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
