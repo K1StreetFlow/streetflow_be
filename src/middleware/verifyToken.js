@@ -10,8 +10,8 @@ const verifyTokenCookieAdmin = (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = user;
+    const admin = jwt.verify(token, process.env.JWT_SECRET);
+    req.admin = admin;
     next();
   } catch (err) {
     res.clearCookie("tokenAdmin", { httpOnly: true });
