@@ -7,7 +7,8 @@ const createAdmin = async (req, res) => {
     const { username, email, password, retypePassword } = req.body;
 
     // Check if user with the provided email already exists
-    const existingUser = await Users_administrators.findOne({ attributes: { exclude: ["password", "deletedAt"] } }, { where: { email: email } });
+    //{ attributes: { exclude: ["password", "deletedAt"] } },
+    const existingUser = await Users_administrators.findOne({ where: { email: email } });
 
     if (existingUser) {
       return res.status(400).json({ message: "User with this email already exists" });

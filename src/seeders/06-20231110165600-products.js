@@ -3,22 +3,15 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const categoryProductsQuery = await queryInterface.sequelize.query(
-      'SELECT id FROM "CategoryProducts"'
-    );
-    const photoProductsQuery = await queryInterface.sequelize.query(
-      'SELECT id FROM "PhotoProducts"'
-    );
+    const categoryProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "CategoryProducts"');
+    const photoProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "PhotoProducts"');
 
     // Mendapatkan hasil query sebagai array
     const categoryProducts = categoryProductsQuery[0];
     const photoProducts = photoProductsQuery[0];
-
     // Pastikan hasil query tidak kosong
     if (categoryProducts.length === 0 || photoProducts.length === 0) {
-      console.error(
-        "Error: Empty result from categoryProducts or photoProducts query."
-      );
+      console.error("Error: Empty result from categoryProducts or photoProducts query.");
       return;
     }
 
