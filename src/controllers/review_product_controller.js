@@ -1,5 +1,5 @@
 const { Review_products, Users_customer, Product, Order_list } = require('../models');
-// const upload = require('../config/multer.config');
+
 
 const getReview = async (req, res) => {
     try {
@@ -85,13 +85,13 @@ const getReviewByRating = async (req, res) => {
 const createReview = async (req, res) => {
     try {
         const { id_products, id_users_customer, message_review, number_review, id_order_list } = req.body;
-
+        console.info("Request Body:", req.body);
         // Query the Order_list model
         const order = await Order_list.findOne({
             where: { id: id_order_list }
         });
 
-        console.info("Request Body:", req.body);
+        
         console.info("ID Order List:", id_order_list);
         console.info("Order Status:", order ? order.status_order : "Order not found");
 
@@ -182,9 +182,6 @@ const updateReview = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
-
-
 
 const deleteReview = async (req, res) => {
     try {
