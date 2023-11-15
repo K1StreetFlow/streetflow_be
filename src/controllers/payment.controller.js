@@ -1,23 +1,20 @@
-const { Payment, Cart, User_customer } = require("../models");
+const { Payment, Cart, Users_customer } = require("../models");
 const midtransClient = require("midtrans-client");
 
 const paymentController = {
   getAllPayments: async (req, res) => {
     try {
       const payments = await Payment.findAll({
-        attributes: {
-          exclude: ["id_cart"],
-        },
         include: [
           {
             model: Cart,
             as: "cart",
-            // include: [
-            //   {
-            //     model: User,
-            //     as: "user",
-            //   },
-            // ],
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
           },
         ],
       });
@@ -38,12 +35,12 @@ const paymentController = {
           {
             model: Cart,
             as: "cart",
-            // include: [
-            //   {
-            //     model: User,
-            //     as: "user",
-            //   },
-            // ],
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
           },
         ],
       });
@@ -71,14 +68,14 @@ const paymentController = {
 
   processPayment: async (req, res) => {
     try {
-      const { fullname, email, codePayment, total } = req.body;
+      const { fullname, email, code_payment, total } = req.body;
       const snap = new midtransClient.Snap({
         isProduction: false,
         serverKey: process.env.MIDTRANS_SERVER_KEY,
       });
       const parameter = {
         transaction_details: {
-          order_id: codePayment,
+          order_id: code_payment,
           gross_amount: total,
         },
         credit_card: {
@@ -96,6 +93,34 @@ const paymentController = {
       });
     } catch (error) {
       console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  updatePayment: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status_payment, date_payment, method_payment, id_cart } =
+        req.body;
+
+      await Payment.update(
+        {
+          status_payment,
+          date_payment,
+          method_payment,
+          id_cart,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      res.status(200).json({
+        message: `Update payment by id ${id} successfull`,
+        data: req.body,
+      });
+    } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
   },

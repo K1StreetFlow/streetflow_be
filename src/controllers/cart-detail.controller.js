@@ -9,10 +9,10 @@ const cardDetailController = {
             model: Cart,
             as: "cart",
           },
-          // {
-          //   model: Product,
-          //   as: "product",
-          // }
+          {
+            model: Product,
+            as: "product",
+          },
         ],
       });
       res.status(200).json({
@@ -33,10 +33,10 @@ const cardDetailController = {
             model: Cart,
             as: "cart",
           },
-          // {
-          //   model: Product,
-          //   as: "product",
-          // }
+          {
+            model: Product,
+            as: "product",
+          },
         ],
       });
       res.status(200).json({
@@ -68,6 +68,13 @@ const cardDetailController = {
           id,
         },
       });
+
+      if (!cart_detail[0]) {
+        return res.status(404).json({
+          message: `Cart detail with id ${id} is not found`,
+        });
+      }
+
       res.status(200).json({
         message: `Cart detail updated successfully`,
       });
@@ -83,6 +90,13 @@ const cardDetailController = {
           id,
         },
       });
+
+      if (!cart_detail) {
+        return res.status(404).json({
+          message: `Cart detail with id ${id} is not found`,
+        });
+      }
+
       res.status(200).json({
         message: `Cart detail deleted successfully`,
       });
