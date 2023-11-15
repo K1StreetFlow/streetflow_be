@@ -1,4 +1,4 @@
-const { Payment, Cart, User_customer } = require("../models");
+const { Payment, Cart, Users_customer } = require("../models");
 const midtransClient = require("midtrans-client");
 
 const paymentController = {
@@ -9,12 +9,12 @@ const paymentController = {
           {
             model: Cart,
             as: "cart",
-            // include: [
-            //   {
-            //     model: User,
-            //     as: "user",
-            //   },
-            // ],
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
           },
         ],
       });
@@ -35,12 +35,12 @@ const paymentController = {
           {
             model: Cart,
             as: "cart",
-            // include: [
-            //   {
-            //     model: User,
-            //     as: "user",
-            //   },
-            // ],
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
           },
         ],
       });
@@ -68,14 +68,14 @@ const paymentController = {
 
   processPayment: async (req, res) => {
     try {
-      const { fullname, email, codePayment, total } = req.body;
+      const { fullname, email, code_payment, total } = req.body;
       const snap = new midtransClient.Snap({
         isProduction: false,
         serverKey: process.env.MIDTRANS_SERVER_KEY,
       });
       const parameter = {
         transaction_details: {
-          order_id: codePayment,
+          order_id: code_payment,
           gross_amount: total,
         },
         credit_card: {
