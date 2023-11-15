@@ -54,6 +54,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
+    photo_review: {
+      allowNull: true,
+      type: DataTypes.STRING(200),
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,
