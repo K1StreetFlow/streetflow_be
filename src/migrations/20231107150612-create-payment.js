@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       method_payment: {
-        type: Sequelize.ENUM("Transfer Bank", "E-Wallet", "M-Banking"),
+        type: Sequelize.STRING,
       },
       id_cart: {
         type: Sequelize.INTEGER,
