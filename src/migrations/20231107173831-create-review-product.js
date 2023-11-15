@@ -40,7 +40,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       photo_review: {
-        type: Sequelize.STRING(200)
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
