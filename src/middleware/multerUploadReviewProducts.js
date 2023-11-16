@@ -4,7 +4,7 @@ const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Menentukan destinasi berdasarkan jumlah file yang diunggah
-    const destinationFolder = file.length > 1 ? "./src/uploads/multiple" : "./src/uploads/single";
+    const destinationFolder = file.length > 1 ? "./src/assets/images/review-products/multiple" : "./src/assets/images/review-products/single";
     cb(null, destinationFolder);
   },
   filename: (req, file, cb) => {
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 });
 
 // Konfigurasi untuk mengizinkan pengguna mengunggah satu file atau hingga 5 file sekaligus
-const upload = multer({ storage }).array("photo", 5);
+const upload = multer({ storage })
 
 module.exports = upload;
 
