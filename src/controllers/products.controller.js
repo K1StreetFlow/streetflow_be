@@ -38,8 +38,6 @@ const getAllProductsWithPagination = async (req, res) => {
   }
 };
 
-
-
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
