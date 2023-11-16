@@ -34,7 +34,7 @@ route.use("/cart-details", cartDetailRoutes);
 
 route.use("/order", orderListRoutes);
 route.use("/address", addressRoutes);
-route.use("/shipping", shippingRoutes);
+route.use("/shippings", shippingRoutes);
 route.use("/review-products", reviewProductsRoutes);
 
 module.exports = route;
