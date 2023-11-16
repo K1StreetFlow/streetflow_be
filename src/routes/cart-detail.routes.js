@@ -1,14 +1,16 @@
 const express = require("express");
 const cartDetailController = require("../controllers/cart-detail.controller");
 const router = express.Router();
-const { isAdminOrSelf } = require("../middleware/adminMiddleware");
-const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
-router.use(isAdminOrSelf);
+const { isAdmin, isAdminOrCustomer } = require("../middleware/verifyToken");
 
-router.get("/", verifyTokenCookieAdmin, cartDetailController.getAllCartDetail);
-router.get("/:id", cartDetailController.getCartDetailById);
-router.post("/", cartDetailController.createCartDetail);
-router.put("/:id", cartDetailController.editCartDetail);
-router.delete("/:id", cartDetailController.deleteCartDetailById);
+router.get("/", isAdmin, cartDetailController.getAllCartDetail);
+router.get("/:id", isAdminOrCustomer, cartDetailController.getCartDetailById);
+router.post("/", isAdminOrCustomer, cartDetailController.createCartDetail);
+router.put("/:id", isAdminOrCustomer, cartDetailController.editCartDetail);
+router.delete(
+  "/:id",
+  isAdminOrCustomer,
+  cartDetailController.deleteCartDetailById
+);
 
 module.exports = router;

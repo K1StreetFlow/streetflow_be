@@ -1,17 +1,19 @@
 const express = require("express");
 const cartController = require("../controllers/cart.controller");
-const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const router = express.Router();
-const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
-router.use(isAdminOrSelf);
+const { isAdmin, isAdminOrCustomer } = require("../middleware/verifyToken");
 
-router.get("/", verifyTokenCookieAdmin, cartController.getAllCarts);
-router.get("/:id", cartController.getCartById);
-router.post("/", cartController.createCart);
-router.put("/:id", cartController.editCartById);
-router.delete("/:id", cartController.deleteCartById);
+router.get("/", isAdmin, cartController.getAllCarts);
+router.get("/:id", isAdminOrCustomer, cartController.getCartById);
+router.post("/", isAdminOrCustomer, cartController.createCart);
+router.put("/:id", isAdminOrCustomer, cartController.editCartById);
+router.delete("/:id", isAdminOrCustomer, cartController.deleteCartById);
 
 // Data dari payment
-router.get("/:id/cart-detail", cartController.getCartDetailByCartId);
+router.get(
+  "/:id/cart-detail",
+  isAdminOrCustomer,
+  cartController.getCartDetailByCartId
+);
 
 module.exports = router;

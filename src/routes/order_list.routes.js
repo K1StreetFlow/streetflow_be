@@ -1,13 +1,18 @@
 const express = require("express");
-const { getAllOrder, getOrderById, updateOrder, createOrder, deleteOrder } = require("../controllers/order_list.controller");
-const { isAdminOrSelf } = require("../middleware/adminMiddleware");
-const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
+const {
+  getAllOrder,
+  getOrderById,
+  updateOrder,
+  createOrder,
+  deleteOrder,
+} = require("../controllers/order_list.controller");
+const { isAdmin, isAdminOrCustomer } = require("../middleware/verifyToken");
 const router = express.Router();
-router.use(isAdminOrSelf);
-router.get("/", verifyTokenCookieAdmin, getAllOrder);
-router.get("/:id", getOrderById);
-router.put("/update/:id", updateOrder);
-router.post("/create", createOrder);
-router.delete("/delete/:id", deleteOrder);
+
+router.get("/", isAdmin, getAllOrder);
+router.get("/:id", isAdminOrCustomer, getOrderById);
+router.put("/update/:id", isAdmin, updateOrder);
+router.post("/create", isAdmin, createOrder);
+router.delete("/delete/:id", isAdmin, deleteOrder);
 
 module.exports = router;

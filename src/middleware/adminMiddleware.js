@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const isAdminOrSelf = async (req, res, next) => {
+const isAdminOrCustomerID = async (req, res, next) => {
   try {
     const { id } = req.params;
     const token = req.cookies.tokenCustomer;
@@ -16,7 +16,11 @@ const isAdminOrSelf = async (req, res, next) => {
 
       // Check if the logged-in user is the owner of the profile
       if (parseInt(userId) !== parseInt(id)) {
-        return res.status(403).json({ message: "Unauthorized: You can only edit your own profile" });
+        return res
+          .status(403)
+          .json({
+            message: "Unauthorized: You can only edit your own profile",
+          });
       }
 
       next(); // Lanjutkan ke middleware atau rute berikutnya
@@ -29,4 +33,4 @@ const isAdminOrSelf = async (req, res, next) => {
   }
 };
 
-module.exports = { isAdminOrSelf };
+module.exports = { isAdminOrCustomerID };

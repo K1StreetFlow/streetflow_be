@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const verifyTokenCookieAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   const token = req.cookies.tokenAdmin;
   try {
     if (!token) {
@@ -19,7 +19,7 @@ const verifyTokenCookieAdmin = (req, res, next) => {
   }
 };
 
-const verifyTokenCookieCustomer = (req, res, next) => {
+const isCustomer = (req, res, next) => {
   const token = req.cookies.tokenCustomer;
   try {
     if (!token) {
@@ -35,7 +35,7 @@ const verifyTokenCookieCustomer = (req, res, next) => {
   }
 };
 
-const verifyUserType = (req, res, next) => {
+const isAdminOrCustomer = (req, res, next) => {
   const tokenAdmin = req.cookies.tokenAdmin;
   const tokenCustomer = req.cookies.tokenCustomer;
 
@@ -56,4 +56,4 @@ const verifyUserType = (req, res, next) => {
   }
 };
 
-module.exports = { verifyTokenCookieAdmin, verifyTokenCookieCustomer, verifyUserType };
+module.exports = { isAdmin, isCustomer, isAdminOrCustomer };
