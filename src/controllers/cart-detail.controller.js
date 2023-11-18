@@ -49,8 +49,16 @@ const cardDetailController = {
   },
   createCartDetail: async (req, res) => {
     try {
-      const { body } = req;
-      const cart_detail = await Cart_detail.create(body);
+      const { id_cart, id_product, quantity } = req.body;
+
+      const price = await Product.findByPk(id_product);
+
+      const cart_detail = await Cart_detail.create({
+        id_cart,
+        id_product,
+        quantity,
+        total_price: price.price_product * quantity,
+      });
       res.status(201).json({
         message: "Create new cart",
         data: cart_detail,
@@ -62,12 +70,22 @@ const cardDetailController = {
   editCartDetail: async (req, res) => {
     try {
       const { id } = req.params;
-      const { body } = req;
-      const cart_detail = await Cart_detail.update(body, {
-        where: {
-          id,
+      const { quantity } = req.body;
+
+      const getCurrentCartDetail = await Cart_detail.findByPk(id);
+      const price = await Product.findByPk(getCurrentCartDetail.id_product);
+
+      const cart_detail = await Cart_detail.update(
+        {
+          quantity,
+          total_price: price.price_product * quantity,
         },
-      });
+        {
+          where: {
+            id,
+          },
+        }
+      );
 
       if (!cart_detail[0]) {
         return res.status(404).json({

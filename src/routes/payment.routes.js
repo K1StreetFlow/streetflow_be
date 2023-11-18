@@ -4,14 +4,10 @@ const router = express.Router();
 const { isAdmin, isAdminOrCustomer } = require("../middleware/verifyToken");
 // router.use(isAdminOrCustomerID);
 
-router.get("/", isAdmin, paymentController.getAllPayments);
-router.get("/:id", isAdminOrCustomer, paymentController.getPaymentById);
-router.post("/", isAdminOrCustomer, paymentController.createPayment);
-router.post(
-  "/process-payment",
-  isAdminOrCustomer,
-  paymentController.processPayment
-);
-router.put("/:id", isAdminOrCustomer, paymentController.updatePayment);
+router.get("/", paymentController.getAllPayments);
+router.get("/:id", paymentController.getPaymentById);
+router.post("/", paymentController.createPayment);
+router.post("/process-payment", paymentController.processPayment);
+router.put("/:id", paymentController.updatePayment);
 
 module.exports = router;
