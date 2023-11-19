@@ -8,7 +8,7 @@ dotenv.config();
 const register = async (req, res) => {
   try {
     const { username, email, password, retypePassword, fullname, gender, birth_date, phone_number } = req.body;
-    console.info(req.body);
+
     // Check if user with the provided email already exists
     const existingUser = await Users_customer.findOne({ where: { email: email } });
 
@@ -26,7 +26,7 @@ const register = async (req, res) => {
     const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
 
     // Create a new user
-    const createUser = await Users_customer.create({
+    await Users_customer.create({
       username,
       email,
       password: hashedPassword,
@@ -37,7 +37,7 @@ const register = async (req, res) => {
       upload_photo: profileImage, // Save the file name in the database
     });
 
-    res.status(201).json(createUser).message("Registration User Successful");
+    res.status(201).json("Registration successful");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -80,7 +80,7 @@ async function login(req, res) {
 
     res.cookie("tokenCustomer", token, { httpOnly: true });
     // Kirim respons dengan token
-    res.status(200).json(token).message("Login Successful");
+    res.status(200).json({ token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -91,7 +91,7 @@ async function logout(req, res) {
   try {
     // Clear the 'token' cookie
     res.clearCookie("tokenCustomer", { httpOnly: true });
-    res.status(200).json().messsage("Logout Successful");
+    res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });

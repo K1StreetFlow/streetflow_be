@@ -18,7 +18,10 @@ const cartController = {
         });
       }
 
-      res.status(200).json(carts).message("Get All Carts Successfully");
+      res.status(200).json({
+        message: "Get all carts",
+        data: carts,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -42,7 +45,10 @@ const cartController = {
         });
       }
 
-      res.status(200).json(cart).message(`Get Cart Successfully at ID: ${id}`);
+      res.status(200).json({
+        message: `Get cart by id ${id}`,
+        data: cart,
+      });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -51,7 +57,10 @@ const cartController = {
     try {
       const { body } = req;
       const cart = await Cart.create(body);
-      res.status(201).json(cart).message("Cart created successfully");
+      res.status(201).json({
+        message: "Cart created successfully",
+        data: cart,
+      });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -74,7 +83,9 @@ const cartController = {
         });
       }
 
-      res.status(200).json(cart).message(`Updated Cart Successfully at ID: ${id}`);
+      res.status(200).json({
+        message: `Cart Successfully updated with id ${id}`,
+      });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -94,7 +105,9 @@ const cartController = {
         });
       }
 
-      res.status(200).json(cart).message(`Deleted Cart Successfully at ID: ${id}`);
+      res.status(200).json({
+        message: `Cart Successfully deleted with id ${id}`,
+      });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -118,7 +131,10 @@ const cartController = {
         });
       }
 
-      res.status(200).json(cart).message(`Get Cart Detail Succesfully at Cart ID: ${id}`);
+      res.status(200).json({
+        message: `Get cart detail by cart id ${id}`,
+        data: cart,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });

@@ -11,7 +11,10 @@ const getAllPhotoReviews = async (req, res) => {
             photo_review: review.photo_review
         }));
 
-        res.status(200).json(allPhotos).message('Get All Photo Reviews Successfully');
+        res.status(200).json({
+            message: 'Get All Photo Reviews Successfully',
+            data: allPhotos
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -29,7 +32,9 @@ const getPhotoByReviewId = async (req, res) => {
             return res.status(404).json({ error: 'Review not found' });
         }
 
-        res.status(200).json(review).message(`Get Photo Successfully at ID: ${id}`);
+        res.status(200).json({
+            photo_review: review.photo_review
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -57,7 +62,11 @@ const uploadPhotoReview = async (req, res) => {
         );
 
         console.info(uploadPhoto);
-        res.status(200).json(uploadPhoto).message(`Upload Photo Successfully at ID: ${reviewId}`);
+        res.status(200).json({
+            success: true,
+            message: `Upload Photo Successfully in ID: ${reviewId}`,
+            data: uploadPhoto
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ 
@@ -86,9 +95,13 @@ const updatePhotoReview = async (req, res) => {
         // Update the photo_review attribute
         existingReview.photo_review = filePath;
         existingReview.updatedAt = new Date();
-        const updatedPhoto = await existingReview.save();
+        await existingReview.save();
 
-        res.status(200).json(updatedPhoto).message(`Updated Photo Successfully at ID: ${reviewId}`);
+        res.status(200).json({
+            success: true,
+            message: `Update Photo Review Successfully in ID: ${reviewId}`,
+            data: existingReview,
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -117,7 +130,11 @@ const deletePhotoReview = async (req, res) => {
         existingReview.updatedAt = new Date();
         await existingReview.save();
 
-        res.status(200).json(existingReview).message(`Delete Photo Review Successfully in ID: ${reviewId}`);
+        res.status(200).json({
+            success: true,
+            message: `Delete Photo Review Successfully in ID: ${reviewId}`,
+            data: existingReview,
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({

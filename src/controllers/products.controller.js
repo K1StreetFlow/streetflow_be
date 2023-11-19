@@ -27,7 +27,11 @@ const getAllProductsWithPagination = async (req, res) => {
 
     const totalPages = Math.ceil(products.count / ITEMS_PER_PAGE);
 
-    res.json(totalPages);
+    res.json({
+      products: products.rows,
+      totalPages: totalPages,
+      currentPage: parseInt(page),
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -175,7 +179,7 @@ const deleteProduct = async (req, res) => {
 
     await product.destroy();
 
-    res.json(product).message("Product deleted successfully");
+    res.json({ message: "Product deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
