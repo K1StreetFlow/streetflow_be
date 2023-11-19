@@ -27,7 +27,7 @@ async function login(req, res) {
 
     res.cookie("tokenAdmin", token, { httpOnly: true });
     // Kirim respons dengan token
-    res.status(200).json({ token });
+    res.status(200).json(token).message(`Login Admin Successful`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -38,7 +38,7 @@ async function logout(req, res) {
   try {
     // Clear the 'token' cookie
     res.clearCookie("tokenAdmin", { httpOnly: true });
-    res.status(200).json({ message: "Logout successful" });
+    res.status(200).json().message("Logout Admin Successful");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
