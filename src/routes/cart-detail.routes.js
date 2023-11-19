@@ -4,13 +4,9 @@ const router = express.Router();
 const { isAdmin, isAdminOrCustomer } = require("../middleware/verifyToken");
 
 router.get("/", cartDetailController.getAllCartDetail);
-router.get("/:id", isAdminOrCustomer, cartDetailController.getCartDetailById);
-router.post("/", isAdminOrCustomer, cartDetailController.createCartDetail);
-router.put("/:id", isAdminOrCustomer, cartDetailController.editCartDetail);
-router.delete(
-  "/:id",
-  isAdminOrCustomer,
-  cartDetailController.deleteCartDetailById
-);
+router.get("/:id", cartDetailController.getCartDetailById);
+router.post("/", cartDetailController.createCartDetail);
+router.put("/:id", cartDetailController.editCartDetail);
+router.delete("/:id", cartDetailController.deleteCartDetailById);
 
 module.exports = router;

@@ -37,7 +37,7 @@ module.exports = {
           username: "customer3",
           email: "customer3@example.com",
           password: hashedPassword3,
-          fullname: "Customer Two",
+          fullname: "Customer Tree",
           gender: "Female",
           birth_date: "1995-03-16",
           upload_photo: null,

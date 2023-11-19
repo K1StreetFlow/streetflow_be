@@ -1,4 +1,4 @@
-const { Cart_detail, Cart, Product } = require("../models");
+const { Cart_detail, Cart, Product, Users_customer } = require("../models");
 
 const cardDetailController = {
   getAllCartDetail: async (req, res) => {
@@ -8,6 +8,12 @@ const cardDetailController = {
           {
             model: Cart,
             as: "cart",
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
           },
           {
             model: Product,
@@ -15,10 +21,7 @@ const cardDetailController = {
           },
         ],
       });
-      res.status(200).json({
-        message: "Get all cart details",
-        data: cart_details,
-      });
+      res.status(200).json(cart_details);
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -32,6 +35,12 @@ const cardDetailController = {
           {
             model: Cart,
             as: "cart",
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
           },
           {
             model: Product,
@@ -39,10 +48,7 @@ const cardDetailController = {
           },
         ],
       });
-      res.status(200).json({
-        message: `Get cart detail by id ${id}`,
-        data: cart_detail,
-      });
+      res.status(200).json(cart_detail);
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }

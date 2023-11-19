@@ -15,7 +15,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id_users_customer: 3,
+        id_users_customer: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

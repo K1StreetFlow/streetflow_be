@@ -67,8 +67,11 @@ const cartController = {
           cart_id: cart.id,
           grand_price: grandPrice,
           total_product: totalProduct,
+          id_user_customer: userCustomer.id,
           user_customer: {
+            id: userCustomer.id,
             fullname: userCustomer.fullname,
+            username: userCustomer.username,
             email: userCustomer.email,
             phone_number: userCustomer.phone_number,
             gender: userCustomer.gender,
@@ -80,10 +83,7 @@ const cartController = {
         };
       });
 
-      res.status(200).json({
-        message: "Get All Carts",
-        data: data,
-      });
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -151,6 +151,7 @@ const cartController = {
         total_product: totalProduct,
         user_customer: {
           fullname: userCustomer.fullname,
+          username: userCustomer.username,
           email: userCustomer.email,
           phone_number: userCustomer.phone_number,
           gender: userCustomer.gender,
@@ -161,10 +162,7 @@ const cartController = {
         product: product,
       };
 
-      res.status(200).json({
-        message: "Get Cart by id",
-        data: cart,
-      });
+      res.status(200).json(cart);
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });

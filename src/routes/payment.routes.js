@@ -9,5 +9,7 @@ router.get("/:id", paymentController.getPaymentById);
 router.post("/", paymentController.createPayment);
 router.post("/process-payment", paymentController.processPayment);
 router.put("/:id", paymentController.updatePayment);
+router.delete("/:id", paymentController.deletePayment);
+router.get("/status/:order_id", paymentController.getMidtransStatus);
 
 module.exports = router;

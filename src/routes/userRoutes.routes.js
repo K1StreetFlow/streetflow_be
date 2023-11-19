@@ -10,7 +10,7 @@ const { isAdminOrCustomerID } = require("../middleware/adminMiddleware");
 const upload = require("../middleware/multerConfig");
 const router = express.Router();
 
-router.get("/", isAdmin, getAllUsers);
+router.get("/", getAllUsers);
 router.get("/:id", isAdminOrCustomerID, getUserById);
 router.put(
   "/:id",
