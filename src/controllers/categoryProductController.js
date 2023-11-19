@@ -15,11 +15,12 @@ const getAllCategoriesWithPagination = async (req, res) => {
 
     const totalPages = Math.ceil(categories.count / ITEMS_PER_PAGE);
 
-    res.json({
-      categories: categories.rows,
-      totalPages: totalPages,
-      currentPage: parseInt(page),
-    });
+    // res.json({
+    //   categories: categories.rows,
+    //   totalPages: totalPages,
+    //   currentPage: parseInt(page),
+    // });
+    res.status(200).json(totalPages)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -30,7 +31,7 @@ const getAllCategories = async (req, res) => {
   try {
     const categories = await CategoryProduct.findAll();
 
-    res.json(categories);
+    res.json(categories).message("Get All Categories Successfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -46,7 +47,7 @@ const getCategoryById = async (req, res) => {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    res.json(category);
+    res.json(category).message(`Get Category Succesfully at ID: ${id}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -58,7 +59,7 @@ const createCategory = async (req, res) => {
 
   try {
     const newCategory = await CategoryProduct.create({ name_category_products });
-    res.status(201).json(newCategory);
+    res.status(201).json(newCategory).message("Created Category Succesfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -78,7 +79,7 @@ const updateCategory = async (req, res) => {
 
     await category.update({ name_category_products });
 
-    res.json(category);
+    res.status(201).json(category).message(`Updated Category Succesfully at ID: ${categoryId}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -97,7 +98,7 @@ const deleteCategory = async (req, res) => {
 
     await category.destroy();
 
-    res.json({ message: "Category deleted successfully" });
+    res.status(201).json(category).message(`Deleted Category Successfully at ID: ${categoryId}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
