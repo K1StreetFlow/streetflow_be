@@ -1,5 +1,6 @@
 const { Payment, Cart, Users_customer } = require("../models");
 const midtransClient = require("midtrans-client");
+const cron = require("node-cron");
 
 const paymentController = {
   getAllPayments: async (req, res) => {
@@ -149,6 +150,7 @@ const paymentController = {
         serverKey: process.env.MIDTRANS_SERVER_KEY,
       });
       const status = await snap.transaction.status(order_id);
+
       res.status(200).json({
         message: `Get status payment by order id ${order_id} successfull`,
         data: status,
@@ -156,6 +158,48 @@ const paymentController = {
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
+  },
+
+  updateAllStatusPending: async (req, res) => {
+    // Scheduler untuk memeriksa status pembayaran setiap 10 detik
+    // cron.schedule("*/10 * * * * *", async () => {
+    try {
+      // Ambil semua order dengan status 'pending' dari database
+      const pendingPayments = await Payment.findAll({
+        where: { status_payment: "Pending" },
+      });
+
+      // Lakukan pengecekan status pembayaran di Midtrans untuk setiap order yang masih pending
+      for (const payment of pendingPayments) {
+        const snap = new midtransClient.Snap({
+          isProduction: false,
+          serverKey: process.env.MIDTRANS_SERVER_KEY,
+          clientKey: process.env.MIDTRANS_CLIENT_KEY,
+        });
+
+        // // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
+        const transactionDetails = await snap.transaction.status(
+          payment.code_payment
+        );
+
+        // // // Periksa status pembayaran dari respons Midtrans
+        const { transaction_status } = transactionDetails;
+
+        // // // Jika status berhasil atau settlement, perbarui status di database
+        if (
+          transaction_status === "capture" ||
+          transaction_status === "settlement"
+        ) {
+          await Payment.update(
+            { status_payment: "Success" },
+            { where: { code_payment: payment.code_payment } }
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Scheduler error:", error);
+    }
+    // });
   },
 };
 
