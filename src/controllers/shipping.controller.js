@@ -16,10 +16,7 @@ const getAllShipping = async (req, res) => {
 		});
 
 		if (shipping) {
-			res.status(200).json({
-				message: "Get All Shipping Successfully",
-				data: shipping,
-			});
+			res.status(200).json(shipping).message("Get All Shipping Successfully");
 		} else {
 			res.status(404).json({ message: "Get All Shipping Failed" });
 		}
@@ -49,10 +46,7 @@ const getShippingById = async (req, res) => {
 		});
 
 		if (shipping) {
-			res.status(200).json({
-				message: "Get Shipping Successfully",
-				data: shipping,
-			});
+			res.status(200).json(shipping).message("Get Shipping Successfully");
 		} else {
 			res.status(404).json({ message: "Get Shipping Failed" });
 		}
@@ -68,10 +62,7 @@ const createShipping = async (req, res) => {
 		const shipping = await Shipping.create(body);
 
 		if (shipping) {
-			res.status(200).json({
-				message: "Create Shipping Successfully",
-				data: shipping,
-			});
+			res.status(200).json(shipping).message("Create Shipping Successfully");
 		} else {
 			res.status(404).json({ message: "Create Shipping Failed" });
 		}
@@ -93,10 +84,7 @@ const updateShipping = async (req, res) => {
 
 		if (updated) {
 			const updatedShipping = await Shipping.findOne({ where: { id } });
-			res.status(200).json({
-				message: "Update Shipping Successfully",
-				data: updatedShipping,
-			});
+			res.status(200).json(updatedShipping).message(`Update Shipping Successfully at ID: ${id}`);
 		} else {
 			res.status(404).json({ message: "Update Shipping Failed" });
 		}
@@ -134,13 +122,7 @@ const updateShippingAndOrderList = async (req, res) => {
 
 			const updatedOrder = await Order_list.findOne({ where: { id: updatedShipping.id_order_list } });
 
-			res.status(200).json({
-				message: "Update Shipping and Order List Successfully",
-				data: {
-					shipping: updatedShipping,
-					orderList: updatedOrder,
-				},
-			});
+			res.status(200).json(updatedOrder).message("Update Shipping and Order List Successfully");
 		} else {
 			res.status(404).json({ message: "Update Shipping Failed" });
 		}
@@ -160,10 +142,7 @@ const deleteShipping = async (req, res) => {
 		});
 
 		if (shipping) {
-			res.status(200).json({
-				message: "Delete Shipping Successfully",
-				data: shipping,
-			});
+			res.status(200).json(shipping).message(`Delete Shipping Successfully at ID: ${id}`);
 		} else {
 			res.status(404).json({ message: "Delete Shipping Failed" });
 		}

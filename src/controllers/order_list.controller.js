@@ -16,10 +16,7 @@ const getAllOrder = async (req, res) => {
 		});
 
 		if (orderList) {
-			res.status(200).json({
-				message: "Get All Order List Successfully",
-				data: orderList,
-			});
+			res.status(200).json(orderList).message("Get All Order List Successfully");
 		} else {
 			res.status(404).json({ message: "Get All Order List Failed" });
 		}
@@ -51,10 +48,7 @@ const getOrderById = async (req, res) => {
 		});
 
 		if (orderList) {
-			res.status(200).json({
-				message: "Get Order List Successfully",
-				data: orderList,
-			});
+			res.status(200).json(orderList).message("Get Order List Successfully");
 		} else {
 			res.status(404).json({ message: "Get Order List Failed" });
 		}
@@ -69,10 +63,7 @@ const createOrder = async (req, res) => {
 		const orderList = await Order_list.create(req.body);
 
 		if (orderList) {
-			res.status(200).json({
-				message: "Create Order List Successfully",
-				data: orderList,
-			});
+			res.status(200).json(orderList).message("Create Order List Successfully");
 		} else {
 			res.status(404).json({ message: "Create Order List Failed" });
 		}
@@ -90,10 +81,7 @@ const updateOrder = async (req, res) => {
 
 		if (updated) {
 			const updatedOrder = await Order_list.findOne({ where: { id: req.params.id } });
-			return res.status(200).json({
-				message: "Update Order List Successfully",
-				data: updatedOrder,
-			});
+			return res.status(200).json(updatedOrder).message("Update Order List Successfully");
 		}
 
 		return res.status(404).json({ message: "Update Order List Failed" });
@@ -110,10 +98,7 @@ const deleteOrder = async (req, res) => {
 		});
 
 		if (orderList) {
-			res.status(200).json({
-				message: "Delete Order List Successfully",
-				data: orderList,
-			});
+			res.status(200).json(orderList).message("Delete Order List Successfully");
 		} else {
 			res.status(404).json({ message: "Delete Order List Failed" });
 		}

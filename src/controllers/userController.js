@@ -94,7 +94,7 @@ const editUser = async (req, res) => {
     // Save the updated user record to the database
     await existingUser.save();
 
-    res.json({ message: "User updated successfully", user: existingUser });
+    res.json(existingUser).message(`Updated User Successfully at ID: ${id}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -113,7 +113,7 @@ async function deleteUser(req, res) {
 
     await user.destroy();
 
-    res.json({ message: "User deleted successfully" });
+    res.json(user).message("User deleted successfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });

@@ -12,10 +12,7 @@ const getReview = async (req, res) => {
         });
 
         if (reviews) {
-            res.status(200).json({
-                message: 'Get All Review Successfully',
-                data: reviews,
-            });
+            res.status(200).json(reviews).message('Get All Review Successfully');
         } else {
             res.status(404).json({
                 message: "Review not found"
@@ -41,10 +38,7 @@ const getReviewById = async (req, res) => {
         });
 
         if (review) {
-            res.status(200).json({
-                message: `Get Review by ID: ${id} Successfully`,
-                data: review
-            });
+            res.status(200).json(review).message(`Get Review by ID: ${id} Successfully`);
         } else {
             res.status(404).json({ message: `Get Review by ID ${id} Failed`});
         }
@@ -69,10 +63,7 @@ const getReviewByRating = async (req, res) => {
         });
 
         if (reviews.length > 0) {
-            res.status(200).json({
-                message: `Get Reviews with Rating ${rating} Successfully`,
-                data: reviews,
-            });
+            res.status(200).json(reviews).message(`Get Reviews with Rating ${rating} Successfully`);
         } else {
             res.status(404).json({ message: `Review with Rating ${rating} Failed`});
         }
@@ -124,10 +115,7 @@ const createReview = async (req, res) => {
         });
 
         if (reviewProducts) {
-            res.status(201).json({
-                message: "Create Review Products Successfully",
-                data: reviewProducts
-            });
+            res.status(201).json(reviewProducts).message("Create Review Products Successfully");
         } else {
             res.status(400).json({
                 message: "Create Review Products Failed"
@@ -173,10 +161,7 @@ const updateReview = async (req, res) => {
         // Log the updated values
         console.log("Updated Review:", review.get({ plain: true }));
 
-        res.status(200).json({
-            message: "Update Review Successfully",
-            data: review,
-        });
+        res.status(200).json(review).message(`Update Review Successfully at ID: ${id}`);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal Server Error" });
@@ -194,10 +179,7 @@ const deleteReview = async (req, res) => {
 
         await review.destroy();
 
-        res.status(200).json({
-            message: `Deleted Review By ID: ${id} Successfully `,
-            data: review
-        })
+        res.status(200).json(review).message(`Deleted Review Successfully at ID: ${id}`);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal Server Error"});        

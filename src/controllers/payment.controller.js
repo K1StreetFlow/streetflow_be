@@ -18,10 +18,7 @@ const paymentController = {
           },
         ],
       });
-      res.status(200).json({
-        message: "Get all payments",
-        data: payments,
-      });
+      res.status(200).json(payments).message("Get all payments");
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -44,10 +41,7 @@ const paymentController = {
           },
         ],
       });
-      res.status(200).json({
-        message: `Get payment by id ${id}`,
-        data: payment,
-      });
+      res.status(200).json(payment).message(`Get Payment Successfully at ID: ${id}`);
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -57,10 +51,7 @@ const paymentController = {
     try {
       const { body } = req;
       const payment = await Payment.create(body);
-      res.status(201).json({
-        message: "Create payment successfull",
-        data: payment,
-      });
+      res.status(201).json(payment).message("Create payment successfull");
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -87,10 +78,11 @@ const paymentController = {
         },
       };
       const transaction = await snap.createTransaction(parameter);
-      res.status(201).json({
-        message: "Create payment successfull",
-        token: transaction.token,
-      });
+      // res.status(201).json({
+      //   message: "Create payment successfull",
+      //   token: transaction.token,
+      // });
+      res.status(201).json(transaction.token).message("Create Payment Successfully")
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -116,10 +108,7 @@ const paymentController = {
           },
         }
       );
-      res.status(200).json({
-        message: `Update payment by id ${id} successfull`,
-        data: req.body,
-      });
+      res.status(200).json(req.body).message(`Update Payment Successfully at ID: ${id}`);
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }

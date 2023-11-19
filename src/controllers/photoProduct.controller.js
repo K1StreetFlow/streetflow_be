@@ -17,11 +17,7 @@ const getAllPhotosWithPagination = async (req, res) => {
 
     const totalPages = Math.ceil(photos.count / ITEMS_PER_PAGE);
 
-    res.json({
-      photos: photos.rows,
-      totalPages: totalPages,
-      currentPage: parseInt(page),
-    });
+    res.status(200).json(totalPages).message("Get All Photo With Pagination");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -31,7 +27,7 @@ const getAllPhotosWithPagination = async (req, res) => {
 const getAllPhotos = async (req, res) => {
   try {
     const photos = await PhotoProduct.findAll();
-    res.json(photos);
+    res.status(200).json(photos).message("Get All Photo Successfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -48,7 +44,7 @@ const getPhotoById = async (req, res) => {
       return res.status(404).json({ error: "Photo not found" });
     }
 
-    res.json(photo);
+    res.status(200).json(photo).message(`Get Photo Successfully at ID: ${id}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -58,7 +54,7 @@ const uploadPhoto = async (req, res) => {
   try {
     const { filename } = req.file;
     const newPhoto = await PhotoProduct.create({ photo_product: filename });
-    res.json(newPhoto);
+    res.status(201).json(newPhoto).message("Created Photo Product Successfully");
   } catch (error) {
     console.error(error);
     res
@@ -79,7 +75,7 @@ const editPhoto = async (req, res) => {
     }
 
     await photo.update({ photo_product: filename });
-    res.json(photo);
+    res.status(200).json(photo).message(`Updated Photo Product Successfully at ID: ${id}`);
   } catch (error) {
     console.error(error);
     res
@@ -99,7 +95,7 @@ const deletePhoto = async (req, res) => {
     }
 
     await photo.destroy();
-    res.json({ message: "Photo deleted successfully" });
+    res.status(200).json(photo).message("Photo deleted successfully");
   } catch (error) {
     console.error(error);
     res
