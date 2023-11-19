@@ -14,7 +14,7 @@ const addressController = {
 					},
 				],
 			});
-			res.json(addresses);
+			res.json(addresses).message("Get All Addresses Successfully");
 		} catch (error) {
 			console.error(error);
 			res.status(500).json(error);
@@ -29,7 +29,7 @@ const addressController = {
 				return res.status(404).json({ message: "Address not found" });
 			}
 
-			res.json(address);
+			res.json(address).message(`Get Address Successfully at ID: ${id}`);
 		} catch (error) {
 			console.error(error);
 			res.status(500).json(error);
@@ -38,7 +38,7 @@ const addressController = {
 	createAddress: async (req, res) => {
 		try {
 			const newAddress = await Address.create(req.body);
-			res.status(201).json({ message: "Address created successfully", address: newAddress });
+			res.status(201).json(newAddress).message("Created Address Successfully");
 		} catch (error) {
 			console.error(error);
 			res.status(500).json(error);
@@ -56,10 +56,7 @@ const addressController = {
 			}
 
 			const updatedAddress = await Address.findByPk(id);
-			res.status(200).json({
-				message: "Address updated successfully",
-				address: updatedAddress,
-			});
+			res.status(200).json(updatedAddress).message(`Updated Address Successfully at ID: ${id}`);
 		} catch (error) {
 			console.error(error);
 			res.status(500).json(error);
@@ -76,7 +73,7 @@ const addressController = {
 				return res.status(404).json({ message: "Address not found" });
 			}
 
-			res.status(204).json({ message: "Address deleted successfully" });
+			res.status(200).json(deleted).message(`Deleted Address successfully at ID: ${id}`);
 		} catch (error) {
 			console.error(error);
 			res.status(500).json(error);
