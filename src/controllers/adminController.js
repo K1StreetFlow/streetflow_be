@@ -23,14 +23,14 @@ const createAdmin = async (req, res) => {
     const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
 
     // Create a new user
-    await Users_administrators.create({
+    const createAdmin = await Users_administrators.create({
       username,
       email,
       password: hashedPassword,
       upload_photo: profileImage, // Simpan nama file di database
     });
 
-    res.status(201).json("Registration successful");
+    res.status(201).json(createAdmin).message("Created Admin Successfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -41,7 +41,7 @@ async function getAllAdmins(req, res) {
   // Implementasi logika mendapatkan semua pengguna
   try {
     const users = await Users_administrators.findAll({ attributes: { exclude: ["password", "deletedAt"] } });
-    res.json(users);
+    res.status(200).json(users).message("Get Admins Successfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -58,7 +58,7 @@ async function getAdminById(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.json(user);
+    res.status(201).json(user).message(`Get Admin Successfully at ID: ${id}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -95,9 +95,9 @@ const editAdmin = async (req, res) => {
     }
 
     // Save the updated user record to the database
-    await existingUser.save();
+    const updateAdmin = await existingUser.save();
 
-    res.json({ message: "User updated successfully", user: existingUser });
+    res.status(200).json(updateAdmin).message(`Updated Admin Successfully at ID: ${id}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -114,9 +114,9 @@ async function deleteAdmin(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    await user.destroy();
+    const deleteAdmin = await user.destroy();
 
-    res.json({ message: "User deleted successfully" });
+    res.json(deleteAdmin).message(`Deleted Admin successfully at ID: ${id}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
