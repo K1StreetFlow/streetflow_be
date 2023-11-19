@@ -162,44 +162,52 @@ const paymentController = {
 
   updateAllStatusPending: async (req, res) => {
     // Scheduler untuk memeriksa status pembayaran setiap 10 detik
-    // cron.schedule("*/10 * * * * *", async () => {
-    try {
-      // Ambil semua order dengan status 'pending' dari database
-      const pendingPayments = await Payment.findAll({
-        where: { status_payment: "Pending" },
-      });
-
-      // Lakukan pengecekan status pembayaran di Midtrans untuk setiap order yang masih pending
-      for (const payment of pendingPayments) {
-        const snap = new midtransClient.Snap({
-          isProduction: false,
-          serverKey: process.env.MIDTRANS_SERVER_KEY,
-          clientKey: process.env.MIDTRANS_CLIENT_KEY,
+    cron.schedule("*/10 * * * * *", async () => {
+      try {
+        // Ambil semua order dengan status 'pending' dari database
+        const pendingPayments = await Payment.findAll({
+          where: { status_payment: "Pending" },
         });
 
-        // // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
-        const transactionDetails = await snap.transaction.status(
-          payment.code_payment
-        );
+        // Lakukan pengecekan status pembayaran di Midtrans untuk setiap order yang masih pending
+        for (const payment of pendingPayments) {
+          const snap = new midtransClient.Snap({
+            isProduction: false,
+            serverKey: process.env.MIDTRANS_SERVER_KEY,
+            clientKey: process.env.MIDTRANS_CLIENT_KEY,
+          });
 
-        // // // Periksa status pembayaran dari respons Midtrans
-        const { transaction_status } = transactionDetails;
-
-        // // // Jika status berhasil atau settlement, perbarui status di database
-        if (
-          transaction_status === "capture" ||
-          transaction_status === "settlement"
-        ) {
-          await Payment.update(
-            { status_payment: "Success" },
-            { where: { code_payment: payment.code_payment } }
+          // // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
+          const transactionDetails = await snap.transaction.status(
+            payment.code_payment
           );
+          console.log("Sedang memeriksa status pembayaran");
+          // // // Periksa status pembayaran dari respons Midtrans
+          const { transaction_status } = transactionDetails;
+
+          // // // Jika status berhasil atau settlement, perbarui status di database
+          if (
+            transaction_status === "capture" ||
+            transaction_status === "settlement"
+          ) {
+            await Payment.update(
+              { status_payment: "Success" },
+              { where: { code_payment: payment.code_payment } }
+            );
+            console.log("Payment status updated");
+          } else if (transaction_status === "deny") {
+            // // // Jika status deny, perbarui status di database
+            await Payment.update(
+              { status_payment: "Failed" },
+              { where: { code_payment: payment.code_payment } }
+            );
+            console.log("Payment status updated");
+          }
         }
+      } catch (error) {
+        console.error("Scheduler error:", error);
       }
-    } catch (error) {
-      console.error("Scheduler error:", error);
-    }
-    // });
+    });
   },
 };
 
