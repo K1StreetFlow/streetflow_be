@@ -26,7 +26,7 @@ const register = async (req, res) => {
     const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
 
     // Create a new user
-    await Users_customer.create({
+    const createUser = await Users_customer.create({
       username,
       email,
       password: hashedPassword,
@@ -37,7 +37,7 @@ const register = async (req, res) => {
       upload_photo: profileImage, // Save the file name in the database
     });
 
-    res.status(201).json("Registration successful");
+    res.status(201).json(createUser).message("Registration User Successful");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -80,7 +80,7 @@ async function login(req, res) {
 
     res.cookie("tokenCustomer", token, { httpOnly: true });
     // Kirim respons dengan token
-    res.status(200).json({ token });
+    res.status(200).json(token).message("Login Successful");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -91,7 +91,7 @@ async function logout(req, res) {
   try {
     // Clear the 'token' cookie
     res.clearCookie("tokenCustomer", { httpOnly: true });
-    res.status(200).json({ message: "Logout successful" });
+    res.status(200).json().messsage("Logout Successful");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
