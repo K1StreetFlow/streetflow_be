@@ -15,10 +15,7 @@ const cardDetailController = {
           },
         ],
       });
-      res.status(200).json({
-        message: "Get all cart details",
-        data: cart_details,
-      });
+      res.status(200).json(cart_details).message("Get all Cart Details Successfully");
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
@@ -39,10 +36,7 @@ const cardDetailController = {
           },
         ],
       });
-      res.status(200).json({
-        message: `Get cart detail by id ${id}`,
-        data: cart_detail,
-      });
+      res.status(200).json(cart_detail).message(`Get Cart Detail Successfully at ID: ${id}`);
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -51,10 +45,7 @@ const cardDetailController = {
     try {
       const { body } = req;
       const cart_detail = await Cart_detail.create(body);
-      res.status(201).json({
-        message: "Create new cart",
-        data: cart_detail,
-      });
+      res.status(201).json(cart_detail).message("Create New Cart Successfully");
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -75,9 +66,7 @@ const cardDetailController = {
         });
       }
 
-      res.status(200).json({
-        message: `Cart detail updated successfully`,
-      });
+      res.status(200).json(cart_detail).message(`Updated Cart Detail Successfully at ID: ${id}`);
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
@@ -97,9 +86,7 @@ const cardDetailController = {
         });
       }
 
-      res.status(200).json({
-        message: `Cart detail deleted successfully`,
-      });
+      res.status(200).json(cart_detail).message(`Deleted Cart Detail Successfully at ID: ${id}`);
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
