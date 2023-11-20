@@ -90,6 +90,7 @@ const getProductById = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 const createProduct = async (req, res) => {
   const {
     name_product,

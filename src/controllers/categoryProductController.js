@@ -36,6 +36,7 @@ const getAllCategories = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 const getCategoryById = async (req, res) => {
   const { categoryId } = req.params;
 
