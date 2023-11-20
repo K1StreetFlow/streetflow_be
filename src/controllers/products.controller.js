@@ -38,8 +38,6 @@ const getAllProductsWithPagination = async (req, res) => {
   }
 };
 
-
-
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
@@ -92,6 +90,7 @@ const getProductById = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 const createProduct = async (req, res) => {
   const {
     name_product,
