@@ -2,7 +2,6 @@ const { Users_administrators } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const path = require("path");
-const jwt = require("jsonwebtoken");
 
 // Function to get token from HTTP-only cookie
 async function getToken(req, res) {
@@ -145,6 +144,7 @@ async function deleteAdmin(req, res) {
       const { adminId } = jwt.verify(tokenAdmin, process.env.JWT_SECRET);
       if (parseInt(adminId) === parseInt(id)) {
         res.clearCookie("tokenAdmin", { httpOnly: true });
+        res.clearCookie("role");
       }
     }
 
