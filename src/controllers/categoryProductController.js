@@ -1,4 +1,3 @@
-// controllers/categoryProductController.js
 const { CategoryProduct, Product } = require("../models");
 
 const ITEMS_PER_PAGE = 5;
@@ -67,11 +66,11 @@ const createCategory = async (req, res) => {
 };
 
 const updateCategory = async (req, res) => {
-  const { categoryId } = req.params;
+  const { id } = req.params;
   const { name_category_products } = req.body;
 
   try {
-    const category = await CategoryProduct.findByPk(categoryId);
+    const category = await CategoryProduct.findByPk(id);
 
     if (!category) {
       return res.status(404).json({ error: "Category not found" });
@@ -87,10 +86,10 @@ const updateCategory = async (req, res) => {
 };
 
 const deleteCategory = async (req, res) => {
-  const { categoryId } = req.params;
+  const { id } = req.params;
 
   try {
-    const category = await CategoryProduct.findByPk(categoryId);
+    const category = await CategoryProduct.findByPk(id);
 
     if (!category) {
       return res.status(404).json({ error: "Category not found" });
