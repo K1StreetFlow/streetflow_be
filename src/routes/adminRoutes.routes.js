@@ -1,10 +1,11 @@
 const express = require("express");
-const { createAdmin, getAllAdmins, getAdminById, editAdmin, deleteAdmin } = require("../controllers/adminController");
+const { getToken, createAdmin, getAllAdmins, getAdminById, editAdmin, deleteAdmin } = require("../controllers/adminController");
 const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
 const upload = require("../middleware/multerConfig");
 const router = express.Router();
 router.use(verifyTokenCookieAdmin);
 // Routing untuk operasi pengelolaan pengguna
+router.get("/token", getToken);
 router.post("/", upload.single("profileImage"), createAdmin);
 router.get("/", getAllAdmins);
 router.get("/:id", getAdminById);

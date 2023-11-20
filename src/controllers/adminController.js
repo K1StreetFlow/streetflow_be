@@ -1,13 +1,36 @@
 const { Users_administrators } = require("../models");
 const bcrypt = require("bcrypt");
 const path = require("path");
+const jwt = require("jsonwebtoken");
+
+// Function to get token from HTTP-only cookie
+async function getToken(req, res) {
+  try {
+    // Get the token from the 'tokenAdmin' cookie
+    const token = req.cookies.tokenAdmin;
+
+    // If the token is not present
+    if (!token) {
+      return res.status(401).json({ message: "Token not found" });
+    }
+
+    // Decode the token to get user information
+    const decodedToken = jwt.decode(token);
+
+    // Send the decoded token to the frontend
+    res.status(200).json({ decodedToken });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 const createAdmin = async (req, res) => {
   try {
     const { username, email, password, retypePassword } = req.body;
 
     // Check if user with the provided email already exists
-    const existingUser = await Users_administrators.findOne({ attributes: { exclude: ["password", "deletedAt"] } }, { where: { email: email } });
+    const existingUser = await Users_administrators.findOne({ where: { email: email } });
 
     if (existingUser) {
       return res.status(400).json({ message: "User with this email already exists" });
@@ -116,7 +139,7 @@ async function deleteAdmin(req, res) {
 
     await user.destroy();
 
-    res.json({ message: "User deleted successfully" });
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -124,6 +147,7 @@ async function deleteAdmin(req, res) {
 }
 
 module.exports = {
+  getToken,
   createAdmin,
   getAllAdmins,
   getAdminById,

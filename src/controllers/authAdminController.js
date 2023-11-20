@@ -24,8 +24,9 @@ async function login(req, res) {
     }
     // Generate token JWT
     const token = jwt.sign({ userId: user.id, username: user.username, email: user.email, photo: user.upload_photo }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
+    const role = "admin";
     res.cookie("tokenAdmin", token, { httpOnly: true });
+    res.cookie("role", role);
     // Kirim respons dengan token
     res.status(200).json({ token });
   } catch (error) {
