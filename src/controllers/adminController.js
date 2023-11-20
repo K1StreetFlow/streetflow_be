@@ -2,6 +2,29 @@ const { Users_administrators } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const path = require("path");
+const jwt = require("jsonwebtoken");
+
+// Function to get token from HTTP-only cookie
+async function getToken(req, res) {
+  try {
+    // Get the token from the 'tokenAdmin' cookie
+    const token = req.cookies.tokenAdmin;
+
+    // If the token is not present
+    if (!token) {
+      return res.status(401).json({ message: "Token not found" });
+    }
+
+    // Decode the token to get user information
+    const decodedToken = jwt.decode(token);
+
+    // Send the decoded token to the frontend
+    res.status(200).json({ decodedToken });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 const createAdmin = async (req, res) => {
   try {
@@ -136,6 +159,7 @@ async function deleteAdmin(req, res) {
 }
 
 module.exports = {
+  getToken,
   createAdmin,
   getAllAdmins,
   getAdminById,

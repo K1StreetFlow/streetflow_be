@@ -23,9 +23,10 @@ async function login(req, res) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     // Generate token JWT
-    const token = jwt.sign({ adminId: admin.id, username: admin.username, email: admin.email, photo: admin.upload_photo }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
+    const token = jwt.sign({ userId: user.id, username: user.username, email: user.email, photo: user.upload_photo }, process.env.JWT_SECRET, { expiresIn: "12h" });
+    const role = "admin";
     res.cookie("tokenAdmin", token, { httpOnly: true });
+    res.cookie("role", role);
     // Kirim respons dengan token
     res.status(200).json({ token });
   } catch (error) {
