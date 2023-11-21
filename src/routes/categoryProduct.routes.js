@@ -7,12 +7,8 @@ const { isAdmin } = require("../middleware/verifyToken");
 // CRUD routes
 router.get("/", categoryProductController.getAllCategories);
 router.get("/:categoryId", categoryProductController.getCategoryById);
-router.post("", isAdmin, categoryProductController.createCategory);
-router.put("/:categoryId", isAdmin, categoryProductController.updateCategory);
-router.delete(
-  "/:categoryId",
-  isAdmin,
-  categoryProductController.deleteCategory
-);
+router.post("", categoryProductController.createCategory);
+router.put("/:categoryId", categoryProductController.updateCategory);
+router.delete("/:categoryId", categoryProductController.deleteCategory);
 
 module.exports = router;

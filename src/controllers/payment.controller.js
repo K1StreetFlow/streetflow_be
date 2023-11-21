@@ -1,6 +1,7 @@
 const { Payment, Cart, Users_customer } = require("../models");
 const midtransClient = require("midtrans-client");
 const cron = require("node-cron");
+// const { scheduler } = require("timers/promises");
 
 const paymentController = {
   getAllPayments: async (req, res) => {
@@ -208,6 +209,62 @@ const paymentController = {
         console.error("Scheduler error:", error);
       }
     });
+  },
+  updateStatusPending: async (req, res) => {
+    const { order_id } = req.params;
+    let scheduler = cron.schedule("*/10 * * * * *", async () => {
+      try {
+        const { status_payment } = await Payment.findOne({
+          where: { code_payment: order_id },
+        });
+
+        const snap = new midtransClient.Snap({
+          isProduction: false,
+          serverKey: process.env.MIDTRANS_SERVER_KEY,
+          clientKey: process.env.MIDTRANS_CLIENT_KEY,
+        });
+
+        // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
+        const transactionDetails = await snap.transaction.status(order_id);
+
+        // Periksa status pembayaran dari respons Midtrans
+        const { transaction_status } = transactionDetails;
+
+        console.log(
+          `Sedang memeriksa status pembayaran dengan code payemnt ${order_id} setiap 10 detik`
+        );
+
+        // // Jika status 'settlement', lakukan update status di database
+        if (status_payment !== "Pending") {
+          if (scheduler) {
+            scheduler.stop();
+            scheduler = null;
+            console.log("Scheduler stopped");
+          }
+        } else if (transaction_status === "settlement" || "capture") {
+          await Payment.update(
+            { status_payment: "Success" },
+            { where: { code_payment: order_id } }
+          );
+          console.log("Payment status updated");
+          // Menghentikan scheduler
+          if (scheduler) {
+            scheduler.stop();
+            scheduler = null;
+          }
+        } else {
+          if (scheduler) {
+            scheduler.stop();
+            scheduler = null;
+            console.log("Scheduler stopped");
+          }
+        }
+      } catch (error) {
+        console.error("Scheduler error:", error);
+      }
+    });
+
+    res.json({ message: "Scheduler started" });
   },
 };
 

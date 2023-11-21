@@ -14,7 +14,7 @@ const { isAdmin } = require("../middleware/verifyToken");
 router.get("/", getAllProducts);
 router.get("/:id", getProductById);
 router.post("/", isAdmin, createProduct);
-router.put("/:id", isAdmin, updateProduct);
+router.put("/:id", updateProduct);
 router.delete("/:id", isAdmin, deleteProduct);
 
 module.exports = router;

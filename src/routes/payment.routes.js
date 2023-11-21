@@ -12,5 +12,6 @@ router.put("/:id", paymentController.updatePayment);
 router.delete("/:id", paymentController.deletePayment);
 router.get("/status/:order_id", paymentController.getMidtransStatus);
 router.get("/update-status/pending", paymentController.updateAllStatusPending);
+router.get("/update-status/:order_id", paymentController.updateStatusPending);
 
 module.exports = router;

@@ -17,17 +17,9 @@ module.exports = {
       },
       id_order_list: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Order_list",
-          key: "id",
-        },
       },
       id_address: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Address",
-          key: "id",
-        },
       },
       createdAt: {
         allowNull: false,

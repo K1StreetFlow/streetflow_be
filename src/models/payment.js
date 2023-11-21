@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
       status_payment: DataTypes.ENUM("Pending", "Unpaid", "Success", "Failed"),
       total_payment: DataTypes.INTEGER,
       method_payment: DataTypes.STRING,
+      va_number: DataTypes.STRING,
+      va_type: DataTypes.STRING,
+      pdf_url: DataTypes.STRING,
       id_cart: {
         type: DataTypes.INTEGER,
         references: {

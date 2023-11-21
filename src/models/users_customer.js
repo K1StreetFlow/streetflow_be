@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // Definisi relasi one-to-many
       this.hasMany(models.Address, {
         foreignKey: "id_users_customer",
-        as: "addresses",
+        as: "address",
       });
     }
   }

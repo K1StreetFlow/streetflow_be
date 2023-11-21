@@ -33,10 +33,12 @@ const getCategoryById = async (req, res) => {
 };
 
 const createCategory = async (req, res) => {
-  const { name } = req.body;
+  const { name_category_products } = req.body;
 
   try {
-    const newCategory = await CategoryProduct.create({ name });
+    const newCategory = await CategoryProduct.create({
+      name_category_products,
+    });
 
     res.status(201).json(newCategory);
   } catch (error) {
@@ -47,7 +49,7 @@ const createCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
   const { categoryId } = req.params;
-  const { name } = req.body;
+  const { name_category_products } = req.body;
 
   try {
     const category = await CategoryProduct.findByPk(categoryId);
@@ -56,7 +58,7 @@ const updateCategory = async (req, res) => {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    await category.update({ name });
+    await category.update({ name_category_products });
 
     res.json(category);
   } catch (error) {

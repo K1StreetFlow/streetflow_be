@@ -3,15 +3,21 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const categoryProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "CategoryProducts"');
-    const photoProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "PhotoProducts"');
+    const categoryProductsQuery = await queryInterface.sequelize.query(
+      'SELECT id FROM "CategoryProducts"'
+    );
+    const photoProductsQuery = await queryInterface.sequelize.query(
+      'SELECT id FROM "PhotoProducts"'
+    );
 
     // Mendapatkan hasil query sebagai array
     const categoryProducts = categoryProductsQuery[0];
     const photoProducts = photoProductsQuery[0];
     // Pastikan hasil query tidak kosong
     if (categoryProducts.length === 0 || photoProducts.length === 0) {
-      console.error("Error: Empty result from categoryProducts or photoProducts query.");
+      console.error(
+        "Error: Empty result from categoryProducts or photoProducts query."
+      );
       return;
     }
 
@@ -21,7 +27,7 @@ module.exports = {
         {
           name_product: "Product 1",
           description_product: "Description for Product 1",
-          price_product: 29.99,
+          price_product: 36000,
           stock_product: 50,
           size_product: "M",
           colour_product: "Black",
@@ -34,7 +40,7 @@ module.exports = {
         {
           name_product: "Product 2",
           description_product: "Description for Product 2",
-          price_product: 39.99,
+          price_product: 50000,
           stock_product: 30,
           size_product: "M",
           colour_product: "Black",
@@ -47,7 +53,7 @@ module.exports = {
         {
           name_product: "Product 3",
           description_product: "Description for Product 3",
-          price_product: 49.99,
+          price_product: 75000,
           stock_product: 20,
           size_product: "S",
           colour_product: "Black",

@@ -6,10 +6,14 @@ module.exports = (sequelize, DataTypes) => {
       Order_list.belongsTo(models.Payment, {
         foreignKey: "id_payment",
         as: "payment",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
       Order_list.belongsTo(models.Cart_detail, {
         foreignKey: "id_cart_details",
         as: "cart_details",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
       Order_list.hasMany(models.Review_products, {
         foreignKey: "id_order_list",

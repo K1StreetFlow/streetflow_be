@@ -9,8 +9,8 @@ const {
 const { isAdmin, isAdminOrCustomer } = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.get("/", isAdmin, getAllOrder);
-router.get("/:id", isAdminOrCustomer, getOrderById);
+router.get("/", getAllOrder);
+router.get("/:id", getOrderById);
 router.put("/update/:id", isAdmin, updateOrder);
 router.post("/create", isAdmin, createOrder);
 router.delete("/delete/:id", isAdmin, deleteOrder);

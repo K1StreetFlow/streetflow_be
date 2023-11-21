@@ -14,10 +14,6 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         allowNull: true,
-        references: {
-          model: "Carts",
-          key: "id",
-        },
       },
       id_product: {
         type: Sequelize.INTEGER,
@@ -26,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       total_price: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

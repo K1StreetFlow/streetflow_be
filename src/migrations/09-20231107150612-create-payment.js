@@ -13,15 +13,24 @@ module.exports = {
         type: Sequelize.STRING,
       },
       date_payment: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
       },
       status_payment: {
-        type: Sequelize.ENUM("Pending", "Unpaid", "Success", "Failed"),
+        type: Sequelize.ENUM("Pending", "Expired", "Success", "Failed"),
       },
       total_payment: {
         type: Sequelize.INTEGER,
       },
       method_payment: {
+        type: Sequelize.STRING,
+      },
+      va_number: {
+        type: Sequelize.STRING,
+      },
+      va_type: {
+        type: Sequelize.STRING,
+      },
+      pdf_url: {
         type: Sequelize.STRING,
       },
       id_cart: {

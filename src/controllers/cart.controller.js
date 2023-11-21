@@ -4,12 +4,14 @@ const {
   Cart_detail,
   Product,
   Address,
+  sequelize,
 } = require("../models");
 
 const cartController = {
   getAllCarts: async (req, res) => {
     try {
       const carts = await Cart.findAll({
+        order: [["id", "DESC"]],
         include: [
           {
             model: Cart_detail,
@@ -27,7 +29,7 @@ const cartController = {
             include: [
               {
                 model: Address,
-                as: "addresses",
+                as: "address",
               },
             ],
           },
@@ -61,7 +63,7 @@ const cartController = {
         const product = cart.cart_detail.product;
 
         // menampilkan semua attribute dari address
-        const address = cart.user_customer.addresses;
+        const address = cart.user_customer.address;
 
         return {
           cart_id: cart.id,
@@ -94,6 +96,8 @@ const cartController = {
     try {
       const { id } = req.params;
       let cart = await Cart.findByPk(id, {
+        order: sequelize.literal("cart_detail.id ASC"),
+
         include: [
           {
             model: Cart_detail,
@@ -111,14 +115,14 @@ const cartController = {
             include: [
               {
                 model: Address,
-                as: "addresses",
+                as: "address",
               },
             ],
           },
         ],
       });
 
-      if (cart.length === 0) {
+      if (!cart) {
         return res.status(200).json({
           message: "There is no cart data",
         });
@@ -143,7 +147,7 @@ const cartController = {
       const product = cart.cart_detail.product;
 
       // menampilkan semua attribute dari address
-      const address = cart.user_customer.addresses;
+      const address = cart.user_customer.address;
 
       cart = {
         cart_id: cart.id,
@@ -191,8 +195,6 @@ const cartController = {
         },
       });
 
-      console.log(cart);
-
       if (!cart[0]) {
         return res.status(404).json({
           message: `Cart with id ${id} is not found`,
@@ -225,6 +227,7 @@ const cartController = {
         message: `Cart Successfully deleted with id ${id}`,
       });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error: "Internal server error" });
     }
   },

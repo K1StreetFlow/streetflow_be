@@ -27,17 +27,6 @@ module.exports = {
         deletedAt: null,
       },
       {
-        street: "Jl. Jalan Buah",
-        house_number: "VII",
-        zipcode: "333",
-        city: "Purwokerto",
-        province: "Jawa Tengah",
-        id_users_customer: 3,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        deletedAt: null,
-      },
-      {
         id_users_customer: 1,
         street: "123 Main Street",
         house_number: "Apt 4B",

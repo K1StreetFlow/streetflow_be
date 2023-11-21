@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       name_product: DataTypes.STRING,
       description_product: DataTypes.TEXT,
-      price_product: DataTypes.FLOAT,
+      price_product: DataTypes.INTEGER,
       stock_product: DataTypes.INTEGER,
       size_product: {
         type: DataTypes.ENUM,

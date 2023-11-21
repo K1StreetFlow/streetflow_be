@@ -33,18 +33,6 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        {
-          username: "customer3",
-          email: "customer3@example.com",
-          password: hashedPassword3,
-          fullname: "Customer Tree",
-          gender: "Female",
-          birth_date: "1995-03-16",
-          upload_photo: null,
-          phone_number: 9876344210,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
       ],
       {}
     );

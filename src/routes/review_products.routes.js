@@ -10,7 +10,7 @@ const {
 const { isAdmin, isAdminOrCustomer } = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.get("/", isAdmin, getReview);
+router.get("/", getReview);
 router.get("/:id", getReviewById);
 router.get("/rating/:rating", getReviewByRating);
 router.post("/", isAdminOrCustomer, createReview);
