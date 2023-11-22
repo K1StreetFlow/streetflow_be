@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       colour_product: {
         type: DataTypes.ENUM,
-        values: ["Black", "Blue", "Green"],
+        values: ["Blue", "Black", "Grey"],
       },
       id_category_product: DataTypes.INTEGER,
       id_photo_product: DataTypes.INTEGER,
