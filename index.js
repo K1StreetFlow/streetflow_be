@@ -4,9 +4,11 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const router = require("./src/routes");
 require("dotenv").config();
+const morgan = require("morgan");
 
 app.use(cookieParser());
 app.use(cors());
+app.use(morgan("dev");
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
