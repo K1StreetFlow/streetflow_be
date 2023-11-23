@@ -173,6 +173,51 @@ const cartController = {
     }
   },
 
+  getCartByUserId: async (req, res) => {
+    try {
+      const { userId } = req.user;
+      console.log(userId);
+      const cart = await Cart.findOne({
+        include: [
+          {
+            model: Cart_detail,
+            as: "cart_detail",
+            include: [
+              {
+                model: Product,
+                as: "product",
+              },
+            ],
+          },
+          {
+            model: Users_customer,
+            as: "user_customer",
+            include: [
+              {
+                model: Address,
+                as: "address",
+              },
+            ],
+          },
+        ],
+        where: {
+          id_users_customer: userId,
+        },
+      });
+
+      if (!cart) {
+        return res.status(200).json({
+          message: "There is no cart data",
+        });
+      }
+
+      res.status(200).json(cart);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
   createCart: async (req, res) => {
     try {
       const { body } = req;

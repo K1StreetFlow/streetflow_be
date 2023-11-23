@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const router = require("./src/routes");
+const morgan = require("morgan");
 require("dotenv").config();
 
 app.use(cookieParser());
@@ -12,6 +13,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(morgan("dev"));
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

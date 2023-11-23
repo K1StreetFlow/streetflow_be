@@ -55,6 +55,33 @@ const paymentController = {
     }
   },
 
+  getPaymentByCode: async (req, res) => {
+    try {
+      const { code_payment } = req.params;
+      const payment = await Payment.findOne({
+        where: { code_payment: code_payment },
+        include: [
+          {
+            model: Cart,
+            as: "cart",
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
+          },
+        ],
+      });
+
+      res.status(200).json(payment);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
   createPayment: async (req, res) => {
     try {
       const { body } = req;
@@ -160,63 +187,13 @@ const paymentController = {
       res.status(500).json({ error: "Internal server error" });
     }
   },
-
-  updateAllStatusPending: async (req, res) => {
-    // Scheduler untuk memeriksa status pembayaran setiap 10 detik
-    cron.schedule("*/10 * * * * *", async () => {
-      try {
-        // Ambil semua order dengan status 'pending' dari database
-        const pendingPayments = await Payment.findAll({
-          where: { status_payment: "Pending" },
-        });
-
-        // Lakukan pengecekan status pembayaran di Midtrans untuk setiap order yang masih pending
-        for (const payment of pendingPayments) {
-          const snap = new midtransClient.Snap({
-            isProduction: false,
-            serverKey: process.env.MIDTRANS_SERVER_KEY,
-            clientKey: process.env.MIDTRANS_CLIENT_KEY,
-          });
-
-          // // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
-          const transactionDetails = await snap.transaction.status(
-            payment.code_payment
-          );
-          console.log("Sedang memeriksa status pembayaran");
-          // // // Periksa status pembayaran dari respons Midtrans
-          const { transaction_status } = transactionDetails;
-
-          // // // Jika status berhasil atau settlement, perbarui status di database
-          if (
-            transaction_status === "capture" ||
-            transaction_status === "settlement"
-          ) {
-            await Payment.update(
-              { status_payment: "Success" },
-              { where: { code_payment: payment.code_payment } }
-            );
-            console.log("Payment status updated");
-          } else if (transaction_status === "deny") {
-            // // // Jika status deny, perbarui status di database
-            await Payment.update(
-              { status_payment: "Failed" },
-              { where: { code_payment: payment.code_payment } }
-            );
-            console.log("Payment status updated");
-          }
-        }
-      } catch (error) {
-        console.error("Scheduler error:", error);
-      }
-    });
-  },
   updateStatusPending: async (req, res) => {
     const { order_id } = req.params;
     let scheduler = cron.schedule("*/10 * * * * *", async () => {
       try {
-        const { status_payment } = await Payment.findOne({
-          where: { code_payment: order_id },
-        });
+        // const { status_payment } = await Payment.findOne({
+        //   where: { code_payment: order_id },
+        // });
 
         const snap = new midtransClient.Snap({
           isProduction: false,
@@ -234,30 +211,23 @@ const paymentController = {
           `Sedang memeriksa status pembayaran dengan code payemnt ${order_id} setiap 10 detik`
         );
 
-        // // Jika status 'settlement', lakukan update status di database
-        if (status_payment !== "Pending") {
-          if (scheduler) {
-            scheduler.stop();
-            scheduler = null;
-            console.log("Scheduler stopped");
-          }
-        } else if (transaction_status === "settlement" || "capture") {
+        if (transaction_status == "settlement") {
           await Payment.update(
             { status_payment: "Success" },
             { where: { code_payment: order_id } }
           );
           console.log("Payment status updated");
-          // Menghentikan scheduler
-          if (scheduler) {
-            scheduler.stop();
-            scheduler = null;
-          }
-        } else {
-          if (scheduler) {
-            scheduler.stop();
-            scheduler = null;
-            console.log("Scheduler stopped");
-          }
+          scheduler.stop();
+          scheduler = null;
+        } else if (transaction_status == "expire") {
+          // Jika status 'expire', lakukan update status di database
+          await Payment.update(
+            { status_payment: "Failed" },
+            { where: { code_payment: order_id } }
+          );
+          console.log("Payment status updated");
+          scheduler.stop();
+          scheduler = null;
         }
       } catch (error) {
         console.error("Scheduler error:", error);

@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
-      Order_list.belongsTo(models.Cart_detail, {
-        foreignKey: "id_cart_details",
-        as: "cart_details",
+      Order_list.belongsTo(models.Cart, {
+        foreignKey: "id_cart",
+        as: "cart",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       code_order: DataTypes.STRING,
       id_payment: DataTypes.INTEGER,
-      id_cart_details: DataTypes.INTEGER,
+      id_cart: DataTypes.INTEGER,
       status_order: {
         type: DataTypes.ENUM(
           "Unpaid",

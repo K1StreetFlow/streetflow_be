@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       status_payment: {
-        type: Sequelize.ENUM("Pending", "Expired", "Success", "Failed"),
+        type: Sequelize.ENUM("Pending", "Success", "Failed"),
       },
       total_payment: {
         type: Sequelize.INTEGER,

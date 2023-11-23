@@ -10,7 +10,7 @@ const {
 const { isAdmin } = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.get("/", isAdmin, getAllShipping);
+router.get("/", getAllShipping);
 router.get("/:id", getShippingById);
 router.post("/create", createShipping);
 router.put("/update/:id", updateShipping);

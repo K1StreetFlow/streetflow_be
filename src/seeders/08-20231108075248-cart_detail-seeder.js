@@ -12,14 +12,6 @@ module.exports = {
 
     const cart_detail = [
       {
-        id_cart: 1,
-        id_product: 1,
-        quantity: 2,
-        total_price: product1[0][0].price_product * 2,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
         id_cart: 2,
         id_product: 2,
         quantity: 3,
@@ -28,10 +20,43 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id_cart: 3,
+        id_product: 2,
+        quantity: 2,
+        total_price: product1[0][0].price_product * 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         id_cart: 2,
         id_product: 1,
         quantity: 1,
         total_price: product1[0][0].price_product * 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+
+      {
+        id_cart: 3,
+        id_product: 1,
+        quantity: 1,
+        total_price: product1[0][0].price_product * 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id_cart: 2,
+        id_product: 1,
+        quantity: 1,
+        total_price: product1[0][0].price_product * 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id_cart: 1,
+        id_product: 1,
+        quantity: 2,
+        total_price: product1[0][0].price_product * 2,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

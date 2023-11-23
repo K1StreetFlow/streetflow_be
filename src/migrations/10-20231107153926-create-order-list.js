@@ -15,7 +15,7 @@ module.exports = {
       id_payment: {
         type: Sequelize.INTEGER,
       },
-      id_cart_details: {
+      id_cart: {
         type: Sequelize.INTEGER,
       },
       status_order: {
