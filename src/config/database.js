@@ -8,5 +8,6 @@ module.exports = {
 		host: process.env.DB_HOST || "localhost",
 		port: 5432,
 		dialect: "postgres",
+		logging: false,
 	},
 };
