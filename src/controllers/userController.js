@@ -3,6 +3,27 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+async function getTokenUser(req, res) {
+  try {
+    // Get the token from the 'tokenAdmin' cookie
+    const token = req.cookies.tokenCustomer;
+
+    // If the token is not present
+    if (!token) {
+      return res.status(401).json({ message: "Token not found" });
+    }
+
+    // Decode the token to get user information
+    const decodedToken = jwt.decode(token);
+
+    // Send the decoded token to the frontend
+    res.status(200).json({ decodedToken });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
 async function getAllUsers(req, res) {
   // Implementasi logika mendapatkan semua pengguna
   try {
@@ -120,6 +141,7 @@ async function deleteUser(req, res) {
 }
 
 module.exports = {
+  getTokenUser,
   getAllUsers,
   getUserById,
   editUser,
