@@ -120,12 +120,13 @@ const paymentController = {
 				let status_order;
 				if (paymentStatus === "Pending") {
 					status_order = "Unpaid";
+				} else if (paymentStatus === "Unpaid") {
+					status_order = "Unpaid";
 				} else if (paymentStatus === "Success") {
 					status_order = "Paid";
 				} else if (paymentStatus === "Failed") {
 					status_order = "Canceled";
 				}
-
 				await Order_list.update({ status_order }, { where: { id: orderId } });
 			}
 
