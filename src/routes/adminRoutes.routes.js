@@ -1,6 +1,6 @@
 const express = require("express");
 const { getToken, createAdmin, getAllAdmins, getAdminById, editAdmin, deleteAdmin } = require("../controllers/adminController");
-const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
+const { isAdmin } = require("../middleware/verifyToken");
 const upload = require("../middleware/multerConfig");
 const router = express.Router();
 router.use(isAdmin);

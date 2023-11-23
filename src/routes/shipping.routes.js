@@ -1,9 +1,9 @@
 const express = require("express");
 const { getAllShipping, getShippingById, createShipping, updateShipping, deleteShipping, updateShippingAndOrderList } = require("../controllers/shipping.controller");
-const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
+const { isAdmin } = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.get("/", verifyTokenCookieAdmin, getAllShipping);
+router.get("/", isAdmin, getAllShipping);
 router.get("/:id", getShippingById);
 router.post("/create", createShipping);
 router.put("/update/:id", updateShipping);
