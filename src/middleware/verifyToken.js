@@ -57,4 +57,4 @@ const verifyUserType = (req, res, next) => {
   }
 };
 
-module.exports = { verifyTokenCookieAdmin, verifyTokenCookieCustomer, verifyUserType };
+module.exports = { isAdmin, isCustomer, verifyUserType };
