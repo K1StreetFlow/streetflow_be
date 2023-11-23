@@ -124,6 +124,21 @@ const paymentController = {
       res.status(500).json({ error: "Internal server error" });
     }
   },
+  deletePayment: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await Payment.destroy({
+        where: {
+          id,
+        },
+      });
+      res.status(200).json({
+        message: `Delete payment by id ${id} successfull`,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
 
 module.exports = paymentController;
