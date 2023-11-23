@@ -8,16 +8,18 @@ require("dotenv").config();
 const morgan = require("morgan");
 
 app.use(cookieParser());
-app.use(cors());
-app.use(morgan("dev"));
-app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
     origin: "http://localhost:3000", // Replace with the URL of your Next.js app
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
 );
-app.use("/uploads", express.static(path.join(__dirname, "src/assets/images/profile")));
+app.use(morgan("dev"));
+app.use("/uploads", express.static("uploads"));
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "src/assets/images/profile"))
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

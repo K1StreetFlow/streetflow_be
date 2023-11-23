@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       id_product: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,
-      total_price: DataTypes.INTEGER,
+      total_price: DataTypes.FLOAT,
     },
     {
       sequelize,

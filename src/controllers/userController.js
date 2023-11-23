@@ -70,7 +70,16 @@ async function getUserById(req, res) {
 const editUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email, password, retypePassword, fullname, gender, birth_date, phone_number } = req.body;
+    const {
+      username,
+      email,
+      password,
+      retypePassword,
+      fullname,
+      gender,
+      birth_date,
+      phone_number,
+    } = req.body;
 
     // Check if the user with the provided ID exists
     const existingUser = await Users_customer.findByPk(id, {
@@ -89,7 +98,9 @@ const editUser = async (req, res) => {
     existingUser.birth_date = birth_date || existingUser.birth_date;
     existingUser.phone_number = phone_number || existingUser.phone_number;
 
-    const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
+    const profileImage = req.file
+      ? path.join("uploads", req.file.filename)
+      : null;
 
     if (profileImage) {
       // Update the profile image if a new one is uploaded
@@ -105,7 +116,9 @@ const editUser = async (req, res) => {
     // Save the updated user record to the database
     await existingUser.save();
 
-    res.status(200).json({ message: "User updated successfully", user: existingUser });
+    res
+      .status(200)
+      .json({ message: "User updated successfully", user: existingUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -140,10 +153,29 @@ async function deleteUser(req, res) {
   }
 }
 
+const getUserProfile = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const user = await Users_customer.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getTokenUser,
   getAllUsers,
   getUserById,
   editUser,
   deleteUser,
+  getUserProfile,
 };

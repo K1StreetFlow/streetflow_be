@@ -64,7 +64,7 @@ const cardDetailController = {
         id_cart,
         id_product,
         quantity,
-        total_price: Math.round(price.price_product) * quantity,
+        total_price: price.price_product * quantity,
       });
       res.status(201).json({
         message: "Create new cart",
@@ -76,6 +76,40 @@ const cardDetailController = {
     }
   },
   editCartDetail: async (req, res) => {
+    try {
+      const { idCart } = req.params;
+      const { idProduct } = req.params;
+      const { quantity } = req.body;
+
+      const price = await Product.findByPk(idProduct);
+
+      const cart_detail = await Cart_detail.update(
+        {
+          quantity,
+          total_price: price.price_product * quantity,
+        },
+        {
+          where: {
+            id_cart: idCart,
+            id_product: idProduct,
+          },
+        }
+      );
+
+      if (!cart_detail[0]) {
+        return res.status(404).json({
+          message: `Cart detail with id ${id} is not found`,
+        });
+      }
+
+      res.status(200).json(req.body);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  editQuantityCartDetail: async (req, res) => {
     try {
       const { id } = req.params;
       const { quantity } = req.body;
