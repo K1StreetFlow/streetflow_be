@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       stock_product: DataTypes.INTEGER,
       size_product: {
         type: DataTypes.ENUM,
-        values: ["S", "M", "xl"],
+        values: ["S", "M", "L", "XL"],
       },
       colour_product: {
         type: DataTypes.ENUM,
-        values: ["Black", "Blue", "Green"],
+        values: ["Blue", "Black", "Grey"],
       },
       id_category_product: DataTypes.INTEGER,
       id_photo_product: DataTypes.INTEGER,

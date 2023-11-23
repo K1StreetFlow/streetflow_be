@@ -11,11 +11,17 @@ module.exports = {
       },
       id_cart: {
         type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        allowNull: true,
       },
       id_product: {
         type: Sequelize.INTEGER,
       },
       quantity: {
+        type: Sequelize.INTEGER,
+      },
+      total_price: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

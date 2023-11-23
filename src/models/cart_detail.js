@@ -11,18 +11,29 @@ module.exports = (sequelize, DataTypes) => {
       Cart_detail.belongsTo(models.Cart, {
         foreignKey: "id_cart",
         as: "cart",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
       Cart_detail.belongsTo(models.Product, {
         foreignKey: "id_product",
         as: "product",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
     }
   }
   Cart_detail.init(
     {
-      id_cart: DataTypes.INTEGER,
+      id_cart: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Cart",
+          key: "id",
+        },
+      },
       id_product: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,
+      total_price: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -9,7 +9,7 @@ async function getAllUsers(req, res) {
       include: [
         {
           model: Address,
-          as: "addresses",
+          as: "address",
           attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
         },
       ],
@@ -29,7 +29,7 @@ async function getUserById(req, res) {
       include: [
         {
           model: Address,
-          as: "addresses",
+          as: "address",
         },
       ],
     });

@@ -1,5 +1,6 @@
 const { Payment, Cart, Users_customer } = require("../models");
 const midtransClient = require("midtrans-client");
+const cron = require("node-cron");
 
 const paymentController = {
   getAllPayments: async (req, res) => {
@@ -49,6 +50,33 @@ const paymentController = {
         data: payment,
       });
     } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  getPaymentByCode: async (req, res) => {
+    try {
+      const { code_payment } = req.params;
+      const payment = await Payment.findOne({
+        where: { code_payment: code_payment },
+        include: [
+          {
+            model: Cart,
+            as: "cart",
+            include: [
+              {
+                model: Users_customer,
+                as: "user_customer",
+              },
+            ],
+          },
+        ],
+      });
+
+      res.status(200).json(payment);
+      return;
+    } catch (error) {
+      console.log(error);
       res.status(500).json({ error: "Internal server error" });
     }
   },
@@ -123,6 +151,89 @@ const paymentController = {
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
+  },
+
+  deletePayment: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await Payment.destroy({
+        where: {
+          id,
+        },
+      });
+      res.status(200).json({
+        message: `Delete payment by id ${id} successfull`,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  getMidtransStatus: async (req, res) => {
+    try {
+      const { order_id } = req.params;
+      const snap = new midtransClient.Snap({
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_SERVER_KEY,
+      });
+      const status = await snap.transaction.status(order_id);
+
+      res.status(200).json({
+        message: `Get status payment by order id ${order_id} successfull`,
+        data: status,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+  updateStatusPending: async (req, res) => {
+    const { order_id } = req.params;
+    let scheduler = cron.schedule("*/10 * * * * *", async () => {
+      try {
+        // const { status_payment } = await Payment.findOne({
+        //   where: { code_payment: order_id },
+        // });
+
+        const snap = new midtransClient.Snap({
+          isProduction: false,
+          serverKey: process.env.MIDTRANS_SERVER_KEY,
+          clientKey: process.env.MIDTRANS_CLIENT_KEY,
+        });
+
+        // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
+        const transactionDetails = await snap.transaction.status(order_id);
+
+        // Periksa status pembayaran dari respons Midtrans
+        const { transaction_status } = transactionDetails;
+
+        console.log(
+          `Sedang memeriksa status pembayaran dengan code payemnt ${order_id} setiap 10 detik`
+        );
+
+        if (transaction_status == "settlement") {
+          await Payment.update(
+            { status_payment: "Success" },
+            { where: { code_payment: order_id } }
+          );
+          console.log("Payment status updated");
+          scheduler.stop();
+          scheduler = null;
+        } else if (transaction_status == "expire") {
+          // Jika status 'expire', lakukan update status di database
+          await Payment.update(
+            { status_payment: "Failed" },
+            { where: { code_payment: order_id } }
+          );
+          console.log("Payment status updated");
+          scheduler.stop();
+          scheduler = null;
+        }
+      } catch (error) {
+        console.error("Scheduler error:", error);
+      }
+    });
+
+    res.json({ message: "Scheduler started" });
   },
 };
 
