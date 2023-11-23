@@ -1,13 +1,24 @@
-const { Review_products, Users_customer, Product, Order_list } = require('../models');
+const { Review_products, Users_customer, Product, PhotoProduct, Order_list } = require('../models');
 
 
 const getReview = async (req, res) => {
     try {
         const reviews = await Review_products.findAll({
             include: [
-                { model: Users_customer, as: 'users_customer'},
-                { model: Product, as: 'products'},
-                { model: Order_list, as: 'order_list'}
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname'],},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
             ]
         });
 
@@ -34,9 +45,20 @@ const getReviewById = async (req, res) => {
         const { id } = req.params;
         const review = await Review_products.findByPk(id, {
             include: [
-                { model: Users_customer, as: 'users_customer'},
-                { model: Product, as: 'products'},
-                { model: Order_list, as: 'order_list'}
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
             ]
         });
 
@@ -62,9 +84,20 @@ const getReviewByRating = async (req, res) => {
                 number_review: rating,
             },
             include: [
-                { model: Users_customer, as: 'users_customer'},
-                { model: Product, as: 'products'},
-                { model: Order_list, as: 'order_list'}
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
             ]
         });
 
@@ -75,6 +108,45 @@ const getReviewByRating = async (req, res) => {
             });
         } else {
             res.status(404).json({ message: `Review with Rating ${rating} Failed`});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error"});
+    }
+}
+
+const getReviewByUser = async (req, res) => {
+    try {
+        const { user } = req.params;
+        const reviews = await Review_products.findAll({
+            where: {
+                id_users_customer: user,
+            },
+            include: [
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
+            ]
+        });
+
+        if (reviews.length > 0) {
+            res.status(200).json({
+                message: `Get Reviews with User ${user} Successfully`,
+                data: reviews,
+            });
+        } else {
+            res.status(404).json({ message: `Review with User ${user} Failed`});
         }
     } catch (error) {
         console.error(error);

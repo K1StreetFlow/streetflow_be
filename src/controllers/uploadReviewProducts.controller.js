@@ -43,7 +43,7 @@ const getPhotoByReviewId = async (req, res) => {
 
 const uploadPhotoReview = async (req, res) => {
     try {
-        const filePath = req.file.path; // Use req.file.path instead of req.file.filePath
+        const { filename } = req.file; // Use req.file.path instead of req.file.filePath
 
         const reviewId = req.params.id;
 
@@ -57,7 +57,7 @@ const uploadPhotoReview = async (req, res) => {
         }
 
         const uploadPhoto = await Review_products.update(
-            { photo_review: filePath },
+            { photo_review: filename },
             { where: { id: reviewId }},
         );
 
@@ -79,7 +79,7 @@ const uploadPhotoReview = async (req, res) => {
 
 const updatePhotoReview = async (req, res) => {
     try {
-        const filePath = req.file.path;
+        const { filename } = req.file;;
 
         const reviewId = req.params.id;
 
@@ -93,7 +93,7 @@ const updatePhotoReview = async (req, res) => {
         }
 
         // Update the photo_review attribute
-        existingReview.photo_review = filePath;
+        existingReview.photo_review = filename;
         existingReview.updatedAt = new Date();
         await existingReview.save();
 
