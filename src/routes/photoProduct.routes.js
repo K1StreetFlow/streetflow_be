@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllPhotos,
-  getAllPhotosWithPagination,  // Sesuaikan nama fungsi dengan yang ada di controller
+  getAllPhotosWithPagination, // Sesuaikan nama fungsi dengan yang ada di controller
   getPhotoById,
   uploadPhoto,
   editPhoto,
@@ -14,7 +14,7 @@ const { isAdminOrSelf } = require("../middleware/adminMiddleware.js");
 
 router.get("/", getAllPhotos);
 // pagination
-router.get("/pagination", getAllPhotosWithPagination);  // Sesuaikan nama fungsi dengan yang ada di controller
+router.get("/pagination", getAllPhotosWithPagination); // Sesuaikan nama fungsi dengan yang ada di controller
 
 // Get photo by ID
 router.get("/:id", getPhotoById);
@@ -29,13 +29,7 @@ router.delete("/:id", isAdminOrSelf, deletePhoto);
 
 // Serve static files from the specified directory
 router.get("/view/:filename", (req, res) => {
-  res.sendFile(
-    path.join(
-      __dirname,
-      "../../src/assets/images/products",
-      req.params.filename
-    )
-  );
+  res.sendFile(path.join(__dirname, "../../src/assets/images/products", req.params.filename));
 });
 
 module.exports = router;
