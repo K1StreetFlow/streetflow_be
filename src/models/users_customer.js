@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // Definisi relasi one-to-many
-      this.hasMany(models.Address, { foreignKey: "id_users_customer", as: "addresses" });
+      this.hasMany(models.Address, {
+        foreignKey: "id_users_customer",
+        as: "address",
+      });
     }
   }
   Users_customer.init(
