@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require('express');
 const router = express.Router();
 const {
@@ -16,13 +17,7 @@ router.put('/:id', upload.single('photo_review'), updatePhotoReview);
 router.delete('/:id', deletePhotoReview);
 
 router.get("/view/:filename", (req, res) => {
-  res.sendFile(
-    path.join(
-      __dirname,
-      "../../src/assets/images/review-products/multiple/" || "../../src/assets/images/review-products/single/",
-      req.params.filename
-    )
-  );
+	res.sendFile(path.join(__dirname, "../assets/images/review-products", req.params.filename));
 });
 
 module.exports = router;
