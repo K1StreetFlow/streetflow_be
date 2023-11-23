@@ -19,9 +19,9 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id_cart: 2,
+        id_cart: 3,
         id_product: 1,
-        quantity: 1,
+        quantity: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

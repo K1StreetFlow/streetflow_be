@@ -9,10 +9,10 @@ const cardDetailController = {
             model: Cart,
             as: "cart",
           },
-          // {
-          //   model: Product,
-          //   as: "product",
-          // }
+          {
+            model: Product,
+            as: "product",
+          }
         ],
       });
       res.status(200).json({

@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: "id_payment",
 				as: "payment",
 			});
-			Order_list.belongsTo(models.Cart_details, {
+			Order_list.belongsTo(models.Cart, {
 				foreignKey: "id_cart_details",
-				as: "cart_details",
+				as: "cart",
 			});
-			Order_list.hasMany(models.Reviews_products, {
+			Order_list.hasMany(models.Review_products, {
 				foreignKey: "id_order_list",
 				as: "review_products",
 			});
@@ -29,9 +29,9 @@ module.exports = (sequelize, DataTypes) => {
 				primaryKey: true,
 				type: DataTypes.INTEGER,
 			},
-			code_order:DataTypes.STRING,
+			code_order: DataTypes.STRING,
 			id_payment: DataTypes.INTEGER,
-			id_cart_details:DataTypes.INTEGER,
+			id_cart_details: DataTypes.INTEGER,
 			status_order: {
 				type: DataTypes.ENUM("Unpaid", "Paid", "Packaged", "Delivered", "Completed", "Canceled"),
 			},

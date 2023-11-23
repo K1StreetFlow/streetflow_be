@@ -1,4 +1,29 @@
-const { Order_list, Payment, Cart_detail } = require("../models");
+const { Order_list, Payment, Cart_detail, Product, Cart, PhotoProduct, Shipping } = require("../models");
+const cron = require("node-cron");
+
+cron.schedule("*/10 * * * *", async () => {
+	// This function will run every 50 seconds
+	try {
+		await Order_list.update({ status_order: "Packaged" }, { where: { status_order: "Paid" } });
+		console.log("Orders updated to Packaged successfully");
+
+		await Order_list.update({ status_order: "Delivered" }, { where: { status_order: "Packaged" } });
+		console.log("Orders updated to Delivered successfully");
+
+		// await Order_list.update({ status_order: "Completed" }, { where: { status_order: "Delivered" } });
+		// console.log("Orders updated to Completed successfully");
+	} catch (error) {
+		console.error("Failed to update orders", error);
+	}
+});
+
+function generateOrderCode() {
+	return "ORDER-" + Date.now();
+}
+
+function generateShippingCode() {
+	return "INV-" + Date.now();
+}
 
 const getAllOrder = async (req, res) => {
 	try {
@@ -9,8 +34,27 @@ const getAllOrder = async (req, res) => {
 					as: "payment",
 				},
 				{
-					model: Cart_detail,
-					as: "cart_details",
+					model: Cart,
+					as: "cart",
+					attributes: ["id", "id_users_customer"],
+					include: [
+						{
+							model: Cart_detail,
+							as: "cart_detail",
+							include: [
+								{
+									model: Product,
+									as: "product",
+									include: [
+										{
+											model: PhotoProduct,
+											as: "photo",
+										},
+									],
+								},
+							],
+						},
+					],
 				},
 			],
 		});
@@ -36,18 +80,35 @@ const getOrderById = async (req, res) => {
 			where: {
 				id,
 			},
-			// include: [
-			// 	{
-			// 		model: Payment,
-			// 		as: "payment",
-			// 		attributes: ["id"],
-			// 	},
-			// 	{
-			// 		model: Cart_details,
-			// 		as: "cart_details",
-			// 		attributes: ["id"],
-			// 	},
-			// ],
+			include: [
+				{
+					model: Payment,
+					as: "payment",
+				},
+				{
+					model: Cart,
+					as: "cart",
+					attributes: ["id", "id_users_customer"],
+					include: [
+						{
+							model: Cart_detail,
+							as: "cart_detail",
+							include: [
+								{
+									model: Product,
+									as: "product",
+									include: [
+										{
+											model: PhotoProduct,
+											as: "photo",
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+			],
 		});
 
 		if (orderList) {
@@ -64,18 +125,33 @@ const getOrderById = async (req, res) => {
 	}
 };
 
-const createOrder = async (req, res) => {
+const createOrderAndShipping = async (req, res) => {
 	try {
-		const orderList = await Order_list.create(req.body);
+		const code_order = generateOrderCode();
+		const newOrder = { ...req.body, code_order };
 
-		if (orderList) {
-			res.status(200).json({
-				message: "Create Order List Successfully",
-				data: orderList,
-			});
-		} else {
-			res.status(404).json({ message: "Create Order List Failed" });
+		// Create a new order list entry
+		const orderList = await Order_list.create(newOrder);
+
+		if (!orderList) {
+			return res.status(404).json({ message: "Create Order List Failed" });
 		}
+
+		const receipt_number = generateShippingCode();
+		const newShipping = { ...req.body, receipt_number, id_order_list: orderList.id };
+		const shipping = await Shipping.create(newShipping);
+
+		if (!shipping) {
+			return res.status(404).json({ message: "Create Shipping Failed" });
+		}
+
+		res.status(200).json({
+			message: "Create Order List and Shipping Successfully",
+			data: {
+				orderList,
+				shipping,
+			},
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: "Internal Server Error" });
@@ -126,7 +202,7 @@ const deleteOrder = async (req, res) => {
 module.exports = {
 	getAllOrder,
 	getOrderById,
-	createOrder,
+	createOrderAndShipping,
 	updateOrder,
 	deleteOrder,
 };
