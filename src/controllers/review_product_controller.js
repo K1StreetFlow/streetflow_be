@@ -113,14 +113,15 @@ const getReviewByRating = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Internal Server Error"});
     }
-}
+};
 
-const getReviewByUser = async (req, res) => {
+const getReviewByUserId = async (req, res) => {
     try {
-        const { user } = req.params;
-        const reviews = await Review_products.findAll({
+        const { userId } = req.user;
+        console.log(userId);
+        const review = await Review_products.findOne({
             where: {
-                id_users_customer: user,
+                id_users_customer: userId,
             },
             include: [
                 { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
@@ -140,19 +141,17 @@ const getReviewByUser = async (req, res) => {
             ]
         });
 
-        if (reviews.length > 0) {
-            res.status(200).json({
-                message: `Get Reviews with User ${user} Successfully`,
-                data: reviews,
+        if (!review) {
+            return res.status(404).json({
+                message: "There is no Product Selected",
             });
-        } else {
-            res.status(404).json({ message: `Review with User ${user} Failed`});
         }
+        res.status(200).json(review);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Internal Server Error"});
+        console.log(error);
+        res.status(500).json({ error: "Internal Server Error"});
     }
-}
+};
 
 const createReview = async (req, res) => {
     try {
@@ -280,6 +279,7 @@ module.exports = {
     getReview,
     getReviewById,
     getReviewByRating,
+    getReviewByUserId,
     createReview,
     updateReview,
     deleteReview
