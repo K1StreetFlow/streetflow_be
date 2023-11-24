@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "id_payment",
         as: "payment",
       });
-      Order_list.belongsTo(models.Cart_detail, {
+      Order_list.belongsTo(models.Cart, {
         foreignKey: "id_cart_details",
-        as: "cart_details",
+        as: "cart",
       });
       Order_list.hasMany(models.Review_products, {
         foreignKey: "id_order_list",
@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       Order_list.hasMany(models.Shipping, {
         foreignKey: "id_order_list",
         as: "shipping",
+      });
+      Order_list.belongsTo(models.Users_customer, {
+        foreignKey: "id_users_customer",
+        as: "user_customer",
       });
     }
   }
@@ -32,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       code_order: DataTypes.STRING,
       id_payment: DataTypes.INTEGER,
       id_cart_details: DataTypes.INTEGER,
+      id_users_customer: DataTypes.INTEGER,
       status_order: {
         type: DataTypes.ENUM(
           "Unpaid",
