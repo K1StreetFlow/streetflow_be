@@ -1,4 +1,14 @@
-const { Shipping, Order_list, Address } = require("../models");
+const {
+	Shipping,
+	Order_list,
+	Address,
+	Payment,
+	Users_customer,
+	Cart_detail,
+	Product,
+	PhotoProduct,
+	Cart,
+} = require("../models");
 
 const getAllShipping = async (req, res) => {
 	try {
@@ -7,10 +17,49 @@ const getAllShipping = async (req, res) => {
 				{
 					model: Order_list,
 					as: "order_list",
+					include: [
+						{
+							model: Payment,
+							as: "payment",
+						},
+						{
+							model: Cart,
+							as: "cart",
+							attributes: ["id", "id_users_customer"],
+							include: [
+								{
+									model: Users_customer,
+									as: "user_customer",
+								},
+								{	
+									model: Cart_detail,
+									as: "cart_detail",
+									include: [
+										{
+											model: Product,
+											as: "product",
+											include: [
+												{
+													model: PhotoProduct,
+													as: "photo",
+												},
+											],
+										},
+									],
+								},
+							],
+						},
+					],
 				},
 				{
 					model: Address,
 					as: "address",
+					include: [
+						{
+							model: Users_customer,
+							as: "user_customer",
+						},
+					],
 				},
 			],
 		});
@@ -40,10 +89,45 @@ const getShippingById = async (req, res) => {
 				{
 					model: Order_list,
 					as: "order_list",
+					include: [
+						{
+							model: Payment,
+							as: "payment",
+						},
+						{
+							model: Cart,
+							as: "cart",
+							attributes: ["id", "id_users_customer"],
+							include: [
+								{
+									model: Cart_detail,
+									as: "cart_detail",
+									include: [
+										{
+											model: Product,
+											as: "product",
+											include: [
+												{
+													model: PhotoProduct,
+													as: "photo",
+												},
+											],
+										},
+									],
+								},
+							],
+						},
+					],
 				},
 				{
 					model: Address,
 					as: "address",
+					include: [
+						{
+							model: Users_customer,
+							as: "user_customer",
+						},
+					],
 				},
 			],
 		});
