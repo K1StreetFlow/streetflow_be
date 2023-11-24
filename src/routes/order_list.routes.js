@@ -3,8 +3,7 @@ const { getAllOrder, getOrderById, updateOrder, createOrder, deleteOrder } = req
 const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const { isAdmin } = require("../middleware/verifyToken");
 const router = express.Router();
-router.use(isAdminOrSelf);
-router.get("/", isAdmin, getAllOrder);
+router.get("/", getAllOrder);
 router.get("/:id", getOrderById);
 router.put("/update/:id", updateOrder);
 router.post("/create", createOrder);
