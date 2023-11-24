@@ -14,17 +14,17 @@ module.exports = {
       },
       id_payment: {
         type: Sequelize.INTEGER,
-        // references: {
-        // 	model: "Payments",
-        // 	key: "id",
-        // },
+        references: {
+        	model: "Payments",
+        	key: "id",
+        },
       },
       id_cart_details: {
         type: Sequelize.INTEGER,
-        // references: {
-        // 	model: "Cart_details",
-        // 	key: "id",
-        // },
+        references: {
+        	model: "Cart_details",
+        	key: "id",
+        },
       },
       status_order: {
         type: Sequelize.ENUM(

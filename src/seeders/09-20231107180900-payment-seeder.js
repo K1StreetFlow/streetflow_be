@@ -32,6 +32,19 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        code_payment: "TES-008",
+        date_payment: "2023-11-20 17:49:28",
+        status_payment: "Failed",
+        total_payment: 200000,
+        method_payment: "E-Wallet",
+        va_number: "123456789",
+        va_type: "Dana",
+        pdf_url: "https://www.tes.com",
+        id_cart: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ];
 
     return queryInterface.bulkInsert("Payments", getAllPayments, {});

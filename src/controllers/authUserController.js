@@ -26,7 +26,7 @@ const register = async (req, res) => {
     const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
 
     // Create a new user
-    await Users_customer.create({
+    const users = await Users_customer.create({
       username,
       email,
       password: hashedPassword,
@@ -37,7 +37,7 @@ const register = async (req, res) => {
       upload_photo: profileImage, // Save the file name in the database
     });
 
-    res.status(201).json("Registration successful");
+    res.status(201).json(users);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });

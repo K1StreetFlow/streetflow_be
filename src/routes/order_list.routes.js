@@ -12,9 +12,6 @@ const {
 const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const { isAdmin, isCustomer } = require("../middleware/verifyToken");
 const router = express.Router();
-// router.use(isAdminOrSelf);
-
-// Admin Side
 router.get("/", getAllOrder);
 router.get("/:id", getOrderById);
 
