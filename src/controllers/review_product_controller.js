@@ -1,14 +1,26 @@
-const { Review_products, Users_customer, Product, Order_list } = require("../models");
+const { Review_products, Users_customer, Product, PhotoProduct, Order_list } = require('../models');
+
 
 const getReview = async (req, res) => {
-	try {
-		const reviews = await Review_products.findAll({
-			include: [
-				{ model: Users_customer, as: "users_customer" },
-				{ model: Product, as: "products" },
-				{ model: Order_list, as: "order_list" },
-			],
-		});
+    try {
+        const reviews = await Review_products.findAll({
+            include: [
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname'],},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
+            ]
+        });
 
 		if (reviews) {
 			res.status(200).json({
@@ -29,15 +41,26 @@ const getReview = async (req, res) => {
 };
 
 const getReviewById = async (req, res) => {
-	try {
-		const { id } = req.params;
-		const review = await Review_products.findByPk(id, {
-			include: [
-				{ model: Users_customer, as: "users_customer" },
-				{ model: Product, as: "products" },
-				{ model: Order_list, as: "order_list" },
-			],
-		});
+    try {
+        const { id } = req.params;
+        const review = await Review_products.findByPk(id, {
+            include: [
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
+            ]
+        });
 
 		if (review) {
 			res.status(200).json({
@@ -54,44 +77,94 @@ const getReviewById = async (req, res) => {
 };
 
 const getReviewByRating = async (req, res) => {
-	try {
-		const { rating } = req.params;
-		const reviews = await Review_products.findAll({
-			where: {
-				number_review: rating,
-			},
-			include: [
-				{ model: Users_customer, as: "users_customer" },
-				{ model: Product, as: "products" },
-				{ model: Order_list, as: "order_list" },
-			],
-		});
+    try {
+        const { rating } = req.params;
+        const reviews = await Review_products.findAll({
+            where: {
+                number_review: rating,
+            },
+            include: [
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
+            ]
+        });
 
-		if (reviews.length > 0) {
-			res.status(200).json({
-				message: `Get Reviews with Rating ${rating} Successfully`,
-				data: reviews,
-			});
-		} else {
-			res.status(404).json({ message: `Review with Rating ${rating} Failed` });
-		}
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
+        if (reviews.length > 0) {
+            res.status(200).json({
+                message: `Get Reviews with Rating ${rating} Successfully`,
+                data: reviews,
+            });
+        } else {
+            res.status(404).json({ message: `Review with Rating ${rating} Failed`});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error"});
+    }
+};
+
+const getReviewByUserId = async (req, res) => {
+    try {
+        const { userId } = req.user;
+        console.log(userId);
+        const review = await Review_products.findOne({
+            where: {
+                id_users_customer: userId,
+            },
+            include: [
+                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { 
+                    model: Product, 
+                    as: 'products', 
+                    attributes: ['name_product'],
+                    include : [
+                        {
+                            model: PhotoProduct,
+                            as: 'photo',
+                            attributes: ['photo_product'],
+                        }
+                    ]
+                },
+                { model: Order_list, as: 'order_list', attributes: ['code_order']}
+            ]
+        });
+
+        if (!review) {
+            return res.status(404).json({
+                message: "There is no Product Selected",
+            });
+        }
+        res.status(200).json(review);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal Server Error"});
+    }
 };
 
 const createReview = async (req, res) => {
-	try {
-		const { id_products, id_users_customer, message_review, number_review, id_order_list } = req.body;
-		console.info("Request Body:", req.body);
-		// Query the Order_list model
-		const order = await Order_list.findOne({
-			where: { id: id_order_list },
-		});
+    try {
+        const { id_products, id_users_customer, message_review, number_review, id_order_list } = req.body;
+        console.info("Request Body:", req.body);
+        // Query the Order_list model
+        const order = await Order_list.findOne({
+            where: { id: id_order_list }
+        });
 
-		console.info("ID Order List:", id_order_list);
-		console.info("Order Status:", order ? order.status_order : "Order not found");
+        
+        console.info("ID Order List:", id_order_list);
+        console.info("Order Status:", order ? order.status_order : "Order not found");
 
 		// Check if the order is completed
 		if (!order || order.status_order !== "Completed") {
@@ -202,10 +275,11 @@ const deleteReview = async (req, res) => {
 };
 
 module.exports = {
-	getReview,
-	getReviewById,
-	getReviewByRating,
-	createReview,
-	updateReview,
-	deleteReview,
+    getReview,
+    getReviewById,
+    getReviewByRating,
+    getReviewByUserId,
+    createReview,
+    updateReview,
+    deleteReview
 };

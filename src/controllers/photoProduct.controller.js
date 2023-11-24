@@ -1,6 +1,33 @@
 const { PhotoProduct } = require("../models");
 const upload = require("../middleware/multer-config.js");
 
+
+
+const ITEMS_PER_PAGE = 10;
+
+const getAllPhotosWithPagination = async (req, res) => {
+  try {
+    const page = req.query.page || 1; // Get page number from query parameter or default to 1
+    const offset = (page - 1) * ITEMS_PER_PAGE;
+
+    const photos = await PhotoProduct.findAndCountAll({
+      limit: ITEMS_PER_PAGE,
+      offset: offset,
+    });
+
+    const totalPages = Math.ceil(photos.count / ITEMS_PER_PAGE);
+
+    res.json({
+      photos: photos.rows,
+      totalPages: totalPages,
+      currentPage: parseInt(page),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const getAllPhotos = async (req, res) => {
   try {
     const photos = await PhotoProduct.findAll();
@@ -84,6 +111,7 @@ const deletePhoto = async (req, res) => {
 module.exports = {
   getAllPhotos,
   getPhotoById,
+  getAllPhotosWithPagination,
   uploadPhoto,
   editPhoto,
   deletePhoto,

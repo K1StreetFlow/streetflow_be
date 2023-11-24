@@ -1,13 +1,16 @@
-// routes/categoryProductRoutes.js
 const express = require("express");
 const router = express.Router();
-const categoryProductController = require("../controllers/categoryProductController");
+const { getAllCategories, getCategoryById, createCategory, updateCategory, getAllCategoriesWithPagination, deleteCategory } = require("../controllers/categoryProductController");
+
+const { isAdminOrSelf } = require("../middleware/adminMiddleware.js");
 
 // CRUD routes
-router.get("/", categoryProductController.getAllCategories);
-router.get("/:categoryId", categoryProductController.getCategoryById);
-router.post("", categoryProductController.createCategory);
-router.put("/:categoryId", categoryProductController.updateCategory);
-router.delete("/:categoryId", categoryProductController.deleteCategory);
+
+router.get("/", getAllCategories);
+router.get("/pagination", getAllCategoriesWithPagination);
+router.get("/:id", getCategoryById);
+router.post("/", isAdminOrSelf, createCategory);
+router.put("/:id", isAdminOrSelf, updateCategory);
+router.delete("/:id", isAdminOrSelf, deleteCategory);
 
 module.exports = router;

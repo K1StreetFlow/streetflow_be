@@ -1,15 +1,9 @@
 const express = require("express");
-const {
-	getAllShipping,
-	getShippingById,
-	createShipping,
-	updateShipping,
-	deleteShipping,
-	updateShippingAndOrderList
-} = require("../controllers/shipping.controller");
+const { getAllShipping, getShippingById, createShipping, updateShipping, deleteShipping, updateShippingAndOrderList } = require("../controllers/shipping.controller");
+const { isAdmin } = require("../middleware/verifyToken");
 const router = express.Router();
 
-router.get("/", getAllShipping);
+router.get("/", isAdmin, getAllShipping);
 router.get("/:id", getShippingById);
 router.post("/create", createShipping);
 router.put("/update/:id", updateShipping);

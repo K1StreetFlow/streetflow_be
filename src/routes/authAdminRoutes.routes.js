@@ -1,9 +1,9 @@
 const express = require("express");
 const { login, logout } = require("../controllers/authAdminController");
-const { verifyTokenCookieAdmin } = require("../middleware/verifyToken");
+const { isAdmin } = require("../middleware/verifyToken");
 const router = express.Router();
 
 router.post("/login", login);
-router.post("/logout", verifyTokenCookieAdmin, logout);
+router.post("/logout", isAdmin, logout);
 
 module.exports = router;

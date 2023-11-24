@@ -75,7 +75,7 @@ async function login(req, res) {
         phone_number: user.phone_number,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
 
     res.cookie("tokenCustomer", token, { httpOnly: true });
