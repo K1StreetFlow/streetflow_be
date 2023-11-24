@@ -143,6 +143,26 @@ const paymentController = {
 					},
 				}
 			);
+
+			async function updateOrderStatus(paymentStatus, orderId) {
+				let status_order;
+				if (paymentStatus === "Pending") {
+					status_order = "Unpaid";
+				} else if (paymentStatus === "Unpaid") {
+					status_order = "Unpaid";
+				} else if (paymentStatus === "Success") {
+					status_order = "Paid";
+				} else if (paymentStatus === "Failed") {
+					status_order = "Canceled";
+				}
+				await Order_list.update({ status_order }, { where: { id: orderId } });
+			}
+
+			const order = await Order_list.findOne({ where: { id_payment: id } });
+			if (order) {
+				updateOrderStatus(status_payment, order.id);
+			}
+
 			res.status(200).json({
 				message: `Update payment by id ${id} successfull`,
 				data: req.body,

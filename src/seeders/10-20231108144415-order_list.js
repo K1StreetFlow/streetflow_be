@@ -22,16 +22,6 @@ module.exports = {
 				updatedAt: new Date(),
 				deletedAt: null,
 			},
-			{
-				code_order: "TS-003",
-				id_payment: 3,
-				id_cart_details: 3,
-				status_order: "Paid",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				deletedAt: null,
-			},
-			
 		]);
 	},
 

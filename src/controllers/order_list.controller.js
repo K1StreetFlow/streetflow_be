@@ -73,7 +73,107 @@ const getAllOrder = async (req, res) => {
 	}
 };
 
+const getAllOrderUser = async (req, res) => {
+	try {
+		const orderList = await Order_list.findAll({
+			include: [
+				{
+					model: Payment,
+					as: "payment",
+				},
+				{
+					model: Cart,
+					as: "cart",
+					attributes: ["id", "id_users_customer"],
+					include: [
+						{
+							model: Cart_detail,
+							as: "cart_detail",
+							include: [
+								{
+									model: Product,
+									as: "product",
+									include: [
+										{
+											model: PhotoProduct,
+											as: "photo",
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+			],
+		});
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Get All Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Get All Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
 const getOrderById = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const orderList = await Order_list.findOne({
+			where: {
+				id,
+			},
+			include: [
+				{
+					model: Payment,
+					as: "payment",
+				},
+				{
+					model: Cart,
+					as: "cart",
+					attributes: ["id", "id_users_customer"],
+					include: [
+						{
+							model: Cart_detail,
+							as: "cart_detail",
+							include: [
+								{
+									model: Product,
+									as: "product",
+									include: [
+										{
+											model: PhotoProduct,
+											as: "photo",
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+			],
+		});
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Get Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Get Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+const getOrderByIdUser = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const orderList = await Order_list.findOne({
@@ -205,4 +305,6 @@ module.exports = {
 	createOrderAndShipping,
 	updateOrder,
 	deleteOrder,
+	getAllOrderUser,
+	getOrderByIdUser,
 };

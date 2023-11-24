@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			Address.belongsTo(models.Users_customer, {
 				foreignKey: "id_users_customer",
-				as: "users_customer",
+				as: "user_customer",
 			});
 			Address.hasMany(models.Shipping, {
 				foreignKey: "id_address",

@@ -29,7 +29,7 @@ const getAllShipping = async (req, res) => {
 							include: [
 								{
 									model: Users_customer,
-									as: "users_customer",
+									as: "user_customer",
 								},
 								{	
 									model: Cart_detail,
@@ -57,7 +57,7 @@ const getAllShipping = async (req, res) => {
 					include: [
 						{
 							model: Users_customer,
-							as: "users_customer",
+							as: "user_customer",
 						},
 					],
 				},
@@ -125,7 +125,7 @@ const getShippingById = async (req, res) => {
 					include: [
 						{
 							model: Users_customer,
-							as: "users_customer",
+							as: "user_customer",
 						},
 					],
 				},

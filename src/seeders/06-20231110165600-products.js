@@ -21,7 +21,7 @@ module.exports = {
         {
           name_product: "Product 1",
           description_product: "Description for Product 1",
-          price_product: 29.99,
+          price_product: 30000,
           stock_product: 50,
           size_product: "M",
           colour_product: "Black",
@@ -34,7 +34,7 @@ module.exports = {
         {
           name_product: "Product 2",
           description_product: "Description for Product 2",
-          price_product: 39.99,
+          price_product: 30000,
           stock_product: 30,
           size_product: "M",
           colour_product: "Black",
@@ -47,7 +47,7 @@ module.exports = {
         {
           name_product: "Product 3",
           description_product: "Description for Product 3",
-          price_product: 49.99,
+          price_product: 30000,
           stock_product: 20,
           size_product: "S",
           colour_product: "Black",

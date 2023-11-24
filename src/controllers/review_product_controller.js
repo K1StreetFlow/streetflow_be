@@ -124,7 +124,7 @@ const getReviewByUserId = async (req, res) => {
                 id_users_customer: userId,
             },
             include: [
-                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { model: Users_customer, as: 'user_customer', attributes: ['fullname']},
                 { 
                     model: Product, 
                     as: 'products', 

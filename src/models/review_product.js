@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			Review_products.belongsTo(models.Users_customer, {
 				foreignKey: "id_users_customer",
-				as: "users_customer",
+				as: "user_customer",
 			});
 
 			Review_products.belongsTo(models.Product, {

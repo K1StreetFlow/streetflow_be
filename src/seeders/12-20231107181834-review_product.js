@@ -20,11 +20,7 @@ module.exports = {
         id_order_list: 1,
         message_review: "Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga sukses selalu",
         number_review: 5,
-<<<<<<< HEAD:src/seeders/20231107181834-review_product.js
-        photo_review: "Landak-Lucu.jpg",
-=======
         photo_review: null,
->>>>>>> 37e01d38e228a2e2fe1d7f357c9c6168151969c0:src/seeders/12-20231107181834-review_product.js
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -34,11 +30,7 @@ module.exports = {
         id_order_list: 2,
         message_review: "Pakaian sangat bagus, dan menarik, pengiriman cepat dan aman, semoga berkah selalu",
         number_review: 5,
-<<<<<<< HEAD:src/seeders/20231107181834-review_product.js
-        photo_review: "apapun.jpg",
-=======
         photo_review: null,
->>>>>>> 37e01d38e228a2e2fe1d7f357c9c6168151969c0:src/seeders/12-20231107181834-review_product.js
         createdAt: new Date(),
         updatedAt: new Date(),
       },
