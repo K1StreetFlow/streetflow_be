@@ -307,7 +307,22 @@ const getOrderByIdUser = async (req, res) => {
 const createOrderAndShipping = async (req, res) => {
   try {
     const code_order = generateOrderCode();
-    const newOrder = { ...req.body, code_order };
+    const {
+      id: orderId,
+      id_payment,
+      id_cart_details,
+      status_order,
+      id_users_customer,
+    } = req.body; // Extracting order_list attributes from req.body
+
+    const newOrder = {
+      id: orderId,
+      code_order,
+      id_payment,
+      id_cart_details,
+      id_users_customer,
+      status_order,
+    };
 
     // Create a new order list entry
     const orderList = await Order_list.create(newOrder);
@@ -317,11 +332,16 @@ const createOrderAndShipping = async (req, res) => {
     }
 
     const receipt_number = generateShippingCode();
+    const { id: shippingId, name_courier, id_address } = req.body; // Extracting shipping attributes from req.body
+
     const newShipping = {
-      ...req.body,
+      id: shippingId,
+      name_courier,
       receipt_number,
       id_order_list: orderList.id,
+      id_address,
     };
+
     const shipping = await Shipping.create(newShipping);
 
     if (!shipping) {
