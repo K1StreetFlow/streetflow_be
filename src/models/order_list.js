@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "id_payment",
         as: "payment",
       });
-      Order_list.belongsTo(models.Cart_detail, {
+      Order_list.belongsTo(models.Cart, {
         foreignKey: "id_cart_details",
-        as: "cart_details",
+        as: "cart",
       });
       Order_list.belongsTo(models.Users_customer, {
         foreignKey: "id_users_customer",
-        as: "users_customer",
-      })
+        as: "user_customer",
+      });
       Order_list.hasMany(models.Review_products, {
         foreignKey: "id_order_list",
         as: "review_products",
