@@ -5,7 +5,7 @@ const getReview = async (req, res) => {
     try {
         const reviews = await Review_products.findAll({
             include: [
-                { model: Users_customer, as: 'users_customer', attributes: ['fullname'],},
+                { model: Users_customer, as: 'user_customer', attributes: ['fullname'],},
                 { 
                     model: Product, 
                     as: 'products', 
@@ -45,7 +45,7 @@ const getReviewById = async (req, res) => {
         const { id } = req.params;
         const review = await Review_products.findByPk(id, {
             include: [
-                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { model: Users_customer, as: 'user_customer', attributes: ['fullname']},
                 { 
                     model: Product, 
                     as: 'products', 
@@ -84,7 +84,7 @@ const getReviewByRating = async (req, res) => {
                 number_review: rating,
             },
             include: [
-                { model: Users_customer, as: 'users_customer', attributes: ['fullname']},
+                { model: Users_customer, as: 'user_customer', attributes: ['fullname']},
                 { 
                     model: Product, 
                     as: 'products', 

@@ -228,7 +228,7 @@ const paymentController = {
 				console.log(`Sedang memeriksa status pembayaran dengan code payemnt ${order_id} setiap 10 detik`);
 
 				if (transaction_status == "settlement") {
-					await Payment.update({ status_payment: "Success" }, { where: { code_payment: order_id } });
+					await Payment.update({ status_payment: "Success" }, { where: { status_payment: order_id } });
 					console.log("Payment status updated");
 					scheduler.stop();
 					scheduler = null;
