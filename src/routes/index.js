@@ -1,6 +1,6 @@
 const route = require("express").Router();
 
-const authAdminRoutes = require('./authAdminRoutes.routes'); 
+const authAdminRoutes = require("./authAdminRoutes.routes");
 const authUserRoutes = require("./authUserRoutes.routes");
 const adminRoutes = require("./adminRoutes.routes");
 const userRoutes = require("./userRoutes.routes");
@@ -17,8 +17,8 @@ const paymentRoutes = require("./payment.routes");
 const orderListRoutes = require("./order_list.routes");
 const shippingRoutes = require("./shipping.routes");
 
-const reviewProductsRoutes = require('./review_products.routes');
-const photoReviewProductRoutes = require('./photoReviewProducts.routes');
+const reviewProductsRoutes = require("./review_products.routes");
+const photoReviewProductRoutes = require("./photoReviewProducts.routes");
 
 // Authentication routes come first
 route.use("/admin/auth", authAdminRoutes);

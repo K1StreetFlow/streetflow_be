@@ -10,6 +10,7 @@ const {
 const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const { isAdmin, isCustomer } = require("../middleware/verifyToken");
 const router = express.Router();
+
 router.get("/", getAllOrder);
 router.get("/:id", getOrderById);
 router.put("/update/:id", updateOrder);

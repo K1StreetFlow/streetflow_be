@@ -5,7 +5,7 @@ module.exports = {
 	async up(queryInterface, Sequelize) {
 		return queryInterface.bulkInsert("Shipping", [
 			{
-				name_courier: "John",
+				name_courier: "JNE",
 				receipt_number: 1,
 				id_order_list: 1,
 				id_address: 1,
@@ -14,7 +14,7 @@ module.exports = {
 				deletedAt: null,
 			},
 			{
-				name_courier: "Doel",
+				name_courier: "JNE",
 				receipt_number: 2,
 				id_order_list: 2,
 				id_address: 2,
@@ -23,7 +23,7 @@ module.exports = {
 				deletedAt: null,
 			},
 			{
-				name_courier: "Dadang",
+				name_courier: "JNE",
 				receipt_number: 3,
 				id_order_list: 3,
 				id_address: 3,

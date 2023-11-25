@@ -26,6 +26,16 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id_users_customer: 3,
+          street: "456 oxford Avenue",
+          house_number: "Unit 10",
+          zipcode: "67890",
+          city: "Townsville",
+          province: "Countyville",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

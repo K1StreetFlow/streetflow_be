@@ -14,15 +14,11 @@ module.exports = {
       },
       id_payment: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Payments",
-          key: "id",
-        },
-      },
-      id_users_customer: {
-        type: Sequelize.INTEGER,
       },
       id_cart_details: {
+        type: Sequelize.INTEGER,
+      },
+      id_users_customer: {
         type: Sequelize.INTEGER,
       },
       status_order: {

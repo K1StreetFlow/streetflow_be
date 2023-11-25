@@ -56,9 +56,9 @@ async function getUserById(req, res) {
       ],
     });
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
 
     res.status(200).json(user);
   } catch (error) {
@@ -68,53 +68,42 @@ async function getUserById(req, res) {
 }
 
 const editUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      username,
-      email,
-      password,
-      retypePassword,
-      fullname,
-      gender,
-      birth_date,
-      phone_number,
-    } = req.body;
+	try {
+		const { id } = req.params;
+		const { username, email, password, retypePassword, fullname, gender, birth_date, phone_number } = req.body;
 
-    // Check if the user with the provided ID exists
-    const existingUser = await Users_customer.findByPk(id, {
-      attributes: { exclude: ["password", "deletedAt"] },
-    });
+		// Check if the user with the provided ID exists
+		const existingUser = await Users_customer.findByPk(id, {
+			attributes: { exclude: ["password", "deletedAt"] },
+		});
 
-    if (!existingUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
+		if (!existingUser) {
+			return res.status(404).json({ message: "User not found" });
+		}
 
-    // Update user data if the fields are provided
-    existingUser.username = username || existingUser.username;
-    existingUser.email = email || existingUser.email;
-    existingUser.fullname = fullname || existingUser.fullname;
-    existingUser.gender = gender || existingUser.gender;
-    existingUser.birth_date = birth_date || existingUser.birth_date;
-    existingUser.phone_number = phone_number || existingUser.phone_number;
+		// Update user data if the fields are provided
+		existingUser.username = username || existingUser.username;
+		existingUser.email = email || existingUser.email;
+		existingUser.fullname = fullname || existingUser.fullname;
+		existingUser.gender = gender || existingUser.gender;
+		existingUser.birth_date = birth_date || existingUser.birth_date;
+		existingUser.phone_number = phone_number || existingUser.phone_number;
 
-    const profileImage = req.file
-      ? path.join("uploads", req.file.filename)
-      : null;
+		const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
 
-    if (profileImage) {
-      // Update the profile image if a new one is uploaded
-      existingUser.upload_photo = profileImage;
-    }
+		if (profileImage) {
+			// Update the profile image if a new one is uploaded
+			existingUser.upload_photo = profileImage;
+		}
 
-    if (password !== undefined && password === retypePassword) {
-      // Hash the new password
-      const hashedPassword = await bcrypt.hash(password, 10);
-      existingUser.password = hashedPassword;
-    }
+		if (password !== undefined && password === retypePassword) {
+			// Hash the new password
+			const hashedPassword = await bcrypt.hash(password, 10);
+			existingUser.password = hashedPassword;
+		}
 
-    // Save the updated user record to the database
-    await existingUser.save();
+		// Save the updated user record to the database
+		await existingUser.save();
 
     res
       .status(200)
@@ -126,14 +115,14 @@ const editUser = async (req, res) => {
 };
 
 async function deleteUser(req, res) {
-  // Implementasi logika penghapusan pengguna
-  try {
-    const { id } = req.params;
-    const user = await Users_customer.findByPk(id);
+	// Implementasi logika penghapusan pengguna
+	try {
+		const { id } = req.params;
+		const user = await Users_customer.findByPk(id);
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
 
     // Hapus token admin dari cookie jika ID admin yang dihapus sama dengan ID yang ada dalam token
     const tokenCustomer = req.cookies.tokenCustomer;

@@ -7,7 +7,7 @@ const addressController = {
         include: [
           {
             model: Users_customer,
-            as: "users_customer",
+            as: "user_customer",
             attributes: {
               exclude: ["password"],
             },
