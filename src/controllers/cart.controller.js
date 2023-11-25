@@ -257,6 +257,7 @@ const cartController = {
         grand_price: grandPrice,
         total_product: totalProduct,
         user_customer: {
+          id: userCustomer.id,
           fullname: userCustomer.fullname,
           username: userCustomer.username,
           email: userCustomer.email,
