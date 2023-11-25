@@ -303,6 +303,69 @@ const paymentController = {
 
     res.json({ message: "Scheduler started" });
   },
+
+  updateAllStatusPending: async (req, res) => {
+    try {
+      const payments = await Payment.findAll({
+        where: { status_payment: "Pending" },
+      });
+
+      payments.forEach((payment) => {
+        const { code_payment } = payment;
+        let scheduler = cron.schedule("*/10 * * * * *", async () => {
+          try {
+            // const { status_payment } = await Payment.findOne({
+            //   where: { code_payment: order_id },
+            // });
+
+            const snap = new midtransClient.Snap({
+              isProduction: false,
+              serverKey: process.env.MIDTRANS_SERVER_KEY,
+              clientKey: process.env.MIDTRANS_CLIENT_KEY,
+            });
+
+            // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
+            const transactionDetails = await snap.transaction.status(
+              code_payment
+            );
+
+            // Periksa status pembayaran dari respons Midtrans
+            const { transaction_status } = transactionDetails;
+
+            console.log(
+              `Sedang memeriksa status pembayaran dengan code payemnt ${code_payment} setiap 10 detik`
+            );
+
+            if (transaction_status == "settlement") {
+              await Payment.update(
+                { status_payment: "Success" },
+                { where: { code_payment: code_payment } }
+              );
+              console.log("Payment status updated");
+              scheduler.stop();
+              scheduler = null;
+            } else if (transaction_status == "expire") {
+              // Jika status 'expire', lakukan update status di database
+              await Payment.update(
+                { status_payment: "Failed" },
+                { where: { code_payment: code_payment } }
+              );
+              console.log("Payment status updated");
+              scheduler.stop();
+              scheduler = null;
+            }
+          } catch (error) {
+            console.error("Scheduler error:", error);
+          }
+        });
+      });
+
+      res.json({ message: "Scheduler started" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
 
 module.exports = paymentController;
