@@ -35,7 +35,6 @@ const isCustomer = (req, res, next) => {
   }
 };
 
-module.exports = { isAdmin, isCustomer };
 const verifyUserType = (req, res, next) => {
   const tokenAdmin = req.cookies.tokenAdmin;
   const tokenCustomer = req.cookies.tokenCustomer;

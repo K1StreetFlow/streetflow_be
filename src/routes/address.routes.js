@@ -9,7 +9,7 @@ router.get("/:id", verifyUserType, addressController.getAddressById);
 router.get("/customer/:id", verifyUserType, addressController.getAddressByIdCustomer);
 router.post("/", isCustomer, addressController.createAddress);
 router.put("/:id", verifyUserType, addressController.updateAddressById);
-router.delete("/:id", isCustomer, addressController.deleteAddressById);
+router.delete("/:id", verifyUserType, addressController.deleteAddressById);
 router.delete("/customer/:id", verifyUserType, addressController.deleteAddressByCustomerId);
 
 module.exports = router;
