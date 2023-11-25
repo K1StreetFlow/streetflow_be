@@ -15,7 +15,11 @@ module.exports = {
         id_cart: 2,
         id_product: 2,
         quantity: 3,
+<<<<<<< HEAD
         total_price: 30000 * 3,
+=======
+        total_price: 90000 /*30000 * 3*/,
+>>>>>>> 21835a2 (Update Seeder Cart Details)
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -23,7 +27,11 @@ module.exports = {
         id_cart: 2,
         id_product: 1,
         quantity: 1,
+<<<<<<< HEAD
         total_price: 30000 * 1,
+=======
+        total_price: 30000 /*30000 * 1*/,
+>>>>>>> 21835a2 (Update Seeder Cart Details)
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -31,7 +39,11 @@ module.exports = {
         id_cart: 1,
         id_product: 1,
         quantity: 1,
+<<<<<<< HEAD
         total_price: 30000 * 1,
+=======
+        total_price: 30000 /*30000 * 1*/,
+>>>>>>> 21835a2 (Update Seeder Cart Details)
         createdAt: new Date(),
         updatedAt: new Date(),
       },
