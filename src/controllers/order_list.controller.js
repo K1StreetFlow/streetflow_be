@@ -113,10 +113,6 @@ const getAllOrder = async (req, res) => {
 		const orderList = await Order_list.findAll({
 			include: [
 				{
-					model: Shipping,
-					as: "shipping",
-				},
-				{
 					model: Payment,
 					as: "payment",
 				},
@@ -169,16 +165,8 @@ const getAllOrderUser = async (req, res) => {
 		const orderList = await Order_list.findAll({
 			include: [
 				{
-					model: Shipping,
-					as: "shipping",
-				},
-				{
 					model: Payment,
 					as: "payment",
-				},
-				{
-					model: Users_customer,
-					as: "user_customer",
 				},
 				{
 					model: Cart,
@@ -289,16 +277,8 @@ const getOrderByIdUser = async (req, res) => {
 			},
 			include: [
 				{
-					model: Shipping,
-					as: "shipping",
-				},
-				{
 					model: Payment,
 					as: "payment",
-				},
-				{
-					model: Users_customer,
-					as: "user_customer",
 				},
 				{
 					model: Cart,

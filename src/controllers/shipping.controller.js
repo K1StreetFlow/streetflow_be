@@ -31,7 +31,7 @@ const getAllShipping = async (req, res) => {
 									model: Users_customer,
 									as: "user_customer",
 								},
-								{
+								{	
 									model: Cart_detail,
 									as: "cart_detail",
 									include: [
@@ -126,80 +126,6 @@ const getShippingById = async (req, res) => {
 						{
 							model: Users_customer,
 							as: "user_customer",
-						},
-					],
-				},
-			],
-		});
-
-		if (shipping) {
-			res.status(200).json({
-				message: "Get Shipping Successfully",
-				data: shipping,
-			});
-		} else {
-			res.status(404).json({ message: "Get Shipping Failed" });
-		}
-	} catch (error) {
-		console.log(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
-};
-
-const getShippingByIdUser = async (req, res) => {
-	try {
-		const { id } = req.params;
-		const { userId } = req.user;
-
-		const shipping = await Shipping.findOne({
-			where: {
-				id,
-			},
-			include: [
-				{
-					model: Order_list,
-					as: "order_list",
-					include: [
-						{
-							model: Payment,
-							as: "payment",
-						},
-						{
-							model: Cart,
-							as: "cart",
-							attributes: ["id", "id_users_customer"],
-							include: [
-								{
-									model: Cart_detail,
-									as: "cart_detail",
-									include: [
-										{
-											model: Product,
-											as: "product",
-											include: [
-												{
-													model: PhotoProduct,
-													as: "photo",
-												},
-											],
-										},
-									],
-								},
-							],
-						},
-					],
-				},
-				{
-					model: Address,
-					as: "address",
-					include: [
-						{
-							model: Users_customer,
-							as: "user_customer",
-							// Add where clause to filter by user ID
-							where: {
-								id: userId,
-							},
 						},
 					],
 				},

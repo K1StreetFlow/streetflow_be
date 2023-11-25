@@ -5,6 +5,7 @@ const {
   Product,
   Address,
   sequelize,
+  PhotoProduct,
 } = require("../models");
 
 const cartController = {
@@ -20,6 +21,12 @@ const cartController = {
               {
                 model: Product,
                 as: "product",
+                include: [
+                  {
+                    model: PhotoProduct,
+                    as: "photo",
+                  },
+                ],
               },
             ],
           },
@@ -106,6 +113,12 @@ const cartController = {
               {
                 model: Product,
                 as: "product",
+                include: [
+                  {
+                    model: PhotoProduct,
+                    as: "photo",
+                  },
+                ],
               },
             ],
           },
@@ -187,6 +200,12 @@ const cartController = {
               {
                 model: Product,
                 as: "product",
+                include: [
+                  {
+                    model: PhotoProduct,
+                    as: "photo",
+                  },
+                ],
               },
             ],
           },

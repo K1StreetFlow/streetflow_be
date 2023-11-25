@@ -6,13 +6,9 @@ const {
 	updateShipping,
 	deleteShipping,
 	updateShippingAndOrderList,
-	getShippingByUserId,
 } = require("../controllers/shipping.controller");
 // const { isAdmin } = require("../middleware/verifyToken");
-const { isCustomer } = require("../middleware/verifyToken");
 const router = express.Router();
-
-// router.get("/user", isCustomer, getShippingByUserId);
 
 router.get("/", getAllShipping);
 router.get("/:id", getShippingById);
