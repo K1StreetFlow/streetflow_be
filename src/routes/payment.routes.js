@@ -19,11 +19,6 @@ router.get(
 
   paymentController.getMidtransStatus
 );
-// router.get(
-//   "/update-status/:order_id",
-
-//   paymentController.updateStatusPending
-// );
 router.get(
   "/update-status/user",
 

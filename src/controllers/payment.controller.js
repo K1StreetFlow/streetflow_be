@@ -206,103 +206,6 @@ const paymentController = {
       res.status(500).json({ error: "Internal server error" });
     }
   },
-  updateStatusPending: async (req, res) => {
-    const { order_id } = req.params;
-    let scheduler = cron.schedule("*/10 * * * * *", async () => {
-      try {
-        // const { status_payment } = await Payment.findOne({
-        //   where: { code_payment: order_id },
-        // });
-
-        const snap = new midtransClient.Snap({
-          isProduction: false,
-          serverKey: process.env.MIDTRANS_SERVER_KEY,
-          clientKey: process.env.MIDTRANS_CLIENT_KEY,
-        });
-
-        // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
-        const transactionDetails = await snap.transaction.status(order_id);
-
-        // Periksa status pembayaran dari respons Midtrans
-        const { transaction_status } = transactionDetails;
-
-        console.log(
-          `Sedang memeriksa status pembayaran dengan code payemnt ${order_id} setiap 10 detik`
-        );
-
-        if (transaction_status == "settlement") {
-          await Payment.update(
-            { status_payment: "Success" },
-            { where: { code_payment: order_id } }
-          );
-          console.log("Payment status updated");
-          scheduler.stop();
-          scheduler = null;
-        } else if (transaction_status == "expire") {
-          // Jika status 'expire', lakukan update status di database
-          await Payment.update(
-            { status_payment: "Failed" },
-            { where: { code_payment: order_id } }
-          );
-          console.log("Payment status updated");
-          scheduler.stop();
-          scheduler = null;
-        }
-      } catch (error) {
-        console.error("Scheduler error:", error);
-      }
-    });
-
-    res.json({ message: "Scheduler started" });
-  },
-  updateStatusPending: async (req, res) => {
-    let scheduler = cron.schedule("*/10 * * * * *", async () => {
-      try {
-        // const { status_payment } = await Payment.findOne({
-        //   where: { code_payment: order_id },
-        // });
-
-        const snap = new midtransClient.Snap({
-          isProduction: false,
-          serverKey: process.env.MIDTRANS_SERVER_KEY,
-          clientKey: process.env.MIDTRANS_CLIENT_KEY,
-        });
-
-        // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
-        const transactionDetails = await snap.transaction.status(order_id);
-
-        // Periksa status pembayaran dari respons Midtrans
-        const { transaction_status } = transactionDetails;
-
-        console.log(
-          `Sedang memeriksa status pembayaran dengan code payemnt ${order_id} setiap 10 detik`
-        );
-
-        if (transaction_status == "settlement") {
-          await Payment.update(
-            { status_payment: "Success" },
-            { where: { code_payment: order_id } }
-          );
-          console.log("Payment status updated");
-          scheduler.stop();
-          scheduler = null;
-        } else if (transaction_status == "expire") {
-          // Jika status 'expire', lakukan update status di database
-          await Payment.update(
-            { status_payment: "Failed" },
-            { where: { code_payment: order_id } }
-          );
-          console.log("Payment status updated");
-          scheduler.stop();
-          scheduler = null;
-        }
-      } catch (error) {
-        console.error("Scheduler error:", error);
-      }
-    });
-
-    res.json({ message: "Scheduler started" });
-  },
 
   updateAllStatusPending: async (req, res) => {
     try {
@@ -310,30 +213,41 @@ const paymentController = {
         where: { status_payment: "Pending" },
       });
 
-      payments.forEach((payment) => {
+      async function updateOrderStatus(paymentStatus, orderId) {
+        let status_order;
+        if (paymentStatus === "Pending") {
+          status_order = "Unpaid";
+        } else if (paymentStatus === "Unpaid") {
+          status_order = "Unpaid";
+        } else if (paymentStatus === "Success") {
+          status_order = "Paid";
+        } else if (paymentStatus === "Failed") {
+          status_order = "Canceled";
+        }
+        await Order_list.update({ status_order }, { where: { id: orderId } });
+      }
+
+      payments.forEach(async (payment) => {
         const { code_payment } = payment;
         let scheduler = cron.schedule("*/10 * * * * *", async () => {
           try {
-            // const { status_payment } = await Payment.findOne({
-            //   where: { code_payment: order_id },
-            // });
-
             const snap = new midtransClient.Snap({
               isProduction: false,
               serverKey: process.env.MIDTRANS_SERVER_KEY,
               clientKey: process.env.MIDTRANS_CLIENT_KEY,
             });
 
-            // Lakukan request ke Midtrans untuk mendapatkan status pembayaran
+            // Request the payment status from Midtrans
             const transactionDetails = await snap.transaction.status(
               code_payment
             );
 
-            // Periksa status pembayaran dari respons Midtrans
-            const { transaction_status } = transactionDetails;
-            console.log(transaction_status);
+            console.log(
+              `Checking payment status with code payment ${code_payment} every 10 seconds`
+            );
 
-            // console.log(transaction_status);
+            // Check the payment status from the Midtrans response
+            const { transaction_status } = transactionDetails;
 
             if (transaction_status == "settlement") {
               await Payment.update(
@@ -341,17 +255,26 @@ const paymentController = {
                 { where: { code_payment: code_payment } }
               );
               console.log("Payment status updated to Success");
-              scheduler.stop();
-              scheduler = null;
+
+              const order = await Order_list.findOne({
+                where: { id_payment: payment.id },
+              });
+              if (order) {
+                await updateOrderStatus("Success", order.id); // await added here
+              }
             } else if (transaction_status == "expire") {
-              // Jika status 'expire', lakukan update status di database
               await Payment.update(
                 { status_payment: "Failed" },
                 { where: { code_payment: code_payment } }
               );
               console.log("Payment status updated to Failed");
-              scheduler.stop();
-              scheduler = null;
+
+              const order = await Order_list.findOne({
+                where: { id_payment: payment.id },
+              });
+              if (order) {
+                await updateOrderStatus("Failed", order.id); // await added here
+              }
             }
           } catch (error) {
             console.error("Scheduler error:", error);
@@ -359,13 +282,12 @@ const paymentController = {
         });
       });
 
-      // res.json({ message: "Scheduler started" });
+      res.status(200).json({
+        message: "Update all pending payments status successfully",
+      });
     } catch (error) {
-      console.log(error);
       res.status(500).json({ error: "Internal server error" });
     }
-
-    res.json({ message: "Scheduler started" });
   },
 };
 

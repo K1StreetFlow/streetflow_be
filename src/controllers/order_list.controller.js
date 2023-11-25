@@ -10,23 +10,40 @@ const {
 } = require("../models");
 const cron = require("node-cron");
 
-cron.schedule("*/10 * * * *", async () => {
-  // This function will run every 50 seconds
+// This function will run every 10 minutes
+cron.schedule("*/20 * * * * *", async () => {
   try {
     await Order_list.update(
       { status_order: "Packaged" },
       { where: { status_order: "Paid" } }
     );
     console.log("Orders updated to Packaged successfully");
+  } catch (error) {
+    console.error("Failed to update orders", error);
+  }
+});
 
+// This function will run every 20 minutes
+cron.schedule("*/30 * * * * *", async () => {
+  try {
     await Order_list.update(
       { status_order: "Delivered" },
       { where: { status_order: "Packaged" } }
     );
     console.log("Orders updated to Delivered successfully");
+  } catch (error) {
+    console.error("Failed to update orders", error);
+  }
+});
 
-    // await Order_list.update({ status_order: "Completed" }, { where: { status_order: "Delivered" } });
-    // console.log("Orders updated to Completed successfully");
+// This function will run every 30 minutes
+cron.schedule("*/40 * * * * *", async () => {
+  try {
+    await Order_list.update(
+      { status_order: "Completed" },
+      { where: { status_order: "Delivered" } }
+    );
+    console.log("Orders updated to Completed successfully");
   } catch (error) {
     console.error("Failed to update orders", error);
   }
