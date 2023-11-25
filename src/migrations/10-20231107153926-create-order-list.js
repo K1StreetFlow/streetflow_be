@@ -24,10 +24,6 @@ module.exports = {
       },
       id_cart_details: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Cart_details",
-          key: "id",
-        },
       },
       status_order: {
         type: Sequelize.ENUM(
