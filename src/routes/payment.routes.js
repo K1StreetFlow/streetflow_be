@@ -25,7 +25,7 @@ router.get(
 //   paymentController.updateStatusPending
 // );
 router.get(
-  "/update-status/:order_id",
+  "/update-status/user",
 
   paymentController.updateAllStatusPending
 );
