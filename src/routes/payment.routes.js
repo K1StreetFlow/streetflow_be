@@ -4,7 +4,7 @@ const router = express.Router();
 const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const { isAdmin, isCustomer } = require("../middleware/verifyToken");
 
-router.get("/", isAdmin, paymentController.getAllPayments);
+router.get("/", paymentController.getAllPayments);
 router.get("/:id", isAdmin, paymentController.getPaymentById);
 router.post("/", paymentController.createPayment);
 router.get(

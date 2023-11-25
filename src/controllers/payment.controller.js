@@ -331,17 +331,16 @@ const paymentController = {
 
             // Periksa status pembayaran dari respons Midtrans
             const { transaction_status } = transactionDetails;
+            console.log(transaction_status);
 
-            console.log(
-              `Sedang memeriksa status pembayaran dengan code payemnt ${code_payment} setiap 10 detik`
-            );
+            // console.log(transaction_status);
 
             if (transaction_status == "settlement") {
               await Payment.update(
                 { status_payment: "Success" },
                 { where: { code_payment: code_payment } }
               );
-              console.log("Payment status updated");
+              console.log("Payment status updated to Success");
               scheduler.stop();
               scheduler = null;
             } else if (transaction_status == "expire") {
@@ -350,7 +349,7 @@ const paymentController = {
                 { status_payment: "Failed" },
                 { where: { code_payment: code_payment } }
               );
-              console.log("Payment status updated");
+              console.log("Payment status updated to Failed");
               scheduler.stop();
               scheduler = null;
             }
@@ -360,11 +359,13 @@ const paymentController = {
         });
       });
 
-      res.json({ message: "Scheduler started" });
+      // res.json({ message: "Scheduler started" });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Internal server error" });
     }
+
+    res.json({ message: "Scheduler started" });
   },
 };
 

@@ -43,7 +43,7 @@ function generateShippingCode() {
 const getUserOrder = async (req, res) => {
   try {
     const { userId } = req.user;
-    const orderList = await Order_list.findOne({
+    const orderList = await Order_list.findAll({
       where: {
         id_users_customer: userId,
       },
