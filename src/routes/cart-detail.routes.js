@@ -6,13 +6,13 @@ const { isAdmin, isCustomer } = require("../middleware/verifyToken");
 
 router.get("/", isAdmin, cartDetailController.getAllCartDetail);
 router.get("/:id", isAdmin, cartDetailController.getCartDetailById);
-router.post("/", isCustomer, cartDetailController.createCartDetail);
-router.put("/:id", isCustomer, cartDetailController.editQuantityCartDetail);
+router.post("/", /*isCustomer,*/ cartDetailController.createCartDetail);
+router.put("/:id", /*isCustomer,*/ cartDetailController.editQuantityCartDetail);
 router.put(
   "/:idCart/:idProduct",
-  isCustomer,
+  /*isCustomer,*/
   cartDetailController.editCartDetail
 );
-router.delete("/:id", isCustomer, cartDetailController.deleteCartDetailById);
+router.delete("/:id", /*isCustomer,*/ cartDetailController.deleteCartDetailById);
 
 module.exports = router;
