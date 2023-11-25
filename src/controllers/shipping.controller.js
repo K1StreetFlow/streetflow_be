@@ -264,5 +264,4 @@ module.exports = {
 	updateShipping,
 	deleteShipping,
 	updateShippingAndOrderList,
-	getShippingByIdUser,
 };

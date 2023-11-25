@@ -19,4 +19,8 @@ router.put("/:id", isAdminOrSelf, upload.single("profileImage"), editUser);
 router.delete("/:id", isAdminOrSelf, deleteUser);
 router.get("/profile/user", isCustomer, getUserProfile);
 
+router.get("/view/:filename", (req, res) => {
+	res.sendFile(path.join(__dirname, "../assets/images/profile", req.params.filename));
+});
+
 module.exports = router;

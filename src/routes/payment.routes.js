@@ -5,24 +5,24 @@ const { isAdminOrSelf } = require("../middleware/adminMiddleware");
 const { isAdmin, isCustomer } = require("../middleware/verifyToken");
 
 router.get("/", paymentController.getAllPayments);
-router.get("/:id", isAdmin, paymentController.getPaymentById);
+router.get("/:id", paymentController.getPaymentById);
 router.post("/", paymentController.createPayment);
 router.get(
-  "/status-order/:code_payment",
+	"/status-order/:code_payment",
 
-  paymentController.getPaymentByCode
+	paymentController.getPaymentByCode
 );
 router.post("/process-payment", paymentController.processPayment);
 router.delete("/:id", isAdmin, paymentController.deletePayment);
 router.get(
-  "/status/:order_id",
+	"/status/:order_id",
 
-  paymentController.getMidtransStatus
+	paymentController.getMidtransStatus
 );
 router.get(
-  "/update-status/user",
+	"/update-status/user",
 
-  paymentController.updateAllStatusPending
+	paymentController.updateAllStatusPending
 );
 router.put("/:id", paymentController.updatePayment);
 

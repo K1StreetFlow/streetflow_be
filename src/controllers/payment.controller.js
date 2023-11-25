@@ -172,6 +172,40 @@ const paymentController = {
 		}
 	},
 
+	deletePayment: async (req, res) => {
+		try {
+			const { id } = req.params;
+			await Payment.destroy({
+				where: {
+					id,
+				},
+			});
+			res.status(200).json({
+				message: `Delete payment by id ${id} successfull`,
+			});
+		} catch (error) {
+			res.status(500).json({ error: "Internal server error" });
+		}
+	},
+
+	getMidtransStatus: async (req, res) => {
+		try {
+			const { order_id } = req.params;
+			const snap = new midtransClient.Snap({
+				isProduction: false,
+				serverKey: process.env.MIDTRANS_SERVER_KEY,
+			});
+			const status = await snap.transaction.status(order_id);
+
+			res.status(200).json({
+				message: `Get status payment by order id ${order_id} successfull`,
+				data: status,
+			});
+		} catch (error) {
+			res.status(500).json({ error: "Internal server error" });
+		}
+	},
+
 	updateAllStatusPending: async (req, res) => {
 		try {
 			const payments = await Payment.findAll({
@@ -205,7 +239,7 @@ const paymentController = {
 						// Request the payment status from Midtrans
 						const transactionDetails = await snap.transaction.status(code_payment);
 
-						console.log(`Checking payment status with code payment ${code_payment} every 10 seconds`);
+						// console.log(`Checking payment status with code payment ${code_payment} every 10 seconds`);
 
 						// Check the payment status from the Midtrans response
 						const { transaction_status } = transactionDetails;
