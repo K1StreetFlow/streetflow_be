@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: "id_order_list",
 				as: "shipping",
 			});
+			Order_list.belongsTo(models.Users_customer, {
+				foreignKey: "id_users_customer",
+				as: "user_customer",
+			});
 		}
 	}
 	Order_list.init(
@@ -32,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
 			code_order: DataTypes.STRING,
 			id_payment: DataTypes.INTEGER,
 			id_cart_details: DataTypes.INTEGER,
+			id_users_customer: DataTypes.INTEGER,
 			status_order: {
 				type: DataTypes.ENUM("Unpaid", "Paid", "Packaged", "Delivered", "Completed", "Canceled"),
 			},

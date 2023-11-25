@@ -1,4 +1,13 @@
-const { Order_list, Payment, Cart_detail, Product, Cart, PhotoProduct, Shipping } = require("../models");
+const {
+	Order_list,
+	Payment,
+	Cart_detail,
+	Product,
+	Cart,
+	PhotoProduct,
+	Shipping,
+	Users_customer,
+} = require("../models");
 const cron = require("node-cron");
 
 cron.schedule("*/10 * * * *", async () => {
@@ -10,8 +19,8 @@ cron.schedule("*/10 * * * *", async () => {
 		await Order_list.update({ status_order: "Delivered" }, { where: { status_order: "Packaged" } });
 		console.log("Orders updated to Delivered successfully");
 
-		// await Order_list.update({ status_order: "Completed" }, { where: { status_order: "Delivered" } });
-		// console.log("Orders updated to Completed successfully");
+		await Order_list.update({ status_order: "Completed" }, { where: { status_order: "Delivered" } });
+		console.log("Orders updated to Completed successfully");
 	} catch (error) {
 		console.error("Failed to update orders", error);
 	}
@@ -25,13 +34,81 @@ function generateShippingCode() {
 	return "INV-" + Date.now();
 }
 
+const getUserOrder = async (req, res) => {
+	try {
+		const { userId } = req.user;
+		const orderList = await Order_list.findAll({
+			where: {
+				id_users_customer: userId,
+			},
+			include: [
+				{
+					model: Users_customer,
+					as: "user_customer",
+				},
+				{
+					model: Shipping,
+					as: "shipping",
+				},
+				{
+					model: Payment,
+					as: "payment",
+				},
+				{
+					model: Cart,
+					as: "cart",
+					attributes: ["id", "id_users_customer"],
+					include: [
+						{
+							model: Cart_detail,
+							as: "cart_detail",
+							include: [
+								{
+									model: Product,
+									as: "product",
+									include: [
+										{
+											model: PhotoProduct,
+											as: "photo",
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+			],
+		});
+
+		if (orderList) {
+			res.status(200).json({
+				message: "Get Order List Successfully",
+				data: orderList,
+			});
+		} else {
+			res.status(404).json({ message: "Get Order List Failed" });
+		}
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
 const getAllOrder = async (req, res) => {
 	try {
 		const orderList = await Order_list.findAll({
 			include: [
 				{
+					model: Shipping,
+					as: "shipping",
+				},
+				{
 					model: Payment,
 					as: "payment",
+				},
+				{
+					model: Users_customer,
+					as: "user_customer",
 				},
 				{
 					model: Cart,
@@ -78,8 +155,16 @@ const getAllOrderUser = async (req, res) => {
 		const orderList = await Order_list.findAll({
 			include: [
 				{
+					model: Shipping,
+					as: "shipping",
+				},
+				{
 					model: Payment,
 					as: "payment",
+				},
+				{
+					model: Users_customer,
+					as: "user_customer",
 				},
 				{
 					model: Cart,
@@ -130,8 +215,16 @@ const getOrderById = async (req, res) => {
 			},
 			include: [
 				{
+					model: Shipping,
+					as: "shipping",
+				},
+				{
 					model: Payment,
 					as: "payment",
+				},
+				{
+					model: Users_customer,
+					as: "user_customer",
 				},
 				{
 					model: Cart,
@@ -182,8 +275,16 @@ const getOrderByIdUser = async (req, res) => {
 			},
 			include: [
 				{
+					model: Shipping,
+					as: "shipping",
+				},
+				{
 					model: Payment,
 					as: "payment",
+				},
+				{
+					model: Users_customer,
+					as: "user_customer",
 				},
 				{
 					model: Cart,
@@ -228,7 +329,16 @@ const getOrderByIdUser = async (req, res) => {
 const createOrderAndShipping = async (req, res) => {
 	try {
 		const code_order = generateOrderCode();
-		const newOrder = { ...req.body, code_order };
+		const { id: orderId, id_payment, id_cart_details, status_order, id_users_customer } = req.body; // Extracting order_list attributes from req.body
+
+		const newOrder = {
+			id: orderId,
+			code_order,
+			id_payment,
+			id_cart_details,
+			id_users_customer,
+			status_order,
+		};
 
 		// Create a new order list entry
 		const orderList = await Order_list.create(newOrder);
@@ -238,7 +348,16 @@ const createOrderAndShipping = async (req, res) => {
 		}
 
 		const receipt_number = generateShippingCode();
-		const newShipping = { ...req.body, receipt_number, id_order_list: orderList.id };
+		const { id: shippingId, id_address } = req.body; // Extracting shipping attributes from req.body
+
+		const newShipping = {
+			id: shippingId,
+			name_courier: "JNE",
+			receipt_number,
+			id_order_list: orderList.id,
+			id_address,
+		};
+
 		const shipping = await Shipping.create(newShipping);
 
 		if (!shipping) {
@@ -265,7 +384,9 @@ const updateOrder = async (req, res) => {
 		});
 
 		if (updated) {
-			const updatedOrder = await Order_list.findOne({ where: { id: req.params.id } });
+			const updatedOrder = await Order_list.findOne({
+				where: { id: req.params.id },
+			});
 			return res.status(200).json({
 				message: "Update Order List Successfully",
 				data: updatedOrder,
@@ -307,4 +428,5 @@ module.exports = {
 	deleteOrder,
 	getAllOrderUser,
 	getOrderByIdUser,
+	getUserOrder,
 };
