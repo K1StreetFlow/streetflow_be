@@ -1,6 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { getAllProducts, getProductById, getAllProductsWithPagination, createProduct, updateProduct, deleteProduct } = require("../controllers/products.controller");
+const {
+  getAllProducts,
+  getProductById,
+  getAllProductsWithPagination,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/products.controller");
 const { isAdmin } = require("../middleware/verifyToken.js");
 
 // CRUD routes

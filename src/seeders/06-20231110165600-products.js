@@ -3,21 +3,15 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const categoryProductsQuery = await queryInterface.sequelize.query(
-      'SELECT id FROM "CategoryProducts"'
-    );
-    const photoProductsQuery = await queryInterface.sequelize.query(
-      'SELECT id FROM "PhotoProducts"'
-    );
+    const categoryProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "CategoryProducts"');
+    const photoProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "PhotoProducts"');
 
     // Mendapatkan hasil query sebagai array
     const categoryProducts = categoryProductsQuery[0];
     const photoProducts = photoProductsQuery[0];
     // Pastikan hasil query tidak kosong
     if (categoryProducts.length === 0 || photoProducts.length === 0) {
-      console.error(
-        "Error: Empty result from categoryProducts or photoProducts query."
-      );
+      console.error("Error: Empty result from categoryProducts or photoProducts query.");
       return;
     }
 
@@ -82,7 +76,7 @@ module.exports = {
           price_product: 35000,
           stock_product: 5,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Gray",
           id_category_product: 1,
           id_photo_product: 5,
           slug_product: "product-5",
@@ -121,7 +115,7 @@ module.exports = {
           price_product: 23000,
           stock_product: 43,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Gray",
           id_category_product: 1,
           id_photo_product: 8,
           slug_product: "product-8",
@@ -147,7 +141,7 @@ module.exports = {
           price_product: 82000,
           stock_product: 10,
           size_product: "M",
-          colour_product: "Black",
+          colour_product: "Gray",
           id_category_product: 1,
           id_photo_product: 10,
           slug_product: "product-10",
@@ -160,7 +154,7 @@ module.exports = {
           price_product: 55000,
           stock_product: 11,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Blue",
           id_category_product: 1,
           id_photo_product: 11,
           slug_product: "product-11",
@@ -238,7 +232,7 @@ module.exports = {
           price_product: 68000,
           stock_product: 51,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Blue",
           id_category_product: 2,
           id_photo_product: 17,
           slug_product: "product-17",
@@ -264,7 +258,7 @@ module.exports = {
           price_product: 3000,
           stock_product: 44,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Gray",
           id_category_product: 2,
           id_photo_product: 19,
           slug_product: "product-19",
@@ -303,7 +297,7 @@ module.exports = {
           price_product: 72000,
           stock_product: 5,
           size_product: "XL",
-          colour_product: "Black",
+          colour_product: "Gray",
           id_category_product: 3,
           id_photo_product: 22,
           slug_product: "product-22",
@@ -316,7 +310,7 @@ module.exports = {
           price_product: 22000,
           stock_product: 44,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Blue",
           id_category_product: 3,
           id_photo_product: 23,
           slug_product: "product-23",
@@ -342,7 +336,7 @@ module.exports = {
           price_product: 85000,
           stock_product: 6,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Gray",
           id_category_product: 3,
           id_photo_product: 25,
           slug_product: "product-25",
@@ -394,7 +388,7 @@ module.exports = {
           price_product: 91000,
           stock_product: 22,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Blue",
           id_category_product: 3,
           id_photo_product: 29,
           slug_product: "product-29",
@@ -433,7 +427,7 @@ module.exports = {
           price_product: 36000,
           stock_product: 24,
           size_product: "S",
-          colour_product: "Black",
+          colour_product: "Blue",
           id_category_product: 3,
           id_photo_product: 32,
           slug_product: "product-32",

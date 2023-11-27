@@ -12,26 +12,14 @@ module.exports = {
       id_users_customer: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: "Users_customer",
-          key: "id"
-        }
       },
       id_products: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: "Products",
-          key: "id",
-        }
       },
       id_order_list: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: "Order_list",
-          key: "id",
-        }
       },
       message_review: {
         type: Sequelize.TEXT,

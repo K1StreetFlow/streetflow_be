@@ -1,5 +1,10 @@
 // controllers/products.controller.js
-const { Product, CategoryProduct, PhotoProduct } = require("../models");
+const {
+  Product,
+  CategoryProduct,
+  PhotoProduct,
+  Review_products,
+} = require("../models");
 
 const ITEMS_PER_PAGE = 10;
 
@@ -10,6 +15,10 @@ const getAllProductsWithPagination = async (req, res) => {
 
     const products = await Product.findAndCountAll({
       include: [
+        {
+          model: Review_products,
+          as: "review_products",
+        },
         {
           model: CategoryProduct,
           as: "category",
@@ -43,6 +52,10 @@ const getAllProducts = async (req, res) => {
     const products = await Product.findAll({
       include: [
         {
+          model: Review_products,
+          as: "review_products",
+        },
+        {
           model: CategoryProduct,
           as: "category",
           // attributes: ["id_category_product"],
@@ -67,6 +80,10 @@ const getProductById = async (req, res) => {
   try {
     const product = await Product.findByPk(id, {
       include: [
+        {
+          model: Review_products,
+          as: "review_products",
+        },
         {
           model: CategoryProduct,
           as: "category",

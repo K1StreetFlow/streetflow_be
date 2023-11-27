@@ -1,4 +1,10 @@
-const { Cart_detail, Cart, Product, Users_customer } = require("../models");
+const {
+  Cart_detail,
+  Cart,
+  Product,
+  Users_customer,
+  PhotoProduct,
+} = require("../models");
 
 const cardDetailController = {
   getAllCartDetail: async (req, res) => {
@@ -19,6 +25,12 @@ const cardDetailController = {
           {
             model: Product,
             as: "product",
+            include: [
+              {
+                model: PhotoProduct,
+                as: "photo",
+              },
+            ],
           },
         ],
       });
@@ -46,6 +58,12 @@ const cardDetailController = {
           {
             model: Product,
             as: "product",
+            include: [
+              {
+                model: PhotoProduct,
+                as: "photo",
+              },
+            ],
           },
         ],
       });
