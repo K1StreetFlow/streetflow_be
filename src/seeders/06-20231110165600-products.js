@@ -3,15 +3,21 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const categoryProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "CategoryProducts"');
-    const photoProductsQuery = await queryInterface.sequelize.query('SELECT id FROM "PhotoProducts"');
+    const categoryProductsQuery = await queryInterface.sequelize.query(
+      'SELECT id FROM "CategoryProducts"'
+    );
+    const photoProductsQuery = await queryInterface.sequelize.query(
+      'SELECT id FROM "PhotoProducts"'
+    );
 
     // Mendapatkan hasil query sebagai array
     const categoryProducts = categoryProductsQuery[0];
     const photoProducts = photoProductsQuery[0];
     // Pastikan hasil query tidak kosong
     if (categoryProducts.length === 0 || photoProducts.length === 0) {
-      console.error("Error: Empty result from categoryProducts or photoProducts query.");
+      console.error(
+        "Error: Empty result from categoryProducts or photoProducts query."
+      );
       return;
     }
 
@@ -20,7 +26,8 @@ module.exports = {
       [
         {
           name_product: "Kaos Hitam Polos",
-          description_product: "Description for Product 1",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 32000,
           stock_product: 20,
           size_product: "M",
@@ -33,7 +40,8 @@ module.exports = {
         },
         {
           name_product: "Product 2",
-          description_product: "Description for Product 2",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 43000,
           stock_product: 30,
           size_product: "L",
@@ -46,7 +54,8 @@ module.exports = {
         },
         {
           name_product: "Product 3",
-          description_product: "Description for Product 3",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 49000,
           stock_product: 20,
           size_product: "S",
@@ -59,7 +68,8 @@ module.exports = {
         },
         {
           name_product: "Product 4",
-          description_product: "Description for Product 4",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 28000,
           stock_product: 10,
           size_product: "M",
@@ -72,7 +82,8 @@ module.exports = {
         },
         {
           name_product: "Product 5",
-          description_product: "Description for Product 5",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 35000,
           stock_product: 5,
           size_product: "S",
@@ -85,7 +96,8 @@ module.exports = {
         },
         {
           name_product: "Product 6",
-          description_product: "Description for Product 6",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 35000,
           stock_product: 12,
           size_product: "S",
@@ -98,7 +110,8 @@ module.exports = {
         },
         {
           name_product: "Product 7",
-          description_product: "Description for Product 7",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 35000,
           stock_product: 18,
           size_product: "S",
@@ -111,7 +124,8 @@ module.exports = {
         },
         {
           name_product: "Product 8",
-          description_product: "Description for Product 8",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 23000,
           stock_product: 43,
           size_product: "S",
@@ -124,7 +138,8 @@ module.exports = {
         },
         {
           name_product: "Product 9",
-          description_product: "Description for Product 9",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?",
           price_product: 65000,
           stock_product: 9,
           size_product: "S",
@@ -137,7 +152,8 @@ module.exports = {
         },
         {
           name_product: "Product 10",
-          description_product: "Description for Product 10",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?0",
           price_product: 82000,
           stock_product: 10,
           size_product: "M",
@@ -150,7 +166,8 @@ module.exports = {
         },
         {
           name_product: "Product 11",
-          description_product: "Description for Product 11",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?1",
           price_product: 55000,
           stock_product: 11,
           size_product: "S",
@@ -163,7 +180,8 @@ module.exports = {
         },
         {
           name_product: "Product 12",
-          description_product: "Description for Product 12",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?2",
           price_product: 11000,
           stock_product: 15,
           size_product: "M",
@@ -176,7 +194,8 @@ module.exports = {
         },
         {
           name_product: "Product 13",
-          description_product: "Description for Product 13",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?3",
           price_product: 73000,
           stock_product: 53,
           size_product: "S",
@@ -189,7 +208,8 @@ module.exports = {
         },
         {
           name_product: "Product 14",
-          description_product: "Description for Product 14",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?4",
           price_product: 36000,
           stock_product: 22,
           size_product: "S",
@@ -202,7 +222,8 @@ module.exports = {
         },
         {
           name_product: "Product 15",
-          description_product: "Description for Product 15",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?5",
           price_product: 65000,
           stock_product: 32,
           size_product: "M",
@@ -215,7 +236,8 @@ module.exports = {
         },
         {
           name_product: "Product 16",
-          description_product: "Description for Product 16",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?6",
           price_product: 55000,
           stock_product: 14,
           size_product: "S",
@@ -228,7 +250,8 @@ module.exports = {
         },
         {
           name_product: "Product 17",
-          description_product: "Description for Product 17",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?7",
           price_product: 68000,
           stock_product: 51,
           size_product: "S",
@@ -241,7 +264,8 @@ module.exports = {
         },
         {
           name_product: "Product 18",
-          description_product: "Description for Product 18",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?8",
           price_product: 35000,
           stock_product: 100,
           size_product: "M",
@@ -254,7 +278,8 @@ module.exports = {
         },
         {
           name_product: "Product 19",
-          description_product: "Description for Product 19",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?9",
           price_product: 3000,
           stock_product: 44,
           size_product: "S",
@@ -267,7 +292,8 @@ module.exports = {
         },
         {
           name_product: "Product 20",
-          description_product: "Description for Product 20",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?0",
           price_product: 72000,
           stock_product: 1,
           size_product: "M",
@@ -280,7 +306,8 @@ module.exports = {
         },
         {
           name_product: "Product 21",
-          description_product: "Description for Product 21",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?1",
           price_product: 11000,
           stock_product: 8,
           size_product: "S",
@@ -293,7 +320,8 @@ module.exports = {
         },
         {
           name_product: "Product 22",
-          description_product: "Description for Product 22",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?2",
           price_product: 72000,
           stock_product: 5,
           size_product: "XL",
@@ -306,7 +334,8 @@ module.exports = {
         },
         {
           name_product: "Product 23",
-          description_product: "Description for Product 23",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?3",
           price_product: 22000,
           stock_product: 44,
           size_product: "S",
@@ -319,7 +348,8 @@ module.exports = {
         },
         {
           name_product: "Product 24",
-          description_product: "Description for Product 24",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?4",
           price_product: 47000,
           stock_product: 151,
           size_product: "L",
@@ -332,7 +362,8 @@ module.exports = {
         },
         {
           name_product: "Product 25",
-          description_product: "Description for Product 25",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?5",
           price_product: 85000,
           stock_product: 6,
           size_product: "S",
@@ -345,7 +376,8 @@ module.exports = {
         },
         {
           name_product: "Product 26",
-          description_product: "Description for Product 26",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?6",
           price_product: 76000,
           stock_product: 62,
           size_product: "L",
@@ -358,7 +390,8 @@ module.exports = {
         },
         {
           name_product: "Product 27",
-          description_product: "Description for Product 27",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?7",
           price_product: 84000,
           stock_product: 16,
           size_product: "S",
@@ -371,7 +404,8 @@ module.exports = {
         },
         {
           name_product: "Product 28",
-          description_product: "Description for Product 28",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?8",
           price_product: 45000,
           stock_product: 32,
           size_product: "XL",
@@ -384,7 +418,8 @@ module.exports = {
         },
         {
           name_product: "Product 29",
-          description_product: "Description for Product 29",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?9",
           price_product: 91000,
           stock_product: 22,
           size_product: "S",
@@ -397,7 +432,8 @@ module.exports = {
         },
         {
           name_product: "Product 30",
-          description_product: "Description for Product 30",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?0",
           price_product: 29000,
           stock_product: 35,
           size_product: "L",
@@ -410,7 +446,8 @@ module.exports = {
         },
         {
           name_product: "Product 31",
-          description_product: "Description for Product 31",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?1",
           price_product: 88000,
           stock_product: 22,
           size_product: "M",
@@ -423,7 +460,8 @@ module.exports = {
         },
         {
           name_product: "Product 32",
-          description_product: "Description for Product 32",
+          description_product:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam, veritatis. Doloribus consectetur aliquid eveniet, laborum praesentium animi quidem nesciunt a ea itaque rerum nobis, sunt debitis iste! Ad, cupiditate fugiat?2",
           price_product: 36000,
           stock_product: 24,
           size_product: "S",

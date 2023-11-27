@@ -19,6 +19,21 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        id_users_customer: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id_users_customer: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id_users_customer: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ];
     return queryInterface.bulkInsert("Carts", carts, {});
   },

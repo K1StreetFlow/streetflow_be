@@ -191,7 +191,10 @@ const cartController = {
       const { userId } = req.user;
 
       let cart = await Cart.findOne({
-        order: [["id", "DESC"]],
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        order: [["id", "ASC"]],
         include: [
           {
             model: Cart_detail,

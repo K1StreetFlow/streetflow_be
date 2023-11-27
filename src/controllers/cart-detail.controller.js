@@ -10,7 +10,6 @@ const cardDetailController = {
   getAllCartDetail: async (req, res) => {
     try {
       const cart_details = await Cart_detail.findAll({
-        order: [["id_cart", "ASC"]],
         include: [
           {
             model: Cart,

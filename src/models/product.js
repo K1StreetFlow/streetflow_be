@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "id_photo_product", // Sesuaikan dengan nama kolom yang ada di dalam tabel Products
         as: "photo",
       });
+      Product.hasMany(models.Review_products, {
+        foreignKey: "id_products",
+        as: "review_products",
+      });
     }
   }
   Product.init(
