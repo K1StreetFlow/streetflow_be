@@ -12,6 +12,7 @@ const photoProductRoutes = require("./photoProduct.routes");
 
 const cartRoutes = require("./cart.routes");
 const cartDetailRoutes = require("./cart-detail.routes");
+const checkoutProductRoutes = require("./checkoutProduct");
 const paymentRoutes = require("./payment.routes");
 
 const orderListRoutes = require("./order_list.routes");
@@ -37,6 +38,7 @@ route.use("/photo_products", photoProductRoutes);
 route.use("/payments", paymentRoutes);
 route.use("/carts", cartRoutes);
 route.use("/cart-details", cartDetailRoutes);
+route.use("/checkout-product", checkoutProductRoutes);
 
 route.use("/order", orderListRoutes);
 route.use("/address", addressRoutes);
