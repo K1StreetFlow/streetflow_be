@@ -20,7 +20,7 @@ app.use("/uploads", express.static(path.join(__dirname, "src/assets/images/profi
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", router);
+app.use(router);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
