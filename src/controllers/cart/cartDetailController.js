@@ -180,6 +180,28 @@ const cardDetailController = {
       res.status(500).json({ error: "Internal server error" });
     }
   },
+  deleteCartDetailByCartId: async (req, res) => {
+    try {
+      const { cartId } = req.params;
+      const cart_detail = await Cart_detail.destroy({
+        where: {
+          id_cart: cartId,
+        },
+      });
+
+      if (!cart_detail) {
+        return res.status(404).json({
+          message: `Cart detail with id ${id} is not found`,
+        });
+      }
+
+      res.status(200).json({
+        message: `Cart detail deleted successfully`,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
 
 module.exports = cardDetailController;

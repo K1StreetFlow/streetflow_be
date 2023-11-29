@@ -26,7 +26,7 @@ module.exports = {
         allowNull: false,
       },
       colour_product: {
-        type: Sequelize.ENUM("Blue", "Black", "Grey"),
+        type: Sequelize.STRING,
         allowNull: false,
       },
       size_product: {

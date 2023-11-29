@@ -29,7 +29,14 @@ router.delete("/:id", isAdmin, deletePhoto);
 
 // Serve static files from the specified directory
 router.get("/view/:filename", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../src/assets/images/products", req.params.filename));
+  // res.sendFile(path.join(__dirname, "../../src/assets/images/products", req.params.filename));
+  res.sendFile(
+    path.join(
+      __dirname,
+      "../../../src/assets/images/products",
+      req.params.filename
+    )
+  );
 });
 
 module.exports = router;

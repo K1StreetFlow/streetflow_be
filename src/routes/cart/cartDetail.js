@@ -13,6 +13,13 @@ router.put(
   /*isCustomer,*/
   cartDetailController.editCartDetail
 );
-router.delete("/:id", /*isCustomer,*/ cartDetailController.deleteCartDetailById);
+router.delete(
+  "/:id",
+  /*isCustomer,*/ cartDetailController.deleteCartDetailById
+);
+router.delete(
+  "/cart/:cartId",
+  /*isCustomer,*/ cartDetailController.deleteCartDetailByCartId
+);
 
 module.exports = router;

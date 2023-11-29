@@ -7,8 +7,8 @@ const { isAdmin, isCustomer } = require("../../middleware/verifyToken");
 router.get("/", cartController.getAllCarts);
 router.get("/:id", cartController.getCartById);
 router.get("/user/cart", isCustomer, cartController.getCartByUserId);
-router.post("/", isCustomer, cartController.createCart);
-router.put("/:id", isCustomer, cartController.editCartById);
-router.delete("/:id", isCustomer, cartController.deleteCartById);
+router.post("/", cartController.createCart);
+router.put("/:id", cartController.editCartById);
+router.delete("/:id", cartController.deleteCartById);
 
 module.exports = router;

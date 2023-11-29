@@ -6,6 +6,7 @@ const {
   Address,
   sequelize,
   PhotoProduct,
+  Checkout_product,
 } = require("../../models");
 
 const cartController = {
@@ -14,6 +15,22 @@ const cartController = {
       const carts = await Cart.findAll({
         order: [["id", "DESC"]],
         include: [
+          {
+            model: Checkout_product,
+            as: "checkout_product",
+            include: [
+              {
+                model: Product,
+                as: "product",
+                include: [
+                  {
+                    model: PhotoProduct,
+                    as: "photo",
+                  },
+                ],
+              },
+            ],
+          },
           {
             model: Cart_detail,
             as: "cart_detail",
@@ -66,6 +83,9 @@ const cartController = {
         // menampilkan semua attribute dari cart detail
         const cartDetail = cart.cart_detail;
 
+        // menampilkan semua attribute dari cart detail
+        const checkoutProduct = cart.checkout_product;
+
         // menampilkan semua attribute dari product
         const product = cart.cart_detail.product;
 
@@ -77,6 +97,7 @@ const cartController = {
           grand_price: grandPrice,
           total_product: totalProduct,
           id_user_customer: userCustomer.id,
+          checkout_product: checkoutProduct,
           user_customer: {
             id: userCustomer.id,
             fullname: userCustomer.fullname,
@@ -106,6 +127,22 @@ const cartController = {
         order: [["id", "DESC"]],
 
         include: [
+          {
+            model: Checkout_product,
+            as: "checkout_product",
+            include: [
+              {
+                model: Product,
+                as: "product",
+                include: [
+                  {
+                    model: PhotoProduct,
+                    as: "photo",
+                  },
+                ],
+              },
+            ],
+          },
           {
             model: Cart_detail,
             as: "cart_detail",
@@ -156,6 +193,8 @@ const cartController = {
       // menampilkan semua attribute dari cart detail
       const cartDetail = cart.cart_detail;
 
+      const checkoutProduct = cart.checkout_product;
+
       // menampilkan semua attribute dari product
       const product = cart.cart_detail.product;
 
@@ -166,6 +205,7 @@ const cartController = {
         cart_id: cart.id,
         grand_price: grandPrice,
         total_product: totalProduct,
+        checkout_product: checkoutProduct,
         user_customer: {
           fullname: userCustomer.fullname,
           username: userCustomer.username,
@@ -191,8 +231,27 @@ const cartController = {
       const { userId } = req.user;
 
       let cart = await Cart.findOne({
-        order: [["id", "DESC"]],
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        order: [["id", "ASC"]],
         include: [
+          {
+            model: Checkout_product,
+            as: "checkout_product",
+            include: [
+              {
+                model: Product,
+                as: "product",
+                include: [
+                  {
+                    model: PhotoProduct,
+                    as: "photo",
+                  },
+                ],
+              },
+            ],
+          },
           {
             model: Cart_detail,
             as: "cart_detail",
@@ -245,6 +304,7 @@ const cartController = {
 
       // menampilkan semua attribute dari cart detail
       const cartDetail = cart.cart_detail;
+      const checkoutProduct = cart.checkout_product;
 
       // menampilkan semua attribute dari product
       const product = cart.cart_detail.product;
@@ -256,6 +316,7 @@ const cartController = {
         cart_id: cart.id,
         grand_price: grandPrice,
         total_product: totalProduct,
+        checkout_product: checkoutProduct,
         user_customer: {
           id: userCustomer.id,
           fullname: userCustomer.fullname,
