@@ -176,6 +176,7 @@ const createReview = async (req, res) => {
 		// Check if a review already exists for the same product by the same customer
 		const existingReview = await Review_products.findOne({
 			where: {
+                		id_order_list,
 				id_products,
 				id_users_customer,
 			},
