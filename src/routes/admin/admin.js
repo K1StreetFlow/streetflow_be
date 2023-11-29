@@ -1,7 +1,7 @@
 const express = require("express");
-const { getToken, createAdmin, getAllAdmins, getAdminById, editAdmin, deleteAdmin } = require("../controllers/adminController");
-const { isAdmin } = require("../middleware/verifyToken");
-const upload = require("../middleware/multerConfig");
+const { getToken, createAdmin, getAllAdmins, getAdminById, editAdmin, deleteAdmin } = require("../../controllers/admin/adminController");
+const { isAdmin } = require("../../middleware/verifyToken");
+const upload = require("../../middleware/multerConfig");
 const router = express.Router();
 router.use(isAdmin);
 // Routing untuk operasi pengelolaan pengguna

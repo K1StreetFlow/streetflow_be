@@ -6,9 +6,9 @@ const {
   updateOrder,
   createOrderAndShipping,
   deleteOrder,
-} = require("../controllers/order_list.controller");
-const { isAdminOrSelf } = require("../middleware/adminMiddleware");
-const { isAdmin, isCustomer } = require("../middleware/verifyToken");
+} = require("../../controllers/order/orderListController");
+const { isAdminOrSelf } = require("../../middleware/adminMiddleware");
+const { isAdmin, isCustomer } = require("../../middleware/verifyToken");
 const router = express.Router();
 
 router.get("/", getAllOrder);

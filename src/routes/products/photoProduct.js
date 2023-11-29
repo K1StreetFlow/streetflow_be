@@ -8,9 +8,9 @@ const {
   uploadPhoto,
   editPhoto,
   deletePhoto,
-} = require("../controllers/photoProduct.controller");
-const upload = require("../middleware/multer-config.js");
-const { isAdmin } = require("../middleware/verifyToken.js");
+} = require("../../controllers/products/photoProductController.js");
+const upload = require("../../middleware/multer-config.js");
+const { isAdmin } = require("../../middleware/verifyToken.js");
 
 router.get("/", getAllPhotos);
 // pagination

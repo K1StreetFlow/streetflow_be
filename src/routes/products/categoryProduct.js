@@ -1,6 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { getAllCategories, getCategoryById, createCategory, updateCategory, getAllCategoriesWithPagination, deleteCategory } = require("../controllers/categoryProductController");
+const { 
+    getAllCategories, 
+    getCategoryById, 
+    createCategory, 
+    updateCategory, 
+    getAllCategoriesWithPagination, 
+    deleteCategory
+} = require("../../controllers/products/categoryProductController");
 
 // CRUD routes
 

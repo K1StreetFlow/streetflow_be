@@ -1,7 +1,7 @@
 const express = require("express");
-const addressController = require("../controllers/address.controller");
-const { isAdmin, isCustomer, verifyUserType } = require("../middleware/verifyToken");
-const { isAdminOrSelf } = require("../middleware/adminMiddleware");
+const addressController = require("../../controllers/users/addressController");
+const { isAdmin, isCustomer, verifyUserType } = require("../../middleware/verifyToken");
+const { isAdminOrSelf } = require("../../middleware/adminMiddleware");
 const router = express.Router();
 
 router.get("/", isAdmin, addressController.getAllAddresses);

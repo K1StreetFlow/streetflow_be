@@ -3,9 +3,9 @@ const {
   register,
   login,
   logout,
-} = require("../controllers/authUserController");
-const upload = require("../middleware/multerConfig");
-const { isCustomer } = require("../middleware/verifyToken");
+} = require("../../controllers/auth/authUserController");
+const upload = require("../../middleware/multerConfig");
+const { isCustomer } = require("../../middleware/verifyToken");
 const router = express.Router();
 
 router.post("/register", upload.single("profileImage"), register);

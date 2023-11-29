@@ -6,7 +6,7 @@ const {
 	updateShipping,
 	deleteShipping,
 	updateShippingAndOrderList,
-} = require("../controllers/shipping.controller");
+} = require("../../controllers/order/shippingController");
 // const { isAdmin } = require("../middleware/verifyToken");
 const router = express.Router();
 

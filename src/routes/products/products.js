@@ -7,8 +7,8 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
-} = require("../controllers/products.controller");
-const { isAdmin } = require("../middleware/verifyToken.js");
+} = require("../../controllers/products/productsController.js");
+const { isAdmin } = require("../../middleware/verifyToken.js");
 
 // CRUD routes
 router.get("/", getAllProducts);

@@ -1,8 +1,8 @@
 const express = require("express");
-const cartDetailController = require("../controllers/cart-detail.controller");
+const cartDetailController = require("../../controllers/cart/cartDetailController");
 const router = express.Router();
-const { isAdminOrSelf } = require("../middleware/adminMiddleware");
-const { isAdmin, isCustomer } = require("../middleware/verifyToken");
+const { isAdminOrSelf } = require("../../middleware/adminMiddleware");
+const { isAdmin, isCustomer } = require("../../middleware/verifyToken");
 
 router.get("/", isAdmin, cartDetailController.getAllCartDetail);
 router.get("/:id", isAdmin, cartDetailController.getCartDetailById);

@@ -6,10 +6,10 @@ const {
   editUser,
   deleteUser,
   getUserProfile,
-} = require("../controllers/userController");
-const { isAdmin, isCustomer } = require("../middleware/verifyToken");
-const { isAdminOrSelf } = require("../middleware/adminMiddleware");
-const upload = require("../middleware/multerConfig");
+} = require("../../controllers/users/userController");
+const { isAdmin, isCustomer } = require("../../middleware/verifyToken");
+const { isAdminOrSelf } = require("../../middleware/adminMiddleware");
+const upload = require("../../middleware/multerConfig");
 const router = express.Router();
 
 router.get("/token", isCustomer, getTokenUser);
