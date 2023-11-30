@@ -5,6 +5,7 @@ const {
   Users_customer,
   PhotoProduct,
   Order_list,
+  Review_products,
 } = require("../../models");
 
 const cardDetailController = {
@@ -15,6 +16,12 @@ const cardDetailController = {
           {
             model: Order_list,
             as: "order",
+            include: [
+              {
+                model: Review_products,
+                as: "review",
+              },
+            ],
           },
           {
             model: Cart,
@@ -52,6 +59,12 @@ const cardDetailController = {
           {
             model: Order_list,
             as: "order",
+            include: [
+              {
+                model: Review_products,
+                as: "review",
+              },
+            ],
           },
           {
             model: Cart,
@@ -92,6 +105,12 @@ const cardDetailController = {
           {
             model: Order_list,
             as: "order",
+            include: [
+              {
+                model: Review_products,
+                as: "review",
+              },
+            ],
           },
           {
             model: Cart,
