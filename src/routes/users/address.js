@@ -1,0 +1,15 @@
+const express = require("express");
+const addressController = require("../../controllers/users/addressController");
+const { isAdmin, isCustomer, verifyUserType } = require("../../middleware/verifyToken");
+const { isAdminOrSelf } = require("../../middleware/adminMiddleware");
+const router = express.Router();
+
+router.get("/", isAdmin, addressController.getAllAddresses);
+router.get("/:id", verifyUserType, addressController.getAddressById);
+router.get("/customer/:id", verifyUserType, addressController.getAddressByIdCustomer);
+router.post("/", isCustomer, addressController.createAddress);
+router.put("/:id", verifyUserType, addressController.updateAddressById);
+router.delete("/:id", verifyUserType, addressController.deleteAddressById);
+router.delete("/customer/:id", verifyUserType, addressController.deleteAddressByCustomerId);
+
+module.exports = router;

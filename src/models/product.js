@@ -30,8 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         values: ["S", "M", "L", "XL"],
       },
       colour_product: {
-        type: DataTypes.ENUM,
-        values: ["Blue", "Black", "Grey"],
+        type: DataTypes.STRING,
       },
       id_category_product: DataTypes.INTEGER,
       id_photo_product: DataTypes.INTEGER,
