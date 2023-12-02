@@ -7,13 +7,26 @@ dotenv.config();
 
 const register = async (req, res) => {
   try {
-    const { username, email, password, retypePassword, fullname, gender, birth_date, phone_number } = req.body;
+    const {
+      username,
+      email,
+      password,
+      retypePassword,
+      fullname,
+      gender,
+      birth_date,
+      phone_number,
+    } = req.body;
 
     // Check if user with the provided email already exists
-    const existingUser = await Users_customer.findOne({ where: { email: email } });
+    const existingUser = await Users_customer.findOne({
+      where: { email: email },
+    });
 
     if (existingUser) {
-      return res.status(400).json({ message: "User with this email already exists" });
+      return res
+        .status(400)
+        .json({ message: "User with this email already exists" });
     }
     if (password !== retypePassword) {
       return res.status(400).json({ message: "Passwords do not match" });
@@ -23,7 +36,9 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Get information about the uploaded file (if any)
-    const profileImage = req.file ? path.join("uploads", req.file.filename) : null;
+    const profileImage = req.file
+      ? path.join("uploads", req.file.filename)
+      : null;
 
     // Create a new user
     const users = await Users_customer.create({
@@ -78,7 +93,7 @@ async function login(req, res) {
       { expiresIn: "24h" }
     );
 
-    res.cookie("tokenCustomer", token, { httpOnly: true });
+    res.cookie("tokenCustomer", token);
     // Kirim respons dengan token
     res.status(200).json({ token });
   } catch (error) {
